@@ -1,4 +1,4 @@
-# PLForge: Enhancing Language Models for Natural Language to Procedural Extensions of SQL
+# PLForge
 
 ## Environment Requirement
 
@@ -18,10 +18,6 @@ conda create -n codes python=3.8.5
 conda activate codes
 conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install -r requirements.txt
-git clone https://github.com/lihaoyang-ruc/SimCSE.git
-cd SimCSE
-python setup.py install
-cd ..
 ```
 
 ### Step 3: Create Database Environment
@@ -30,7 +26,7 @@ Install and configure PostgreSQL:
 
 ```bash
 apt install postgresql postgresql-contrib
-pip install psycopg[binary] -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install psycopg[binary]
 service postgresql start
 service postgresql status
 ```
