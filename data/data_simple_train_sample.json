@@ -1,0 +1,2869 @@
+[
+    {
+        "text": "create a PLpgSQL procedure to increase each Sales value in journal by para_Sales.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Sales integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"journal\" SET \"Sales\" = \"Sales\" + para_Sales; END; $$;",
+        "call": [
+            "call sp(2940);",
+            "call sp(3421);",
+            "call sp(1934);",
+            "call sp(4271);",
+            "call sp(2804);"
+        ],
+        "database": "journal_committee",
+        "table": [
+            "journal"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "editor",
+                    "table_comment": "",
+                    "column_names": [
+                        "Editor_ID",
+                        "Name",
+                        "Age"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            1
+                        ],
+                        [
+                            "Mariusz Zalejski",
+                            "Grażyna Wolszczak"
+                        ],
+                        [
+                            21.0,
+                            43.0
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "journal",
+                    "table_comment": "",
+                    "column_names": [
+                        "Journal_ID",
+                        "integer",
+                        "Theme",
+                        "Sales"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            6
+                        ],
+                        [
+                            "December 16, 2001",
+                            "October 7, 2001"
+                        ],
+                        [
+                            "Pittsburgh Steelers",
+                            "at Minnesota Vikings"
+                        ],
+                        [
+                            5342,
+                            6532
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "journal_committee",
+                    "table_comment": "",
+                    "column_names": [
+                        "Editor_ID",
+                        "Journal_ID",
+                        "Work_Type"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            8
+                        ],
+                        [
+                            6,
+                            6
+                        ],
+                        [
+                            "Article",
+                            "Title"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ + _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL to delete records from company where Market_Value_in_Billion equals para_Market_Value_in_Billion or Name equals para_Name or Headquarters equals para_Headquarters.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Market_Value_in_Billion real, para_Name text, para_Headquarters text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"company\" WHERE \"Market_Value_in_Billion\" = para_Market_Value_in_Billion OR \"Name\" = para_Name OR \"Headquarters\" = para_Headquarters; END; $$;",
+        "call": [
+            "call sp(147.4, 'General Electric', 'China');",
+            "call sp(164.3, 'Industrial and Commercial Bank of China', 'China');",
+            "call sp(107.5, 'Royal Dutch Shell', 'Germany');",
+            "call sp(107.5, 'Total', 'UK');",
+            "call sp(213.7, 'Chevron', 'USA');"
+        ],
+        "database": "company_employee",
+        "table": [
+            "company"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "company",
+                    "table_comment": "",
+                    "column_names": [
+                        "Company_ID",
+                        "Name",
+                        "Headquarters",
+                        "Industry",
+                        "Sales_in_Billion",
+                        "Profits_in_Billion",
+                        "Assets_in_Billion",
+                        "Market_Value_in_Billion"
+                    ],
+                    "column_types": [
+                        "real",
+                        "text",
+                        "text",
+                        "text",
+                        "real",
+                        "real",
+                        "real",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            13.0,
+                            12.0
+                        ],
+                        [
+                            "BP",
+                            "Royal Dutch Shell"
+                        ],
+                        [
+                            "Russia",
+                            "France"
+                        ],
+                        [
+                            "Oil and gas",
+                            "Oil and gas"
+                        ],
+                        [
+                            221.9,
+                            102.0
+                        ],
+                        [
+                            19.0,
+                            10.3
+                        ],
+                        [
+                            1563.9,
+                            1873.9
+                        ],
+                        [
+                            170.1,
+                            159.8
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "employment",
+                    "table_comment": "",
+                    "column_names": [
+                        "Company_ID",
+                        "People_ID",
+                        "Year_working"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            17,
+                            7
+                        ],
+                        [
+                            1,
+                            2
+                        ],
+                        [
+                            1,
+                            2
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "people",
+                    "table_comment": "",
+                    "column_names": [
+                        "People_ID",
+                        "Age",
+                        "Name",
+                        "Nationality",
+                        "Graduation_College"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            2
+                        ],
+                        [
+                            25,
+                            37
+                        ],
+                        [
+                            "Jerry Corcoran",
+                            "Reggie Lewis"
+                        ],
+                        [
+                            "United Kindom",
+                            "United Kindom"
+                        ],
+                        [
+                            "Iowa",
+                            "Wisconsin–Stevens Point"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ OR _ = _ OR _ = _; END; $$;",
+        "insert": 0,
+        "update": 0,
+        "delete": 1,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL, in the party table, update the Last_year column value to para_Last_year for the rows whose Party_ID value is para_Party_ID or Location value is para_Location.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Last_year text, para_Party_ID integer, para_Location text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"party\" SET \"Last_year\" = para_Last_year WHERE \"Party_ID\" = para_Party_ID or \"Location\" = para_Location; END; $$;",
+        "call": [
+            "call sp('2001', 1, 'Heineken Music Hall Amsterdam');",
+            "call sp('2002', 7, 'Various locations');",
+            "call sp('2010', 2, 'Various locations');",
+            "call sp('2003', 8, 'Various locations');",
+            "call sp('2007', 4, 'Heineken Music Hall Amsterdam');"
+        ],
+        "database": "party_host",
+        "table": [
+            "party"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "host",
+                    "table_comment": "",
+                    "column_names": [
+                        "Host_ID",
+                        "Name",
+                        "Nationality",
+                        "Age"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            7,
+                            4
+                        ],
+                        [
+                            "Ed Davis",
+                            "Austin Daye"
+                        ],
+                        [
+                            "United States",
+                            "Argentina"
+                        ],
+                        [
+                            "45",
+                            "31"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "party",
+                    "table_comment": "",
+                    "column_names": [
+                        "Party_ID",
+                        "Party_Theme",
+                        "Location",
+                        "First_year",
+                        "Last_year",
+                        "Number_of_hosts"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            2
+                        ],
+                        [
+                            "Houseqlassics",
+                            "Teqnology"
+                        ],
+                        [
+                            "Hemkade 48 Zaandam",
+                            "Various locations"
+                        ],
+                        [
+                            "2000",
+                            "2002"
+                        ],
+                        [
+                            "2003",
+                            "2010"
+                        ],
+                        [
+                            18,
+                            4
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "party_host",
+                    "table_comment": "",
+                    "column_names": [
+                        "Party_ID",
+                        "Host_ID",
+                        "Is_Main_in_Charge"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            4
+                        ],
+                        [
+                            5,
+                            1
+                        ],
+                        [
+                            "T",
+                            "F"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                1,
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE _ = _ or _ = _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "create a stored procedure in PLpgSQL to update Oppose_rate to para_Oppose_rate * para_Oppose_rate - 1 and People_ID to para_People_ID in candiinteger, then delete rows where Candiinteger_ID is para_Candiinteger_ID + 1.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Oppose_rate real, para_People_ID integer, para_Candiinteger_ID integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"candiinteger\" SET \"Oppose_rate\" = para_Oppose_rate * para_Oppose_rate - 1, \"People_ID\" = para_People_ID; DELETE FROM \"candiinteger\" WHERE \"Candiinteger_ID\" = para_Candiinteger_ID + 1; END; $$;",
+        "call": [
+            "call sp(0.32, 9, 6);",
+            "call sp(0.43, 1, 2);",
+            "call sp(0.32, 4, 6);",
+            "call sp(0.43, 3, 6);",
+            "call sp(0.45, 4, 6);"
+        ],
+        "database": "candidate_poll",
+        "table": [
+            "candiinteger"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "candiinteger",
+                    "table_comment": "",
+                    "column_names": [
+                        "Candiinteger_ID",
+                        "People_ID",
+                        "Poll_Source",
+                        "integer",
+                        "Support_rate",
+                        "Consider_rate",
+                        "Oppose_rate",
+                        "Unsure_rate"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "real",
+                        "real",
+                        "real",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            6
+                        ],
+                        [
+                            1,
+                            7
+                        ],
+                        [
+                            "Newsweek Poll",
+                            "Newsweek Poll"
+                        ],
+                        [
+                            "Feb 12–15, 2007",
+                            "Nov 9–10, 2006"
+                        ],
+                        [
+                            0.33,
+                            0.33
+                        ],
+                        [
+                            0.34,
+                            0.34
+                        ],
+                        [
+                            0.43,
+                            0.32
+                        ],
+                        [
+                            0.3,
+                            0.2
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "people",
+                    "table_comment": "",
+                    "column_names": [
+                        "People_ID",
+                        "Sex",
+                        "Name",
+                        "integer_of_Birth",
+                        "Height",
+                        "Weight"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "real",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            8
+                        ],
+                        [
+                            "M",
+                            "M"
+                        ],
+                        [
+                            "Hubert Henno",
+                            "Frantz Granvorka"
+                        ],
+                        [
+                            "20.08.1970",
+                            "10.11.1972"
+                        ],
+                        [
+                            197.0,
+                            194.0
+                        ],
+                        [
+                            82.0,
+                            83.0
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ * _ - 1, _ = _; DELETE FROM _ WHERE _ = _ + 1; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 1,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL, if para_Driver_ID is greater than 30, then insert a new record into driver table setting Driver_ID to para_Driver_ID and Home_city to para_Home_city.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Driver_ID integer, para_Home_city text) LANGUAGE plpgsql AS $$ BEGIN IF para_Driver_ID > 30 THEN INSERT INTO \"driver\" (\"Driver_ID\", \"Home_city\") VALUES (para_Driver_ID, para_Home_city); END IF; END; $$;",
+        "call": [
+            "call sp(1, 'Coventry');",
+            "call sp(1, 'Bethel');",
+            "call sp(2, 'Hartford');",
+            "call sp(3, 'Coventry');",
+            "call sp(6, 'East Hartford');"
+        ],
+        "database": "school_bus",
+        "table": [
+            "driver"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "driver",
+                    "table_comment": "",
+                    "column_names": [
+                        "Driver_ID",
+                        "Name",
+                        "Party",
+                        "Home_city",
+                        "Age"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            4
+                        ],
+                        [
+                            "Angel Acre",
+                            "Tim Larson"
+                        ],
+                        [
+                            "Dem",
+                            "Dem"
+                        ],
+                        [
+                            "East Hartford",
+                            "Bethel"
+                        ],
+                        [
+                            36,
+                            36
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "school",
+                    "table_comment": "",
+                    "column_names": [
+                        "School_ID",
+                        "Grade",
+                        "School",
+                        "Location",
+                        "Type"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            5
+                        ],
+                        [
+                            "5th-12th grade",
+                            "College"
+                        ],
+                        [
+                            "State Elementary School Menteng 01",
+                            "Occidental College"
+                        ],
+                        [
+                            "Jakarta, Indonesia",
+                            "Honolulu, Hawaii"
+                        ],
+                        [
+                            "Private",
+                            "Public"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "school_bus",
+                    "table_comment": "",
+                    "column_names": [
+                        "School_ID",
+                        "Driver_ID",
+                        "Years_Working",
+                        "If_full_time"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            5
+                        ],
+                        [
+                            4,
+                            3
+                        ],
+                        [
+                            3,
+                            10
+                        ],
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                0,
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF _ > 30 THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+        "insert": 1,
+        "update": 0,
+        "delete": 0,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL, in the People_Addresses table, update the integer_from column value to para_integer_from for the rows whose integer_to value is para_integer_to and person_address_id value is less than para_person_address_id.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_integer_from text, para_integer_to text, para_person_address_id integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"People_Addresses\" SET \"integer_from\" = para_integer_from WHERE \"integer_to\" = para_integer_to and \"person_address_id\" < para_person_address_id; END; $$;",
+        "call": [
+            "call sp('2008-05-26 20:43:41', '2018-03-08 06:16:47', 396);",
+            "call sp('2010-11-26 05:21:12', '2018-03-09 02:11:12', 276);",
+            "call sp('2013-12-26 16:57:01', '2018-02-23 22:44:18', 257);",
+            "call sp('2013-12-26 16:57:01', '2018-03-12 21:10:02', 269);",
+            "call sp('2008-05-26 20:43:41', '2018-03-09 08:45:06', 396);"
+        ],
+        "database": "student_assessment",
+        "table": [
+            "People_Addresses"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "People_Addresses",
+                    "table_comment": "",
+                    "column_names": [
+                        "person_address_id",
+                        "person_id",
+                        "address_id",
+                        "integer_from",
+                        "integer_to"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            122,
+                            363
+                        ],
+                        [
+                            151,
+                            131
+                        ],
+                        [
+                            88,
+                            55
+                        ],
+                        [
+                            "2017-05-01 17:32:26",
+                            "2010-11-26 05:21:12"
+                        ],
+                        [
+                            "2018-03-12 21:10:02",
+                            "2018-03-08 06:16:47"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Addresses",
+                    "table_comment": "",
+                    "column_names": [
+                        "address_id",
+                        "line_1",
+                        "line_2",
+                        "city",
+                        "zip_postcode",
+                        "state_province_county",
+                        "country"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            29,
+                            73
+                        ],
+                        [
+                            "242 Pacocha Streets East Isabellashire, ND 03506",
+                            "0177 Fisher Dam Berniershire, KS 00038-7574"
+                        ],
+                        [
+                            "Suite 903",
+                            "Apt. 435"
+                        ],
+                        [
+                            "Lake Kaley",
+                            "North Trystanborough"
+                        ],
+                        [
+                            "559",
+                            "536"
+                        ],
+                        [
+                            "NewMexico",
+                            "Texas"
+                        ],
+                        [
+                            "USA",
+                            "USA"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Candiinteger_Assessments",
+                    "table_comment": "",
+                    "column_names": [
+                        "candiinteger_id",
+                        "qualification",
+                        "assessment_integer",
+                        "asessment_outcome_code"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            131,
+                            151
+                        ],
+                        [
+                            "C",
+                            "C"
+                        ],
+                        [
+                            "2010-04-07 11:44:34",
+                            "2010-04-07 11:44:34"
+                        ],
+                        [
+                            "Pass",
+                            "Pass"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Candiintegers",
+                    "table_comment": "",
+                    "column_names": [
+                        "candiinteger_id",
+                        "candiinteger_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            161,
+                            171
+                        ],
+                        [
+                            "Tao",
+                            "Tao"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Courses",
+                    "table_comment": "",
+                    "column_names": [
+                        "course_id",
+                        "course_name",
+                        "course_description",
+                        "other_details"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "304",
+                            "304"
+                        ],
+                        [
+                            "French",
+                            "English"
+                        ],
+                        [
+                            "data structure",
+                            "Art history"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "People",
+                    "table_comment": "",
+                    "column_names": [
+                        "person_id",
+                        "first_name",
+                        "middle_name",
+                        "last_name",
+                        "cell_mobile_number",
+                        "email_address",
+                        "login_name",
+                        "password"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            111,
+                            121
+                        ],
+                        [
+                            "Hoyt",
+                            "Hoyt"
+                        ],
+                        [
+                            "Bell",
+                            "Hayley"
+                        ],
+                        [
+                            "Bednar",
+                            "Hartmann"
+                        ],
+                        [
+                            "1-372-548-7538x314",
+                            "(508)319-2970x043"
+                        ],
+                        [
+                            "celestine11@example.net",
+                            "celestine11@example.net"
+                        ],
+                        [
+                            "bkkv",
+                            "mkou"
+                        ],
+                        [
+                            "7dce9b688636ee212294c257dd2f6b85c7f65f2e",
+                            "c55795df86182959094b83e27900f7cf44ced570"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Student_Course_Attendance",
+                    "table_comment": "",
+                    "column_names": [
+                        "student_id",
+                        "course_id",
+                        "integer_of_attendance"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            121,
+                            111
+                        ],
+                        [
+                            301,
+                            303
+                        ],
+                        [
+                            "2012-04-09 11:44:34",
+                            "2014-01-09 11:44:34"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Students",
+                    "table_comment": "",
+                    "column_names": [
+                        "student_id",
+                        "student_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            151,
+                            161
+                        ],
+                        [
+                            "Barry",
+                            "Sarah"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Student_Course_Registrations",
+                    "table_comment": "",
+                    "column_names": [
+                        "student_id",
+                        "course_id",
+                        "registration_integer"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            121,
+                            151
+                        ],
+                        [
+                            303,
+                            303
+                        ],
+                        [
+                            "2008-11-08 10:35:13",
+                            "2008-11-04 10:35:13"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                0,
+                0,
+                1,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE _ = _ and _ < _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "Create a PLpgSQL function to remove rows from player matching Team = para_Team, School_ID = para_School_ID, and Player_ID = para_Player_ID, followed by updating all rows' Player columns to para_Player.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Team text, para_School_ID integer, para_Player_ID integer, para_Player text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"player\" WHERE \"Team\" = para_Team AND \"School_ID\" = para_School_ID AND \"Player_ID\" = para_Player_ID; IF FOUND THEN UPDATE \"player\" SET \"Player\" = para_Player; END IF; END; $$;",
+        "call": [
+            "call sp('Oakland Athletics', 2, 19, 'Ike Davis');",
+            "call sp('Chicago White Sox', 1, 8, 'David Cooper');",
+            "call sp('Minnesota Twins', 1, 2, 'Timothy Beckham');",
+            "call sp('Pittsburgh Pirates', 1, 11, 'Brett Lawrie');",
+            "call sp('San Francisco Giants', 4, 4, 'Ethan Martin');"
+        ],
+        "database": "school_player",
+        "table": [
+            "player"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "player",
+                    "table_comment": "",
+                    "column_names": [
+                        "Player_ID",
+                        "Player",
+                        "Team",
+                        "Age",
+                        "Position",
+                        "School_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "integer",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            1
+                        ],
+                        [
+                            "Buster Posey",
+                            "Jemile Weeks"
+                        ],
+                        [
+                            "Baltimore Orioles",
+                            "Chicago White Sox"
+                        ],
+                        [
+                            14,
+                            16
+                        ],
+                        [
+                            "Third baseman",
+                            "Right-handed pitcher"
+                        ],
+                        [
+                            4,
+                            1
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "school",
+                    "table_comment": "",
+                    "column_names": [
+                        "School_ID",
+                        "School",
+                        "Location",
+                        "Enrollment",
+                        "Founded",
+                        "Denomination",
+                        "Boys_or_Girls",
+                        "Day_or_Boarding",
+                        "Year_Entered_Competition",
+                        "School_Colors"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "real",
+                        "real",
+                        "text",
+                        "text",
+                        "text",
+                        "real",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            1
+                        ],
+                        [
+                            "St Aloysius' College",
+                            "Knox Grammar School"
+                        ],
+                        [
+                            "Milsons Point",
+                            "Hornsby"
+                        ],
+                        [
+                            1200.0,
+                            1200.0
+                        ],
+                        [
+                            1879.0,
+                            1890.0
+                        ],
+                        [
+                            "Anglican",
+                            "Anglican"
+                        ],
+                        [
+                            "Boys only to Yr 9 Co-ed Year 10 to 12",
+                            "Boys"
+                        ],
+                        [
+                            "Day",
+                            "Day & Boarding"
+                        ],
+                        [
+                            1929.0,
+                            1929.0
+                        ],
+                        [
+                            "Royal Blue and Gold",
+                            "Red & Blue"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "school_details",
+                    "table_comment": "",
+                    "column_names": [
+                        "School_ID",
+                        "Nickname",
+                        "Colors",
+                        "League",
+                        "Class",
+                        "Division"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            6,
+                            6
+                        ],
+                        [
+                            "Tigers",
+                            "Raiders"
+                        ],
+                        [
+                            "Blue and Yellow",
+                            "Blue and Gold"
+                        ],
+                        [
+                            "DSHA",
+                            "DSHA"
+                        ],
+                        [
+                            "Fight A",
+                            "Flight B"
+                        ],
+                        [
+                            "Division 3",
+                            "Division 2"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "school_performance",
+                    "table_comment": "",
+                    "column_names": [
+                        "School_ID",
+                        "School_Year",
+                        "Class_A",
+                        "Class_AA"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            2
+                        ],
+                        [
+                            "1987-88",
+                            "1990-91"
+                        ],
+                        [
+                            "Martin's Mill",
+                            "Martin's Mill"
+                        ],
+                        [
+                            "Wheeler",
+                            "Lytle"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                1,
+                1,
+                0,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ AND _ = _ AND _ = _; IF FOUND THEN UPDATE _ SET _ = _; END IF; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 1,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "create a stored procedure in PLpgSQL that adds a row to Products_in_Events table with values para_Event_ID for Event_ID and para_Product_in_Event_ID for Product_in_Event_ID if para_Event_ID is greater than 30.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Event_ID integer, para_Product_in_Event_ID integer) LANGUAGE plpgsql AS $$ BEGIN IF para_Event_ID > 30 THEN INSERT INTO \"Products_in_Events\" (\"Event_ID\", \"Product_in_Event_ID\") VALUES (para_Event_ID, para_Product_in_Event_ID); END IF; END; $$;",
+        "call": [
+            "call sp(10, 32);",
+            "call sp(10, 61);",
+            "call sp(14, 13);",
+            "call sp(7, 50);",
+            "call sp(4, 64);"
+        ],
+        "database": "solvency_ii",
+        "table": [
+            "Products_in_Events"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "Addresses",
+                    "table_comment": "",
+                    "column_names": [
+                        "Address_ID",
+                        "address_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            3
+                        ],
+                        [
+                            "8220 Concepcion Neck Suite 394 East Beauview, LA 19968-4755",
+                            "9694 Wava Roads Ricechester, DC 70816-9058"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Agreements",
+                    "table_comment": "",
+                    "column_names": [
+                        "Document_ID",
+                        "Event_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            15,
+                            11
+                        ],
+                        [
+                            15,
+                            8
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Assets",
+                    "table_comment": "",
+                    "column_names": [
+                        "Asset_ID",
+                        "Other_Details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            3
+                        ],
+                        [
+                            "Meeting Rooms",
+                            "Transportation Cars"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Assets_in_Events",
+                    "table_comment": "",
+                    "column_names": [
+                        "Asset_ID",
+                        "Event_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            2
+                        ],
+                        [
+                            5,
+                            9
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Channels",
+                    "table_comment": "",
+                    "column_names": [
+                        "Channel_ID",
+                        "Other_Details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            15,
+                            8
+                        ],
+                        [
+                            "348",
+                            "163"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Parties_in_Events",
+                    "table_comment": "",
+                    "column_names": [
+                        "Party_ID",
+                        "Event_ID",
+                        "Role_Code"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            9
+                        ],
+                        [
+                            4,
+                            7
+                        ],
+                        [
+                            "Participant",
+                            "Organizer"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Events",
+                    "table_comment": "",
+                    "column_names": [
+                        "Event_ID",
+                        "Address_ID",
+                        "Channel_ID",
+                        "Event_Type_Code",
+                        "Finance_ID",
+                        "Location_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            7,
+                            9
+                        ],
+                        [
+                            15,
+                            15
+                        ],
+                        [
+                            13,
+                            11
+                        ],
+                        [
+                            "Conference",
+                            "Trade Show"
+                        ],
+                        [
+                            2,
+                            2
+                        ],
+                        [
+                            5,
+                            8
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Finances",
+                    "table_comment": "",
+                    "column_names": [
+                        "Finance_ID",
+                        "Other_Details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            4
+                        ],
+                        [
+                            "Good",
+                            "Good"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Locations",
+                    "table_comment": "",
+                    "column_names": [
+                        "Location_ID",
+                        "Other_Details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            10,
+                            6
+                        ],
+                        [
+                            "White, Kassulke and Barrows",
+                            "Morar-Denesik"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Parties",
+                    "table_comment": "",
+                    "column_names": [
+                        "Party_ID",
+                        "Party_Details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            8
+                        ],
+                        [
+                            "European People's Party",
+                            "European People's Party"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Products_in_Events",
+                    "table_comment": "",
+                    "column_names": [
+                        "Product_in_Event_ID",
+                        "Event_ID",
+                        "Product_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            90,
+                            63
+                        ],
+                        [
+                            4,
+                            10
+                        ],
+                        [
+                            6,
+                            3
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Products",
+                    "table_comment": "",
+                    "column_names": [
+                        "Product_ID",
+                        "Product_Type_Code",
+                        "Product_Name",
+                        "Product_Price"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            34,
+                            26
+                        ],
+                        [
+                            "Electronics",
+                            "Electronics"
+                        ],
+                        [
+                            "Dinning",
+                            "Men suits"
+                        ],
+                        [
+                            502.15,
+                            970.77
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF _ > 30 THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+        "insert": 1,
+        "update": 0,
+        "delete": 0,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "create a procedure to discrease each Device_ID in device by para_Device_ID.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Device_ID integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"device\" SET \"Device_ID\" = \"Device_ID\" - para_Device_ID; END; $$;",
+        "call": [
+            "call sp(1);",
+            "call sp(3);",
+            "call sp(6);",
+            "call sp(5);",
+            "call sp(5);"
+        ],
+        "database": "device",
+        "table": [
+            "device"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "device",
+                    "table_comment": "",
+                    "column_names": [
+                        "Device_ID",
+                        "Device",
+                        "Carrier",
+                        "Package_Version",
+                        "Applications",
+                        "Software_Platform"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            6
+                        ],
+                        [
+                            "Xiaomi",
+                            "Galaxy"
+                        ],
+                        [
+                            "MTS Mobility",
+                            "Bell Mobility"
+                        ],
+                        [
+                            "5.0.0.742",
+                            "5.0.0.419"
+                        ],
+                        [
+                            "5.0.0.419",
+                            "5.0.0.419"
+                        ],
+                        [
+                            "Android",
+                            "Android"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "shop",
+                    "table_comment": "",
+                    "column_names": [
+                        "Shop_ID",
+                        "Shop_Name",
+                        "Location",
+                        "Open_integer",
+                        "Open_Year"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            11,
+                            8
+                        ],
+                        [
+                            "Dinas Device",
+                            "Naval's shop"
+                        ],
+                        [
+                            "Cymmer",
+                            "Gelli"
+                        ],
+                        [
+                            "8 November",
+                            "18 February"
+                        ],
+                        [
+                            2013,
+                            2009
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "stock",
+                    "table_comment": "",
+                    "column_names": [
+                        "Shop_ID",
+                        "Device_ID",
+                        "Quantity"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            11
+                        ],
+                        [
+                            4,
+                            4
+                        ],
+                        [
+                            200,
+                            134
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ - _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "create a stored procedure in PLpgSQL to modify screen_mode to para_screen_mode and Accreditation_type to para_Accreditation_type when integer exceeds para_integer in the phone table.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_screen_mode text, para_Accreditation_type text, para_integer text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"phone\" SET \"screen_mode\" = para_screen_mode, \"Accreditation_type\" = para_Accreditation_type WHERE \"integer\" > para_integer; END; $$;",
+        "call": [
+            "call sp('1', 'Provisional', 'Approved (valid until 14.09.13)');",
+            "call sp('3', 'Provisional', 'Approved (valid until 06.04.13)');",
+            "call sp('6', 'Full', 'Approved (valid until 03.05.13)');",
+            "call sp('4', 'Full', 'Approved (valid until 03.05.13)');",
+            "call sp('1', 'Full', 'Approved (valid until 06.04.13)');"
+        ],
+        "database": "phone_1",
+        "table": [
+            "phone"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "chip_model",
+                    "table_comment": "",
+                    "column_names": [
+                        "Model_name",
+                        "Launch_year",
+                        "RAM_MiB",
+                        "ROM_MiB",
+                        "Slots",
+                        "WiFi",
+                        "Bluetooth"
+                    ],
+                    "column_types": [
+                        "text",
+                        "real",
+                        "real",
+                        "real",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "X50 Standard",
+                            "X5 high end"
+                        ],
+                        [
+                            2004.0,
+                            2005.0
+                        ],
+                        [
+                            64.0,
+                            64.0
+                        ],
+                        [
+                            64.0,
+                            256.0
+                        ],
+                        [
+                            "1SD",
+                            "1CFII,1SD"
+                        ],
+                        [
+                            "No",
+                            "No"
+                        ],
+                        [
+                            "Yes",
+                            "No"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "phone",
+                    "table_comment": "",
+                    "column_names": [
+                        "Company_name",
+                        "Hardware_Model_name",
+                        "Accreditation_type",
+                        "Accreditation_level",
+                        "integer",
+                        "chip_model",
+                        "screen_mode"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "LG Electronics",
+                            "HTC Corporation"
+                        ],
+                        [
+                            "GT-I9300",
+                            "Lumia 920, Lumia 820, Lumia 620"
+                        ],
+                        [
+                            "Full",
+                            "Provisional"
+                        ],
+                        [
+                            "joyn",
+                            "joyn"
+                        ],
+                        [
+                            "Approved (awarded 23.10.12)",
+                            "Approved (valid until 06.04.13)"
+                        ],
+                        [
+                            "X51v",
+                            "X3i"
+                        ],
+                        [
+                            "3",
+                            "1"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "screen_mode",
+                    "table_comment": "",
+                    "column_names": [
+                        "Graphics_mode",
+                        "Char_cells",
+                        "Pixels",
+                        "Hardware_colours",
+                        "used_kb",
+                        "map",
+                        "Type"
+                    ],
+                    "column_types": [
+                        "real",
+                        "text",
+                        "text",
+                        "real",
+                        "real",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            0.0,
+                            6.0
+                        ],
+                        [
+                            "20 × 32",
+                            "20 × 32"
+                        ],
+                        [
+                            "160 × 256",
+                            "320 × 256"
+                        ],
+                        [
+                            2.0,
+                            4.0
+                        ],
+                        [
+                            10.0,
+                            10.0
+                        ],
+                        [
+                            "6000–7FFF",
+                            "3000–7FFF"
+                        ],
+                        [
+                            "Graphics",
+                            "text"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                0,
+                1,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _, _ = _ WHERE _ > _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    }
+]

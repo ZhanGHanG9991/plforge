@@ -1,0 +1,4181 @@
+[
+    {
+        "text": "construct a PLpgSQL stored procedure to erase records in Procedures where Name equals or is greater than para_Name and Code is para_Code.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Name text, para_Code integer) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"Procedures\" WHERE \"Name\" >= para_Name AND \"Code\" = para_Code; END; $$;",
+        "call": [
+            "call sp('Reversible Pancreomyoplasty', 6);",
+            "call sp('Complete Walletectomy', 2);",
+            "call sp('Reverse Rhinopodoplasty', 5);",
+            "call sp('Reverse Rhinopodoplasty', 1);",
+            "call sp('Follicular Demiectomy', 5);"
+        ],
+        "database": "hospital_1",
+        "table": [
+            "Procedures"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "Affiliated_With",
+                    "table_comment": "",
+                    "column_names": [
+                        "Physician",
+                        "Department",
+                        "PrimaryAffiliation"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            1
+                        ],
+                        [
+                            2,
+                            1
+                        ],
+                        [
+                            "1",
+                            "1"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Appointment",
+                    "table_comment": "",
+                    "column_names": [
+                        "AppointmentID",
+                        "Patient",
+                        "PrepNurse",
+                        "Physician",
+                        "Start",
+                        "End",
+                        "ExaminationRoom"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            93216548,
+                            26548913
+                        ],
+                        [
+                            100000002,
+                            100000004
+                        ],
+                        [
+                            101,
+                            102
+                        ],
+                        [
+                            4,
+                            2
+                        ],
+                        [
+                            "2008-04-25 10:00",
+                            "2008-04-26 12:00"
+                        ],
+                        [
+                            "2008-04-26 13:00",
+                            "2008-04-21 11:00"
+                        ],
+                        [
+                            "A",
+                            "A"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Block",
+                    "table_comment": "",
+                    "column_names": [
+                        "BlockFloor",
+                        "BlockCode"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            4
+                        ],
+                        [
+                            2,
+                            3
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "On_Call",
+                    "table_comment": "",
+                    "column_names": [
+                        "Nurse",
+                        "BlockFloor",
+                        "BlockCode",
+                        "OnCallStart",
+                        "OnCallEnd"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            103,
+                            101
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            "2008-11-04 11:00",
+                            "2008-11-04 19:00"
+                        ],
+                        [
+                            "2008-11-04 19:00",
+                            "2008-11-04 19:00"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Department",
+                    "table_comment": "",
+                    "column_names": [
+                        "DepartmentID",
+                        "Name",
+                        "Head"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            1
+                        ],
+                        [
+                            "General Medicine",
+                            "General Medicine"
+                        ],
+                        [
+                            9,
+                            9
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Medication",
+                    "table_comment": "",
+                    "column_names": [
+                        "Code",
+                        "Name",
+                        "Brand",
+                        "Description"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            2
+                        ],
+                        [
+                            "Awakin",
+                            "Thesisin"
+                        ],
+                        [
+                            "Bar Laboratories",
+                            "Foo Labs"
+                        ],
+                        [
+                            "N/A",
+                            "N/A"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Nurse",
+                    "table_comment": "",
+                    "column_names": [
+                        "EmployeeID",
+                        "Name",
+                        "Position",
+                        "Registered",
+                        "SSN"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            102,
+                            101
+                        ],
+                        [
+                            "Laverne Roberts",
+                            "Laverne Roberts"
+                        ],
+                        [
+                            "Head Nurse",
+                            "Nurse"
+                        ],
+                        [
+                            "1",
+                            "0"
+                        ],
+                        [
+                            111111110,
+                            222222220
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Patient",
+                    "table_comment": "",
+                    "column_names": [
+                        "SSN",
+                        "Name",
+                        "Address",
+                        "Phone",
+                        "InsuranceID",
+                        "PCP"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            100000002,
+                            100000003
+                        ],
+                        [
+                            "Grace Ritchie",
+                            "Grace Ritchie"
+                        ],
+                        [
+                            "1100 Foobaz Avenue",
+                            "1100 Foobaz Avenue"
+                        ],
+                        [
+                            "555-1204",
+                            "555-0256"
+                        ],
+                        [
+                            65465421,
+                            68476213
+                        ],
+                        [
+                            1,
+                            2
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Physician",
+                    "table_comment": "",
+                    "column_names": [
+                        "EmployeeID",
+                        "Name",
+                        "Position",
+                        "SSN"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            4
+                        ],
+                        [
+                            "John Dorian",
+                            "Keith Dudemeister"
+                        ],
+                        [
+                            "Head Chief of Medicine",
+                            "Surgical Attending Physician"
+                        ],
+                        [
+                            333333333,
+                            111111111
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Prescribes",
+                    "table_comment": "",
+                    "column_names": [
+                        "Physician",
+                        "Patient",
+                        "Medication",
+                        "integer",
+                        "Appointment",
+                        "Dose"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            9,
+                            1
+                        ],
+                        [
+                            100000004,
+                            100000004
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            "2008-04-24 10:47",
+                            "2008-04-24 10:47"
+                        ],
+                        [
+                            13216584,
+                            13216584
+                        ],
+                        [
+                            "5",
+                            "10"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Room",
+                    "table_comment": "",
+                    "column_names": [
+                        "RoomNumber",
+                        "RoomType",
+                        "BlockFloor",
+                        "BlockCode",
+                        "Unavailable"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            213,
+                            103
+                        ],
+                        [
+                            "Single",
+                            "Single"
+                        ],
+                        [
+                            2,
+                            2
+                        ],
+                        [
+                            3,
+                            1
+                        ],
+                        [
+                            "0",
+                            "1"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Procedures",
+                    "table_comment": "",
+                    "column_names": [
+                        "Code",
+                        "Name",
+                        "Cost"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            7
+                        ],
+                        [
+                            "Complete Walletectomy",
+                            "Reversible Pancreomyoplasty"
+                        ],
+                        [
+                            4899.0,
+                            4899.0
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Stay",
+                    "table_comment": "",
+                    "column_names": [
+                        "StayID",
+                        "Patient",
+                        "Room",
+                        "StayStart",
+                        "StayEnd"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3216,
+                            3217
+                        ],
+                        [
+                            100000001,
+                            100000001
+                        ],
+                        [
+                            112,
+                            112
+                        ],
+                        [
+                            "2008-05-01",
+                            "2008-05-02"
+                        ],
+                        [
+                            "2008-05-03",
+                            "2008-05-04"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Trained_In",
+                    "table_comment": "",
+                    "column_names": [
+                        "Physician",
+                        "Treatment",
+                        "Certificationinteger",
+                        "CertificationExpires"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            6,
+                            3
+                        ],
+                        [
+                            5,
+                            6
+                        ],
+                        [
+                            "2008-01-01",
+                            "2007-01-01"
+                        ],
+                        [
+                            "2008-12-31",
+                            "2008-12-31"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Undergoes",
+                    "table_comment": "",
+                    "column_names": [
+                        "Patient",
+                        "Procedures",
+                        "Stay",
+                        "integerUndergoes",
+                        "Physician",
+                        "AssistingNurse"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            100000001,
+                            100000004
+                        ],
+                        [
+                            5,
+                            7
+                        ],
+                        [
+                            3215,
+                            3217
+                        ],
+                        [
+                            "2008-05-13",
+                            "2008-05-10"
+                        ],
+                        [
+                            3,
+                            7
+                        ],
+                        [
+                            101,
+                            101
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ >= _ AND _ = _; END; $$;",
+        "insert": 0,
+        "update": 0,
+        "delete": 1,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "create a stored procedure in PLpgSQL to multiply Event_ID by para_Event_ID in news_report table if para_Event_ID is less than 1000.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Event_ID integer) LANGUAGE plpgsql AS $$ BEGIN IF para_Event_ID < 1000 THEN UPDATE \"news_report\" SET \"Event_ID\" = \"Event_ID\" * para_Event_ID; END IF; END; $$;",
+        "call": [
+            "call sp(4);",
+            "call sp(5);",
+            "call sp(1);",
+            "call sp(3);",
+            "call sp(3);"
+        ],
+        "database": "news_report",
+        "table": [
+            "news_report"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "event",
+                    "table_comment": "",
+                    "column_names": [
+                        "Event_ID",
+                        "integer",
+                        "Venue",
+                        "Name",
+                        "Event_Attendance"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            3
+                        ],
+                        [
+                            "20 June 2018",
+                            "11 October 2007"
+                        ],
+                        [
+                            "Hispano",
+                            "Motagua"
+                        ],
+                        [
+                            "Olympia Games Openning",
+                            "Government Hearing"
+                        ],
+                        [
+                            2356,
+                            2356
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "journalist",
+                    "table_comment": "",
+                    "column_names": [
+                        "journalist_ID",
+                        "Name",
+                        "Nationality",
+                        "Age",
+                        "Years_working"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            6
+                        ],
+                        [
+                            "Tony Waddington",
+                            "Tony Waddington"
+                        ],
+                        [
+                            "England",
+                            "England"
+                        ],
+                        [
+                            "33",
+                            "33"
+                        ],
+                        [
+                            7,
+                            8
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "news_report",
+                    "table_comment": "",
+                    "column_names": [
+                        "journalist_ID",
+                        "Event_ID",
+                        "Work_Type"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            11,
+                            4
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            "Host",
+                            "Music"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            1
+        ],
+        "column_labels": [
+            [
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN IF _ < 1000 THEN UPDATE _ SET _ = _ * _; END IF; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "create a PLpgSQL procedure for removing entries from perpetrator where Year matches para_Year and Injured corresponds to para_Injured.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Year real, para_Injured integer) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"perpetrator\" WHERE \"Year\" = para_Year AND \"Injured\" = para_Injured; END; $$;",
+        "call": [
+            "call sp(1995.0, 80);",
+            "call sp(1994.0, 80);",
+            "call sp(1950.0, 37);",
+            "call sp(1950.0, 37);",
+            "call sp(1950.0, 3);"
+        ],
+        "database": "perpetrator",
+        "table": [
+            "perpetrator"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "people",
+                    "table_comment": "",
+                    "column_names": [
+                        "People_ID",
+                        "Name",
+                        "Height",
+                        "Weight",
+                        "Home Town"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "real",
+                        "real",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            2
+                        ],
+                        [
+                            "Tyrone Brayan",
+                            "Tyrone Brayan"
+                        ],
+                        [
+                            6.1,
+                            6.1
+                        ],
+                        [
+                            170.0,
+                            185.0
+                        ],
+                        [
+                            "Altoona, PA",
+                            "Placentia, CA"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "perpetrator",
+                    "table_comment": "",
+                    "column_names": [
+                        "Perpetrator_ID",
+                        "People_ID",
+                        "integer",
+                        "Year",
+                        "Location",
+                        "Country",
+                        "Killed",
+                        "Injured"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "real",
+                        "text",
+                        "text",
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            2
+                        ],
+                        [
+                            4,
+                            4
+                        ],
+                        [
+                            "11.18 Nov. 18",
+                            "09.20 Sep. 20"
+                        ],
+                        [
+                            1950.0,
+                            1950.0
+                        ],
+                        [
+                            "Zhaodong",
+                            "Nainital"
+                        ],
+                        [
+                            "China",
+                            "India"
+                        ],
+                        [
+                            23,
+                            23
+                        ],
+                        [
+                            80,
+                            37
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ AND _ = _; END; $$;",
+        "insert": 0,
+        "update": 0,
+        "delete": 1,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "create a stored procedure in PLpgSQL to add Race_ID by para_Race_ID in race table if para_Race_ID is greater than 500.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Race_ID integer) LANGUAGE plpgsql AS $$ BEGIN IF para_Race_ID > 500 THEN UPDATE \"race\" SET \"Race_ID\" = \"Race_ID\" + para_Race_ID; END IF; END; $$;",
+        "call": [
+            "call sp(3);",
+            "call sp(3);",
+            "call sp(1);",
+            "call sp(7);",
+            "call sp(1);"
+        ],
+        "database": "race_track",
+        "table": [
+            "race"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "race",
+                    "table_comment": "",
+                    "column_names": [
+                        "Race_ID",
+                        "Name",
+                        "Class",
+                        "integer",
+                        "Track_ID"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            7
+                        ],
+                        [
+                            "Lime Rock GT Classic 250",
+                            "Bosch Engineering 250 at VIR"
+                        ],
+                        [
+                            "GT",
+                            "DP/GT"
+                        ],
+                        [
+                            "April 27",
+                            "March 29"
+                        ],
+                        [
+                            "4",
+                            "4"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "track",
+                    "table_comment": "",
+                    "column_names": [
+                        "Track_ID",
+                        "Name",
+                        "Location",
+                        "Seating",
+                        "Year_Opened"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "real",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            1
+                        ],
+                        [
+                            "Daytona International Speedway",
+                            "Chicagoland Speedway"
+                        ],
+                        [
+                            "Darlington, SC",
+                            "Daytona Beach, FL"
+                        ],
+                        [
+                            137243.0,
+                            137243.0
+                        ],
+                        [
+                            2001.0,
+                            1950.0
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN IF _ > 500 THEN UPDATE _ SET _ = _ + _; END IF; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "create a procedure to increase each skill_id in Skills by para_skill_id - 100.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_skill_id integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"Skills\" SET \"skill_id\" = \"skill_id\" + para_skill_id - 100; END; $$;",
+        "call": [
+            "call sp(2);",
+            "call sp(1);",
+            "call sp(3);",
+            "call sp(3);",
+            "call sp(3);"
+        ],
+        "database": "assets_maintenance",
+        "table": [
+            "Skills"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "Asset_Parts",
+                    "table_comment": "",
+                    "column_names": [
+                        "asset_id",
+                        "part_id"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            14,
+                            10
+                        ],
+                        [
+                            3,
+                            1
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Assets",
+                    "table_comment": "",
+                    "column_names": [
+                        "asset_id",
+                        "maintenance_contract_id",
+                        "supplier_company_id",
+                        "asset_details",
+                        "asset_make",
+                        "asset_model",
+                        "asset_acquired_integer",
+                        "asset_disposed_integer",
+                        "other_asset_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            14,
+                            8
+                        ],
+                        [
+                            10,
+                            2
+                        ],
+                        [
+                            2,
+                            8
+                        ],
+                        [
+                            "machine3",
+                            "machine4"
+                        ],
+                        [
+                            "RU",
+                            "FR"
+                        ],
+                        [
+                            "11 wi",
+                            "24 ak"
+                        ],
+                        [
+                            "2017-06-12 17:37:19",
+                            "2017-09-19 16:15:45"
+                        ],
+                        [
+                            "2018-02-28 18:14:13",
+                            "2018-03-16 05:46:55"
+                        ],
+                        [
+                            "Bad condition",
+                            "Bad condition"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Engineer_Skills",
+                    "table_comment": "",
+                    "column_names": [
+                        "engineer_id",
+                        "skill_id"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            15,
+                            3
+                        ],
+                        [
+                            3,
+                            1
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Engineer_Visits",
+                    "table_comment": "",
+                    "column_names": [
+                        "engineer_visit_id",
+                        "contact_staff_id",
+                        "engineer_id",
+                        "fault_log_entry_id",
+                        "fault_status",
+                        "visit_start_text",
+                        "visit_end_text",
+                        "other_visit_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            14,
+                            11
+                        ],
+                        [
+                            7,
+                            14
+                        ],
+                        [
+                            6,
+                            15
+                        ],
+                        [
+                            13,
+                            3
+                        ],
+                        [
+                            "Return",
+                            "Return"
+                        ],
+                        [
+                            "2006-03-31 20:03:10",
+                            "1996-11-07 05:31:35"
+                        ],
+                        [
+                            "2000-01-27 09:33:10",
+                            "2008-03-24 22:18:47"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Fault_Log",
+                    "table_comment": "",
+                    "column_names": [
+                        "fault_log_entry_id",
+                        "asset_id",
+                        "recorded_by_staff_id",
+                        "fault_log_entry_text",
+                        "fault_description",
+                        "other_fault_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            6,
+                            3
+                        ],
+                        [
+                            9,
+                            3
+                        ],
+                        [
+                            10,
+                            9
+                        ],
+                        [
+                            "2018-02-28 20:15:25",
+                            "2018-03-05 09:44:08"
+                        ],
+                        [
+                            "system error",
+                            "failed parts"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Parts",
+                    "table_comment": "",
+                    "column_names": [
+                        "part_id",
+                        "part_name",
+                        "chargeable_yn",
+                        "chargeable_amount",
+                        "other_part_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            2
+                        ],
+                        [
+                            "middle",
+                            "middle"
+                        ],
+                        [
+                            "0",
+                            "0"
+                        ],
+                        [
+                            "4",
+                            "9"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Fault_Log_Parts",
+                    "table_comment": "",
+                    "column_names": [
+                        "fault_log_entry_id",
+                        "part_fault_id",
+                        "fault_status"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            11
+                        ],
+                        [
+                            1,
+                            4
+                        ],
+                        [
+                            "Waiting",
+                            "Reported"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Maintenance_Contracts",
+                    "table_comment": "",
+                    "column_names": [
+                        "maintenance_contract_id",
+                        "maintenance_contract_company_id",
+                        "contract_start_integer",
+                        "contract_end_integer",
+                        "other_contract_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            1
+                        ],
+                        [
+                            9,
+                            10
+                        ],
+                        [
+                            "2017-12-06 20:09:39",
+                            "2017-07-23 05:07:37"
+                        ],
+                        [
+                            "2018-03-16 21:21:50",
+                            "2018-03-05 21:24:36"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Maintenance_Engineers",
+                    "table_comment": "",
+                    "column_names": [
+                        "engineer_id",
+                        "company_id",
+                        "first_name",
+                        "last_name",
+                        "other_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            10,
+                            13
+                        ],
+                        [
+                            2,
+                            4
+                        ],
+                        [
+                            "Josie",
+                            "Nellie"
+                        ],
+                        [
+                            "Hauck",
+                            "Adams"
+                        ],
+                        [
+                            "Skilled",
+                            "Skilled"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Part_Faults",
+                    "table_comment": "",
+                    "column_names": [
+                        "part_fault_id",
+                        "part_id",
+                        "fault_short_name",
+                        "fault_description",
+                        "other_fault_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            6
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            "MW",
+                            "TW"
+                        ],
+                        [
+                            "Medium Scale Wrong",
+                            "Medium Scale Wrong"
+                        ],
+                        [
+                            NaN,
+                            NaN
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Skills_Required_To_Fix",
+                    "table_comment": "",
+                    "column_names": [
+                        "part_fault_id",
+                        "skill_id"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            15,
+                            5
+                        ],
+                        [
+                            3,
+                            3
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Skills",
+                    "table_comment": "",
+                    "column_names": [
+                        "skill_id",
+                        "skill_code",
+                        "skill_description"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            1
+                        ],
+                        [
+                            "MECH",
+                            "TV"
+                        ],
+                        [
+                            "Mechanical",
+                            "TV, Video"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Staff",
+                    "table_comment": "",
+                    "column_names": [
+                        "staff_id",
+                        "staff_name",
+                        "gender",
+                        "other_staff_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            7,
+                            11
+                        ],
+                        [
+                            "Helena",
+                            "Berneice"
+                        ],
+                        [
+                            "1",
+                            "0"
+                        ],
+                        [
+                            "Manager",
+                            "Woker"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Third_Party_Companies",
+                    "table_comment": "",
+                    "column_names": [
+                        "company_id",
+                        "company_type",
+                        "company_name",
+                        "company_address",
+                        "other_company_details"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            14
+                        ],
+                        [
+                            "Maintenance Contractor",
+                            "Maintenance Contractor"
+                        ],
+                        [
+                            "Dicki, Erdman and Kris",
+                            "Dooley and Sons"
+                        ],
+                        [
+                            "066 Bechtelar Ridge",
+                            "84631 Rosenbaum Well Suite 727"
+                        ],
+                        [
+                            "Uganda",
+                            "Western Sahara"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ + _ - 100; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL to delete records from MediaType where MediaTypeId equals para_MediaTypeId and update Name to para_Name afterwards.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_MediaTypeId integer, para_Name text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"MediaType\" WHERE \"MediaTypeId\" = para_MediaTypeId; IF FOUND THEN UPDATE \"MediaType\" SET \"Name\" = para_Name; END IF; END; $$;",
+        "call": [
+            "call sp(2, 'MPEG audio file');",
+            "call sp(3, 'Protected MPEG-4 video file');",
+            "call sp(1, 'Protected AAC audio file');",
+            "call sp(2, 'AAC audio file');",
+            "call sp(3, 'Protected AAC audio file');"
+        ],
+        "database": "chinook_1",
+        "table": [
+            "MediaType"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "Invoice",
+                    "table_comment": "",
+                    "column_names": [
+                        "InvoiceId",
+                        "CustomerId",
+                        "Invoiceinteger",
+                        "BillingAddress",
+                        "BillingCity",
+                        "BillingState",
+                        "BillingCountry",
+                        "BillingPostalCode",
+                        "Total"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            2
+                        ],
+                        [
+                            17,
+                            38
+                        ],
+                        [
+                            "2009-03-09 00:00:00",
+                            "2009-01-02 00:00:00"
+                        ],
+                        [
+                            "Barbarossastraße 19",
+                            "1 Infinite Loop"
+                        ],
+                        [
+                            "Boston",
+                            "Edmonton"
+                        ],
+                        [
+                            "RJ",
+                            "AZ"
+                        ],
+                        [
+                            "Germany",
+                            "Germany"
+                        ],
+                        [
+                            "60316",
+                            "EH4 1HH"
+                        ],
+                        [
+                            1.98,
+                            8.91
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Album",
+                    "table_comment": "",
+                    "column_names": [
+                        "AlbumId",
+                        "Title",
+                        "ArtistId"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            12
+                        ],
+                        [
+                            "Out Of Exile",
+                            "Chemical Wedding"
+                        ],
+                        [
+                            2,
+                            11
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Artist",
+                    "table_comment": "",
+                    "column_names": [
+                        "ArtistId",
+                        "Name"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            4
+                        ],
+                        [
+                            "Caetano Veloso",
+                            "Alanis Morissette"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Customer",
+                    "table_comment": "",
+                    "column_names": [
+                        "CustomerId",
+                        "FirstName",
+                        "LastName",
+                        "Company",
+                        "Address",
+                        "City",
+                        "State",
+                        "Country",
+                        "PostalCode",
+                        "Phone",
+                        "Fax",
+                        "Email",
+                        "SupportRepId"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            9,
+                            11
+                        ],
+                        [
+                            "Frank",
+                            "Roberto"
+                        ],
+                        [
+                            "Smith",
+                            "Holý"
+                        ],
+                        [
+                            "Apple Inc.",
+                            "Google Inc."
+                        ],
+                        [
+                            "8210 111 ST NW",
+                            "Grétrystraat 63"
+                        ],
+                        [
+                            "São Paulo",
+                            "São Paulo"
+                        ],
+                        [
+                            "RJ",
+                            "WA"
+                        ],
+                        [
+                            "Canada",
+                            "Brazil"
+                        ],
+                        [
+                            "98052-8300",
+                            "70174"
+                        ],
+                        [
+                            "+55 (61) 3363-5547",
+                            "+49 0711 2842222"
+                        ],
+                        [
+                            "+55 (12) 3923-5566",
+                            "+1 (650) 253-0000"
+                        ],
+                        [
+                            "dmiller@comcast.com",
+                            "astrid.gruber@apple.at"
+                        ],
+                        [
+                            5,
+                            4
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Employee",
+                    "table_comment": "",
+                    "column_names": [
+                        "EmployeeId",
+                        "LastName",
+                        "FirstName",
+                        "Title",
+                        "ReportsTo",
+                        "Birthinteger",
+                        "Hireinteger",
+                        "Address",
+                        "City",
+                        "State",
+                        "Country",
+                        "PostalCode",
+                        "Phone",
+                        "Fax",
+                        "Email"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            2
+                        ],
+                        [
+                            "Peacock",
+                            "King"
+                        ],
+                        [
+                            "Steve",
+                            "Andrew"
+                        ],
+                        [
+                            "IT Manager",
+                            "IT Staff"
+                        ],
+                        [
+                            6,
+                            6
+                        ],
+                        [
+                            "1947-09-19 00:00:00",
+                            "1947-09-19 00:00:00"
+                        ],
+                        [
+                            "2004-03-04 00:00:00",
+                            "2003-10-17 00:00:00"
+                        ],
+                        [
+                            "7727B 41 Ave",
+                            "11120 Jasper Ave NW"
+                        ],
+                        [
+                            "Edmonton",
+                            "Lethbridge"
+                        ],
+                        [
+                            "AB",
+                            "AB"
+                        ],
+                        [
+                            "Canada",
+                            "Canada"
+                        ],
+                        [
+                            "T3B 0C5",
+                            "T2P 5M5"
+                        ],
+                        [
+                            "+1 (403) 246-9887",
+                            "+1 (403) 456-9986"
+                        ],
+                        [
+                            "+1 (403) 246-9899",
+                            "+1 (403) 263-4289"
+                        ],
+                        [
+                            "steve@chinookcorp.com",
+                            "margaret@chinookcorp.com"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "InvoiceLine",
+                    "table_comment": "",
+                    "column_names": [
+                        "InvoiceLineId",
+                        "InvoiceId",
+                        "TrackId",
+                        "UnitPrice",
+                        "Quantity"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "real",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            6,
+                            12
+                        ],
+                        [
+                            4,
+                            2
+                        ],
+                        [
+                            16,
+                            60
+                        ],
+                        [
+                            0.99,
+                            0.99
+                        ],
+                        [
+                            1,
+                            1
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Genre",
+                    "table_comment": "",
+                    "column_names": [
+                        "GenreId",
+                        "Name"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            16,
+                            1
+                        ],
+                        [
+                            "Pop",
+                            "Rock"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "PlaylistTrack",
+                    "table_comment": "",
+                    "column_names": [
+                        "PlaylistId",
+                        "TrackId"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            17
+                        ],
+                        [
+                            6,
+                            1
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "MediaType",
+                    "table_comment": "",
+                    "column_names": [
+                        "MediaTypeId",
+                        "Name"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            5
+                        ],
+                        [
+                            "AAC audio file",
+                            "AAC audio file"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Playlist",
+                    "table_comment": "",
+                    "column_names": [
+                        "PlaylistId",
+                        "Name"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            2,
+                            10
+                        ],
+                        [
+                            "Classical 101 - The Basics",
+                            "Music Videos"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Track",
+                    "table_comment": "",
+                    "column_names": [
+                        "TrackId",
+                        "Name",
+                        "AlbumId",
+                        "MediaTypeId",
+                        "GenreId",
+                        "Composer",
+                        "Milliseconds",
+                        "Bytes",
+                        "UnitPrice"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text",
+                        "integer",
+                        "integer",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            9,
+                            14
+                        ],
+                        [
+                            "Overdose",
+                            "Restless and Wild"
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            2,
+                            1
+                        ],
+                        [
+                            1,
+                            1
+                        ],
+                        [
+                            "Deaffy & R.A. Smith-Diesel",
+                            "Angus Young, Malcolm Young, Brian Johnson"
+                        ],
+                        [
+                            342562,
+                            215196
+                        ],
+                        [
+                            10617116,
+                            8611245
+                        ],
+                        [
+                            0.99,
+                            0.99
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                1,
+                1
+            ],
+            [
+                0,
+                1
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _; IF FOUND THEN UPDATE _ SET _ = _; END IF; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 1,
+        "if": 1,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL to delete records from Document_Sections where section_code equals para_section_code and document_code equals para_document_code and section_sequence equals para_section_sequence and section_id equals para_section_id.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_section_code text, para_document_code text, para_section_sequence integer, para_section_id integer) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"Document_Sections\" WHERE \"section_code\" = para_section_code AND \"document_code\" = para_document_code AND \"section_sequence\" = para_section_sequence AND \"section_id\" = para_section_id; END; $$;",
+        "call": [
+            "call sp('58', '930', 2170, 38);",
+            "call sp('14', '566', 6016, 21);",
+            "call sp('70', '566', 4510, 12);",
+            "call sp('60', '989', 2354, 27);",
+            "call sp('34', '714', 4433, 40);"
+        ],
+        "database": "document_management",
+        "table": [
+            "Document_Sections"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "Document_Functional_Areas",
+                    "table_comment": "",
+                    "column_names": [
+                        "document_code",
+                        "functional_area_code"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "930",
+                            "961"
+                        ],
+                        [
+                            "8",
+                            "8"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Document_Sections",
+                    "table_comment": "",
+                    "column_names": [
+                        "section_id",
+                        "document_code",
+                        "section_sequence",
+                        "section_code",
+                        "section_title"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "integer",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            95,
+                            95
+                        ],
+                        [
+                            "706",
+                            "989"
+                        ],
+                        [
+                            6016,
+                            2170
+                        ],
+                        [
+                            "90",
+                            "16"
+                        ],
+                        [
+                            "before",
+                            "after"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Document_Sections_Images",
+                    "table_comment": "",
+                    "column_names": [
+                        "section_id",
+                        "image_id"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            93,
+                            54
+                        ],
+                        [
+                            12,
+                            8
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Images",
+                    "table_comment": "",
+                    "column_names": [
+                        "image_id",
+                        "image_alt_text",
+                        "image_name",
+                        "image_url"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            5
+                        ],
+                        [
+                            "Filomena",
+                            "Marianna"
+                        ],
+                        [
+                            "chapter3",
+                            "top1"
+                        ],
+                        [
+                            "http://sauer.com/1.jpg",
+                            "http://haleychamplin.net/1.jpg"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Document_Structures",
+                    "table_comment": "",
+                    "column_names": [
+                        "document_structure_code",
+                        "parent_document_structure_code",
+                        "document_structure_description"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "5",
+                            "6"
+                        ],
+                        [
+                            "1",
+                            "1"
+                        ],
+                        [
+                            "Main section",
+                            "Bib"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Documents",
+                    "table_comment": "",
+                    "column_names": [
+                        "document_code",
+                        "document_structure_code",
+                        "document_type_code",
+                        "access_count",
+                        "document_name"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text",
+                        "text",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "961",
+                            "217"
+                        ],
+                        [
+                            "8",
+                            "9"
+                        ],
+                        [
+                            "Book",
+                            "Book"
+                        ],
+                        [
+                            2294,
+                            2045
+                        ],
+                        [
+                            "How to cook pasta",
+                            "Fall Sails"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Functional_Areas",
+                    "table_comment": "",
+                    "column_names": [
+                        "functional_area_code",
+                        "parent_functional_area_code",
+                        "functional_area_description"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "1",
+                            "9"
+                        ],
+                        [
+                            "8",
+                            "8"
+                        ],
+                        [
+                            "Acknowledgement",
+                            "Signature"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Roles",
+                    "table_comment": "",
+                    "column_names": [
+                        "role_code",
+                        "role_description"
+                    ],
+                    "column_types": [
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            "DBA",
+                            "PROJ-MGR"
+                        ],
+                        [
+                            "Database Administrator",
+                            "Database Administrator"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "Users",
+                    "table_comment": "",
+                    "column_names": [
+                        "user_id",
+                        "role_code",
+                        "user_name",
+                        "user_login",
+                        "password"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            5,
+                            1
+                        ],
+                        [
+                            "PROJ-MGR",
+                            "PROJ-MGR"
+                        ],
+                        [
+                            "amelie53",
+                            "jacklyn.schmitt"
+                        ],
+                        [
+                            "1",
+                            "1"
+                        ],
+                        [
+                            "20241478f890508ac47870cfba472e1db04a71ca",
+                            "90db8f51449e6c39e2a01f0b649d5a92fe76bbbb"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                1,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                0
+            ],
+            [
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ AND _ = _ AND _ = _ AND _ = _; END; $$;",
+        "insert": 0,
+        "update": 0,
+        "delete": 1,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL, in the member table, update the Age column value to para_Age for the rows whose Level_of_membership value is para_Level_of_membership.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Age integer, para_Level_of_membership integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"member\" SET \"Age\" = para_Age WHERE \"Level_of_membership\" = para_Level_of_membership; END; $$;",
+        "call": [
+            "call sp(67, 1);",
+            "call sp(45, 4);",
+            "call sp(33, 22);",
+            "call sp(33, 3);",
+            "call sp(45, 4);"
+        ],
+        "database": "coffee_shop",
+        "table": [
+            "member"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "happy_hour",
+                    "table_comment": "",
+                    "column_names": [
+                        "HH_ID",
+                        "Shop_ID",
+                        "Month",
+                        "Num_of_shaff_in_charge"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            3
+                        ],
+                        [
+                            5,
+                            3
+                        ],
+                        [
+                            "June",
+                            "July"
+                        ],
+                        [
+                            3,
+                            5
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "happy_hour_member",
+                    "table_comment": "",
+                    "column_names": [
+                        "HH_ID",
+                        "Member_ID",
+                        "Total_amount"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            8,
+                            7
+                        ],
+                        [
+                            9,
+                            9
+                        ],
+                        [
+                            4.9,
+                            20.9
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "member",
+                    "table_comment": "",
+                    "column_names": [
+                        "Member_ID",
+                        "Name",
+                        "Membership_card",
+                        "Age",
+                        "Time_of_purchase",
+                        "Level_of_membership",
+                        "Address"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            7,
+                            7
+                        ],
+                        [
+                            "Cobb, Sedrick",
+                            "Webb, Daniel"
+                        ],
+                        [
+                            "Black",
+                            "Black"
+                        ],
+                        [
+                            33,
+                            42
+                        ],
+                        [
+                            24,
+                            24
+                        ],
+                        [
+                            4,
+                            6
+                        ],
+                        [
+                            "Cheshire",
+                            "Hartford"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "shop",
+                    "table_comment": "",
+                    "column_names": [
+                        "Shop_ID",
+                        "Address",
+                        "Num_of_staff",
+                        "Score",
+                        "Open_Year"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "real",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            9,
+                            7
+                        ],
+                        [
+                            "324 E. 11th Street",
+                            "1100 Main Street"
+                        ],
+                        [
+                            "16",
+                            "42"
+                        ],
+                        [
+                            36.0,
+                            30.0
+                        ],
+                        [
+                            "2011",
+                            "2010"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            0,
+            1,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                1,
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE _ = _; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL that updates integer to para_integer for rows in debate and inserts a new record with Venue set to para_Venue.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_integer text, para_Venue text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"debate\" SET \"integer\" = para_integer; INSERT INTO \"debate\" (\"Venue\") VALUES (para_Venue); END; $$;",
+        "call": [
+            "call sp('August 3, 2015', 'Doha , Qatar');",
+            "call sp('January 12, 2017', 'Manama , Bahrain');",
+            "call sp('October 21, 2011', 'Dubai , UAE');",
+            "call sp('October 21, 2011', 'Manama , Bahrain');",
+            "call sp('December 17, 2014', 'Doha , Qatar');"
+        ],
+        "database": "debate",
+        "table": [
+            "debate"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "debate",
+                    "table_comment": "",
+                    "column_names": [
+                        "Debate_ID",
+                        "integer",
+                        "Venue",
+                        "Num_of_Audience"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            4,
+                            5
+                        ],
+                        [
+                            "January 21, 2017",
+                            "October 21, 2011"
+                        ],
+                        [
+                            "Manama , Bahrain",
+                            "Dubai , UAE"
+                        ],
+                        [
+                            159,
+                            90
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "debate_people",
+                    "table_comment": "",
+                    "column_names": [
+                        "Debate_ID",
+                        "Affirmative",
+                        "Negative",
+                        "If_Affirmative_Win"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "integer",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            5
+                        ],
+                        [
+                            5,
+                            4
+                        ],
+                        [
+                            7,
+                            8
+                        ],
+                        [
+                            "F",
+                            "F"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "people",
+                    "table_comment": "",
+                    "column_names": [
+                        "People_ID",
+                        "District",
+                        "Name",
+                        "Party",
+                        "Age"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "text",
+                        "text",
+                        "integer"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            2
+                        ],
+                        [
+                            "New York 9",
+                            "New York 2"
+                        ],
+                        [
+                            "George Briggs",
+                            "James Humphrey"
+                        ],
+                        [
+                            "Republican",
+                            "Democratic"
+                        ],
+                        [
+                            43,
+                            43
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            1,
+            0,
+            0
+        ],
+        "column_labels": [
+            [
+                0,
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _; INSERT INTO _ (_) VALUES (_); END; $$;",
+        "insert": 1,
+        "update": 1,
+        "delete": 0,
+        "if": 0,
+        "loop": 0
+    },
+    {
+        "text": "write a stored procedure in PLpgSQL to delete records from people where Birth_Place equals para_Birth_Place and update Birth_integer to para_Birth_integer afterwards.",
+        "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Birth_Place text, para_Birth_integer text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"people\" WHERE \"Birth_Place\" = para_Birth_Place; IF FOUND THEN UPDATE \"people\" SET \"Birth_integer\" = para_Birth_integer; END IF; END; $$;",
+        "call": [
+            "call sp('Minnetonka, Minnesota', 'January 1, 1992');",
+            "call sp('Glenview, Illinois', 'March 30, 1976');",
+            "call sp('Nashua, New Hampshire', 'March 30, 1976');",
+            "call sp('Minnetonka, Minnesota', 'December 5, 1991');",
+            "call sp('Anchorage, Alaska', 'March 30, 1976');"
+        ],
+        "database": "body_builder",
+        "table": [
+            "people"
+        ],
+        "schema": {
+            "schema_items": [
+                {
+                    "table_name": "body_builder",
+                    "table_comment": "",
+                    "column_names": [
+                        "Body_Builder_ID",
+                        "People_ID",
+                        "Snatch",
+                        "Clean_Jerk",
+                        "Total"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "integer",
+                        "real",
+                        "real",
+                        "real"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            3,
+                            3
+                        ],
+                        [
+                            5,
+                            6
+                        ],
+                        [
+                            137.5,
+                            137.5
+                        ],
+                        [
+                            175.0,
+                            175.0
+                        ],
+                        [
+                            317.5,
+                            292.5
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "table_name": "people",
+                    "table_comment": "",
+                    "column_names": [
+                        "People_ID",
+                        "Name",
+                        "Height",
+                        "Weight",
+                        "Birth_integer",
+                        "Birth_Place"
+                    ],
+                    "column_types": [
+                        "integer",
+                        "text",
+                        "real",
+                        "real",
+                        "text",
+                        "text"
+                    ],
+                    "column_comments": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "column_contents": [
+                        [
+                            1,
+                            6
+                        ],
+                        [
+                            "Al Montoya",
+                            "Cam Fowler"
+                        ],
+                        [
+                            195.0,
+                            196.0
+                        ],
+                        [
+                            102.0,
+                            80.0
+                        ],
+                        [
+                            "March 30, 1976",
+                            "March 30, 1976"
+                        ],
+                        [
+                            "Minnetonka, Minnesota",
+                            "Minnetonka, Minnesota"
+                        ]
+                    ],
+                    "pk_indicators": [
+                        1,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "foreign_keys": []
+        },
+        "evidence": "",
+        "table_labels": [
+            0,
+            1
+        ],
+        "column_labels": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
+            ]
+        ],
+        "matched_contents": {},
+        "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _; IF FOUND THEN UPDATE _ SET _ = _; END IF; END; $$;",
+        "insert": 0,
+        "update": 1,
+        "delete": 1,
+        "if": 1,
+        "loop": 0
+    }
+]
