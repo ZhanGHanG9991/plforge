@@ -1,7 +1,9 @@
 import argparse
-from utils.db_utils import check_plsql_executability, compare_plsql, get_db_schema_sequence
+from utils.oracle_db_utils import check_plsql_executability, compare_plsql, is_exact_match
+from utils.db_utils import get_db_schema_sequence
 from plsql_skeleton_similarity import get_plsql_skeleton_similarity
 import os
+import pickle
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -10,6 +12,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 import json
 import nltk
 import time
+from datetime import datetime
 import re
 import random
 import numpy as np
@@ -43,6 +46,13 @@ def parse_option():
     parser.add_argument('--new_similarity', type = int)
     parser.add_argument('--similarity_w', type = float)
 
+    parser.add_argument('--test_question_skeletons_path', type = str)
+    parser.add_argument('--test_plsql_skeletons_path', type = str)
+    parser.add_argument('--plsql_skeleton_similarity_path', type = str)
+    
+    # 添加Oracle连接参数
+    parser.add_argument('--host', type = str, default = 'localhost')
+    parser.add_argument('--port', type = int, default = 1521)
 
     opt = parser.parse_args()
 
@@ -54,15 +64,18 @@ def prepare_cross_domain_input_seq(opt, eval_data, demonstration_set, similarity
     print(similarity[top_k_indices])
 
     input_seq = ""
+
+    if opt.cot == 1:
+        input_seq += (get_CoT(eval_data["text"]) + "\n")
+
     for idx in top_k_indices:
         demonstration_plsql = demonstration_set[idx]["plsql"]
         input_seq += demonstration_set[idx]["text"] + "\n" + demonstration_plsql + "\n\n"
 
     input_seq += eval_data["schema_sequence"] + "\n"
-    if opt.cot == 1:
-        input_seq += (get_CoT() + "\n")
+    
     if opt.skeleton == 1:
-        input_seq += ("Skeleton: " + eval_data["skeleton"] + "\n")
+        input_seq += ("Skeleton: " + eval_data["predict_skeleton"] + "\n")
     input_seq += (eval_data["text"] + "\n")
 
     return input_seq
@@ -155,12 +168,12 @@ def post_process(schema, plsql):
         token_list = re.findall(r'\w+|[^\w\s]', plsql)
         return token_list
 
-    # end with $$;
-    index = plsql.find("$$;")
+    # end with END;
+    index = plsql.find("END;")
     if index != -1:
-        plsql = plsql[:index + 3]
+        plsql = plsql[:index + 4]
     
-    # add "" for postgres
+    # add "" for oracle
     plsql_token_list = tokenize_plsql_statement(plsql)
     schema_token_list = tokenize_schema(schema)
 
@@ -192,39 +205,54 @@ def post_process(schema, plsql):
         if monitoring and meet_zuo_kuo:
             final_token_list[i] = final_token_list[i].replace("\"", "")
 
-    # avoid "$ $"
-    for i in range(len(final_token_list) - 1):
-        if final_token_list[i] == "$" and final_token_list[i+1] == "$":
-            final_token_list[i] = "$$"
-
-    final_token_list = [token for token in final_token_list if token != "$"]
-
-    # avoid "> =" and "< ="
-    for i in range(len(final_token_list) - 1):
+    # avoid "> =" and "< =" and "! =" and ": =" and "| |"
+    for i in range(len(final_token_list) - 2):
         if (final_token_list[i] == "=" or final_token_list[i] == "<" or final_token_list[i] == ">") and final_token_list[i+1] == "=":
             final_token_list[i] = final_token_list[i] + "="
             final_token_list[i+1] = ""
         elif final_token_list[i] == "<" and final_token_list[i+1] == ">":
             final_token_list[i] = final_token_list[i] + ">"
             final_token_list[i+1] = ""
+        elif final_token_list[i] == "!" and final_token_list[i+1] == "=":
+            final_token_list[i] = final_token_list[i] + "="
+            final_token_list[i+1] = ""
+        elif final_token_list[i] == ":" and final_token_list[i+1] == "=":
+            final_token_list[i] = final_token_list[i] + "="
+            final_token_list[i+1] = ""
+        elif final_token_list[i] == "|" and final_token_list[i+1] == "|":
+            final_token_list[i] = final_token_list[i] + "|"
+            final_token_list[i+1] = ""
+        elif final_token_list[i] == "'" and final_token_list[i+1] == "%" and final_token_list[i+2] == "'":
+            final_token_list[i] = final_token_list[i] + "%'"
+            final_token_list[i+1] = ""
+            final_token_list[i+2] = ""
 
     # avoid " " Something " "
     post_plsql = re.sub(r'" +"', '"', " ".join(final_token_list))
+
+    # 修正小数格式，例如 "0 . 5" -> "0.5"
+    post_plsql = re.sub(r'(\d+)\s*\.\s*(\d+)', r'\1.\2', post_plsql)
 
     # avoid " Something "
     post_plsql = re.sub(r'"\s*(.*?)\s*"', r'"\1"', post_plsql)
     
     return post_plsql
 
-def is_exact_match(plsql1, plsql2):
-    format_plsql1 = ''.join(plsql1.split())
-    format_plsql2 = ''.join(plsql2.split())
-    return format_plsql1 == format_plsql2
 
-def get_CoT():
-    return "Let's think step by step. 1. Begin with CREATE OR REPLACE PROCEDURE sp(); 2. Consider the parameter number and types; 3. Declare LANGUAGE plpgsql; 4. Use BEGIN and END; 5. Consider code logic, the given skeleton and whether to use IF or LOOP. Finally, output the PLpgSQL."
+def get_CoT(text):
+    if "oracle" in text.lower():
+        return "To generate the PL/SQL code for the procedure: Start with the procedure header using CREATE OR REPLACE PROCEDURE sp(); Specify the required parameters with correct Oracle types like VARCHAR2 or NUMBER. After the header, declare the procedure body with IS, and add any needed variable or cursor declarations. Declare local variables used within the procedure body, including appropriate types and optional default values. Begin the logic with a BEGIN block. Consider what control structures are needed—do you need a LOOP, IF statement, or a cursor with FETCH and WHERE CURRENT OF? Use proper OPEN, FETCH, and CLOSE for cursors, and IF...THEN for conditional logic. Finish with END;, ensuring the logic handles relevant conditions and updates data as expected."
+    return "To generate the PLpgSQL code for the procedure: Start with the procedure header using CREATE OR REPLACE PROCEDURE sp(); Specify the required parameters with correct PostgreSQL types like TEXT, INTEGER, or NUMERIC. After the header, declare the language using LANGUAGE plpgsql;. Then, declare the procedure body using a DECLARE block if needed, and add any variable or cursor declarations. Declare local variables used within the procedure body, including appropriate types and optional default values. Begin the logic with a BEGIN block. Consider what control structures are needed—do you need a LOOP, IF statement, or a cursor with FETCH and WHERE CURRENT OF? Use proper OPEN, FETCH, and CLOSE for cursors, and IF...THEN for conditional logic. Finish with END;, ensuring the logic handles relevant conditions and updates data as expected."
 
-def generate_skeletons(skeleton_predictor_path, plsql_texts):
+
+def generate_skeletons(skeleton_predictor_path, plsql_texts, cache_file):
+
+    # 检查缓存文件是否存在
+    if os.path.exists(cache_file):
+        print(f"Loading plsql skeletons from cache: {cache_file}")
+        with open(cache_file, 'rb') as f:
+            return pickle.load(f)
+
     # 确保模型和tokenizer已经加载
     model_dir = skeleton_predictor_path
     tokenizer = T5Tokenizer.from_pretrained(model_dir)
@@ -260,6 +288,13 @@ def generate_skeletons(skeleton_predictor_path, plsql_texts):
         skeleton = tokenizer.decode(output_ids[0], skip_special_tokens=True)
         skeletons.append(skeleton)
 
+    # 保存缓存
+    if cache_file:
+        print(f"Saving plsql skeletons to cache: {cache_file}")
+        os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+        with open(cache_file, 'wb') as f:
+            pickle.dump(skeletons, f)
+
     return skeletons
 
 def normalize_similarities(similarities):
@@ -271,6 +306,24 @@ def normalize_similarities(similarities):
 
     return normalized_similarities
 
+def get_question_skeletons(eval_set_questions, cache_file):
+    # 检查缓存文件是否存在
+    if os.path.exists(cache_file):
+        print(f"Loading question skeletons from cache: {cache_file}")
+        with open(cache_file, 'rb') as f:
+            return pickle.load(f)
+        
+    skeletons = [extract_skeleton(question) for question in eval_set_questions]
+
+    # 保存缓存
+    if cache_file:
+        print(f"Saving question skeletons to cache: {cache_file}")
+        os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+        with open(cache_file, 'wb') as f:
+            pickle.dump(skeletons, f)
+
+    return skeletons
+
 
 if __name__ == "__main__":
     set_seed(42)
@@ -280,9 +333,15 @@ if __name__ == "__main__":
     # load the evaluation set
     eval_set = json.load(open(opt.dataset_path))
     eval_set_questions = [data["text"] for data in eval_set]
-    eval_set_question_skeletons = [extract_skeleton(question) for question in eval_set_questions]
-    eval_set_plsql_skeletons = generate_skeletons(opt.skeleton_predictor_path, eval_set_questions)
-
+    eval_set_question_skeletons = get_question_skeletons(
+        eval_set_questions,
+        cache_file=opt.test_question_skeletons_path
+    )
+    eval_set_plsql_skeletons = generate_skeletons(
+        opt.skeleton_predictor_path,
+        eval_set_questions,
+        cache_file=opt.test_plsql_skeletons_path
+    )
     print("length of evaluation set:", len(eval_set))
 
      # load the demonstration pool
@@ -313,7 +372,10 @@ if __name__ == "__main__":
     question_skeleton_similarities = simsce_model.similarity(eval_set_question_skeletons, demonstration_set_question_skeletons)
 
     if opt.new_similarity == 1:
-        plsql_skeleton_similarities = get_plsql_skeleton_similarity(eval_set_plsql_skeletons, demonstration_set_plsql_skeletons)
+        plsql_skeleton_similarities = get_plsql_skeleton_similarity(
+            eval_set_plsql_skeletons, 
+            demonstration_set_plsql_skeletons,
+            opt.plsql_skeleton_similarity_path)
 
         normalized_question_skeleton_similarities = normalize_similarities(question_skeleton_similarities)
         normalized_plsql_skeleton_similarities = normalize_similarities(np.array(plsql_skeleton_similarities))
@@ -345,6 +407,13 @@ if __name__ == "__main__":
     no_error_cnt = 0
 
     for eval_data_idx, eval_data in tqdm(enumerate(eval_set)):
+
+        eval_data["predict_skeleton"] = eval_set_plsql_skeletons[eval_data_idx]
+
+        # print()
+        # print("{:>20}: {}".format("real skeleton", eval_data["skeleton"]))
+        # print("{:>20}: {}".format("predicted skeleton", eval_data["predict_skeleton"]))
+
         input_seq = prepare_cross_domain_input_seq(opt, eval_data, demonstration_set, similarities[eval_data_idx])
 
         if eval_data_idx < 2:
@@ -356,7 +425,7 @@ if __name__ == "__main__":
 
         final_generated_plsql = None
         for generated_plsql in generated_plsqls:
-            execution_error = check_plsql_executability(generated_plsql, eval_data["call"], eval_data["database"].lower())
+            execution_error = check_plsql_executability(generated_plsql, eval_data["call"], eval_data["database"].lower(), opt.host, opt.port)
             if execution_error is None: # the generated sql has no execution errors, we will return it as the final generated sql
                 final_generated_plsql = generated_plsql
                 no_error_cnt += 1
@@ -406,7 +475,7 @@ if __name__ == "__main__":
         if is_exact_match(eval_data["plsql"], predicted_plsql):
             exact_match_cnt += 1
 
-        if compare_plsql(eval_data["database"], eval_data["table"], eval_data["plsql"], predicted_plsql, eval_data["call"]):
+        if compare_plsql(eval_data["database"], eval_data["plsql"], predicted_plsql, eval_data["call"], True, opt.host, opt.port):
             accurate_plsql_cnt += 1
 
             accurate_insert_cnt += eval_data["insert"]

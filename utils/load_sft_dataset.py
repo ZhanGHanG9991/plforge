@@ -1,6 +1,8 @@
 import json
 import torch
 import gc
+import os
+import pickle
 
 from datasets import Dataset
 from torch.utils.data import Dataset
@@ -9,14 +11,18 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 from utils.db_utils import get_db_schema_sequence
 
 def prepare_text2plsql_prefix_sequence(data, cot, skeleton):
-    # schema、cot、skeleton、text
-    prefix_seq = data["schema_sequence"] + "\n"
+
+    prefix_seq = ""
+
     if cot == 1:
-        prefix_seq += (get_CoT() + "\n")
+        prefix_seq += (get_CoT(data["text"]) + "\n")
+    prefix_seq += data["schema_sequence"] + "\n"
     if skeleton == 1:
         prefix_seq += ("Skeleton: " + data["predict_skeleton"] + "\n")
     prefix_seq += (data["text"] + "\n")
-    
+
+    prefix_seq += "Output the PL/SQL procedure. Begin with CREATE OR REPLACE PROCEDURE sp();\n"
+
     return prefix_seq
 
 def prepare_inputs_and_labels(prefix_seq, target_seq, tokenizer, max_tokens):
@@ -41,7 +47,7 @@ def prepare_inputs_and_labels(prefix_seq, target_seq, tokenizer, max_tokens):
         labels = [-100] * len(prefix_ids) + target_ids
         # pre-truncate labels
         labels = labels[-max_tokens:]
-    
+
     return {
         "input_ids": torch.tensor(input_ids, dtype = torch.int64), 
         "attention_mask": torch.tensor(attention_mask, dtype = torch.int64), 
@@ -62,10 +68,19 @@ def prepare_inputs(prefix_seq, tokenizer, max_prefix_length):
         "attention_mask": torch.tensor(attention_mask, dtype = torch.int64)
     }
 
-def get_CoT():
-    return "Let's think step by step. 1. Begin with CREATE OR REPLACE PROCEDURE sp(); 2. Consider the parameter number and types; 3. Declare LANGUAGE plpgsql; 4. Use BEGIN and END; 5. Consider code logic, the given skeleton and whether to use IF or LOOP. Finally, output the PLpgSQL."
+def get_CoT(text):
+    if "oracle" in text.lower():
+        return "To generate the PL/SQL code for the procedure: Start with the procedure header using CREATE OR REPLACE PROCEDURE sp(); Specify the required parameters with correct Oracle types like VARCHAR2 or NUMBER. After the header, declare the procedure body with IS, and add any needed variable or cursor declarations. Declare local variables used within the procedure body, including appropriate types and optional default values. Begin the logic with a BEGIN block. Consider what control structures are needed—do you need a LOOP, IF statement, or a cursor with FETCH and WHERE CURRENT OF? Use proper OPEN, FETCH, and CLOSE for cursors, and IF...THEN for conditional logic. Finish with END;, ensuring the logic handles relevant conditions and updates data as expected."
+    return "To generate the PLpgSQL code for the procedure: Start with the procedure header using CREATE OR REPLACE PROCEDURE sp(); Specify the required parameters with correct PostgreSQL types like TEXT, INTEGER, or NUMERIC. After the header, declare the language using LANGUAGE plpgsql;. Then, declare the procedure body using a DECLARE block if needed, and add any variable or cursor declarations. Declare local variables used within the procedure body, including appropriate types and optional default values. Begin the logic with a BEGIN block. Consider what control structures are needed—do you need a LOOP, IF statement, or a cursor with FETCH and WHERE CURRENT OF? Use proper OPEN, FETCH, and CLOSE for cursors, and IF...THEN for conditional logic. Finish with END;, ensuring the logic handles relevant conditions and updates data as expected."
 
-def generate_skeletons(skeleton_predictor_path, plsql_texts):
+def generate_skeletons(skeleton_predictor_path, plsql_texts, cache_file):
+
+    # 检查缓存文件是否存在
+    if os.path.exists(cache_file):
+        print(f"Loading plsql skeletons from cache: {cache_file}")
+        with open(cache_file, 'rb') as f:
+            return pickle.load(f)
+
     # 确保模型和tokenizer已经加载
     model_dir = skeleton_predictor_path
     tokenizer = T5Tokenizer.from_pretrained(model_dir)
@@ -101,11 +116,18 @@ def generate_skeletons(skeleton_predictor_path, plsql_texts):
         skeleton = tokenizer.decode(output_ids[0], skip_special_tokens=True)
         skeletons.append(skeleton)
 
+    # 保存缓存
+    if cache_file:
+        print(f"Saving plsql skeletons to cache: {cache_file}")
+        os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+        with open(cache_file, 'wb') as f:
+            pickle.dump(skeletons, f)
+
     return skeletons
 
 
 class SFTPLSQLGenerationDataset(Dataset):
-    def __init__(self, text2plsql_data_dir, tokenizer, max_tokens, mode, table_num, column_num, sic_path, skeleton_predictor_path, is_filter_schema, cot, skeleton):
+    def __init__(self, text2plsql_data_dir, tokenizer, max_tokens, mode, table_num, column_num, sic_path, skeleton_predictor_path, is_filter_schema, cot, skeleton, test_plsql_skeletons_path=None):
         super().__init__()
         dataset = json.load(open(text2plsql_data_dir))
 
@@ -123,7 +145,7 @@ class SFTPLSQLGenerationDataset(Dataset):
                 torch.cuda.empty_cache()
             if skeleton == 1:
                 text_list = [data["text"] for data in dataset]
-                predict_skeletons = generate_skeletons(skeleton_predictor_path, text_list)
+                predict_skeletons = generate_skeletons(skeleton_predictor_path, text_list, test_plsql_skeletons_path)
                 for i, data in enumerate(dataset):
                     data["predict_skeleton"] = predict_skeletons[i]
 
