@@ -4,6 +4,14 @@
 
 The dataset is stored in JSON format, where each entry represents a text-to-PL/SQL task. Below is the structure and description of each key in the JSON data:
 
+### Text Variations
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `text` | `str` | `detailed_text`, as the input of model for the NL-to-PL/SQL task. |
+| `concise_text` | `str` | A natural, simplified version of the task description. |
+| `detailed_text` | `str` | A comprehensive, detailed version of the task description. |
+
 ### Core Fields
 
 | Field | Type | Description |
@@ -29,13 +37,6 @@ The dataset is stored in JSON format, where each entry represents a text-to-PL/S
 | `if` | `int` | Binary indicator (0/1) for conditional (IF) statements. |
 | `loop` | `int` | Binary indicator (0/1) for loop constructs. |
 | `declare` | `int` | Binary indicator (0/1) for variable declarations. |
-
-### Text Variations
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `concise_text` | `str` | A shortened, simplified version of the task description. |
-| `detailed_text` | `str` | A comprehensive, detailed version of the task description. |
 
 ## Environment Requirement
 
