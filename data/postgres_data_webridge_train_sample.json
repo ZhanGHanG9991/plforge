@@ -1,0 +1,3072 @@
+[
+  {
+    "text": "Design a PL/pgSQL stored procedure that executes the following operations: initially, delete entries from the \"artist\" table where \"Artist_ID\" is less than three times the provided para_Artist_ID and \"Age\" equals the given para_Age. After this, iterate over all records in the \"volume\" table using a cursor. For each record, update the \"Age\" of every artist in the \"artist\" table to be para_Age minus 2, and set the \"Song\" field in the \"volume\" table to the value specified by para_Song.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Artist_ID integer, para_Age integer, para_Song text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"volume\"; rec RECORD; BEGIN DELETE FROM \"artist\" WHERE \"Artist_ID\" < para_Artist_ID * 3 and \"Age\" = para_Age; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"artist\" SET \"Age\" = para_Age - 2; UPDATE \"volume\" SET \"Song\" = para_Song WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(2, 35, ' With or Without You ');",
+      "call sp(7, 35, ' Walk Like an Egyptian ');",
+      "call sp(5, 49, ' (I Just) Died in Your Arms ');",
+      "call sp(3, 22, ' Always ');",
+      "call sp(4, 35, ' Touch Me (I Want Your Body) ');"
+    ],
+    "database": "music_4",
+    "table": [
+      "artist",
+      "volume"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "artist",
+          "table_comment": "",
+          "column_names": [
+            "Artist_ID",
+            "Artist",
+            "Age",
+            "Famous_Title",
+            "Famous_Release_integer"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              5
+            ],
+            [
+              "Tangorodrim",
+              "Tangorodrim"
+            ],
+            [
+              35,
+              35
+            ],
+            [
+              "Bergen 1996",
+              "Antithesis of All Flesh"
+            ],
+            [
+              "January 21, 2008",
+              "January 21, 2008"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "music_festival",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "Music_Festival",
+            "integer_of_ceremony",
+            "Category",
+            "Volume",
+            "Result"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              5
+            ],
+            [
+              "36th Japan Academy Prize",
+              "40th Japan Academy Prize"
+            ],
+            [
+              "18 February 2011",
+              "18 February 2011"
+            ],
+            [
+              "Best Sound Song",
+              "Best Sound Song"
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              "Nominated",
+              "Nominated"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "volume",
+          "table_comment": "",
+          "column_names": [
+            "Volume_ID",
+            "Volume_Issue",
+            "Issue_integer",
+            "Weeks_on_Top",
+            "Song",
+            "Artist_ID"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              -128,
+              -128
+            ],
+            [
+              "46:5",
+              "46:6-8"
+            ],
+            [
+              "11 July - 18 July",
+              "28 February - 7 March"
+            ],
+            [
+              2.0,
+              1.0
+            ],
+            [
+              " The Way",
+              " Touch Me (I Want Your Body) "
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN DELETE FROM _ WHERE _ < _ * _ AND _ = _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ - _; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 3,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to manage artist and volume records. First, remove artists whose ID is less than three times a specified parameter and whose age matches a given value. Then, update all artists' ages to two years younger than a specified age and set all song titles to a specific name.",
+    "detailed_text": "Design a PL/pgSQL stored procedure that executes the following operations: initially, delete entries from the \"artist\" table where \"Artist_ID\" is less than three times the provided para_Artist_ID and \"Age\" equals the given para_Age. After this, iterate over all records in the \"volume\" table using a cursor. For each record, update the \"Age\" of every artist in the \"artist\" table to be para_Age minus 2, and set the \"Song\" field in the \"volume\" table to the value specified by para_Song."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that processes each entry in the Pets table. For each record, modify the PetType field by appending 'www' to the provided para_PetType value and set the pet_age to the input parameter para_pet_age. Subsequently, iterate through every record in the Student table, updating the Age field to para_Age and the Sex field to para_Sex, but only if the para_Age is less than 1000. Use cursors to navigate through and update the records in both tables.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_PetType text, para_pet_age integer, para_Age integer, para_Sex text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Pets\"; ref_2cursor CURSOR FOR SELECT * FROM \"Student\"; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Pets\" SET \"PetType\" = CONCAT(para_PetType, 'www'), \"pet_age\" = para_pet_age WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; OPEN ref_2cursor; LOOP FETCH ref_2cursor INTO rec; EXIT WHEN NOT FOUND; IF para_Age < 1000 THEN UPDATE \"Student\" SET \"Age\" = para_Age, \"Sex\" = para_Sex WHERE CURRENT OF ref_2cursor; END IF; END LOOP; CLOSE ref_2cursor; END; $$;",
+    "call": [
+      "call sp('cat', 1, 22, 'F');",
+      "call sp('cat', 2, 20, 'M');",
+      "call sp('cat', 2, 20, 'F');",
+      "call sp('dog', 3, 19, 'M');",
+      "call sp('dog', 3, 22, 'F');"
+    ],
+    "database": "pets_1",
+    "table": [
+      "Pets",
+      "Student"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Has_Pet",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "PetID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1002,
+              1002
+            ],
+            [
+              2003,
+              2002
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Pets",
+          "table_comment": "",
+          "column_names": [
+            "PetID",
+            "PetType",
+            "pet_age",
+            "weight"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2001,
+              2003
+            ],
+            [
+              "cat",
+              "dog"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              13.4,
+              9.3
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Student",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "LName",
+            "Fname",
+            "Age",
+            "Sex",
+            "Major",
+            "Advisor",
+            "city_code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1008,
+              1005
+            ],
+            [
+              "Thornton",
+              "Gompers"
+            ],
+            [
+              "Andy",
+              "Paul"
+            ],
+            [
+              19,
+              20
+            ],
+            [
+              "F",
+              "F"
+            ],
+            [
+              600,
+              600
+            ],
+            [
+              1121,
+              2192
+            ],
+            [
+              "BAL",
+              "LON"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = CONCAT(_, _), _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _ < _ THEN UPDATE _ SET _ = _, _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PLpgSQL procedure to update all pet records by appending 'www' to the specified pet type and setting their age to a given number. Next, examine every student record, updating their age and gender to specified values only if the age is less than 1000.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that processes each entry in the Pets table. For each record, modify the PetType field by appending 'www' to the provided para_PetType value and set the pet_age to the input parameter para_pet_age. Subsequently, iterate through every record in the Student table, updating the Age field to para_Age and the Sex field to para_Sex, but only if the para_Age is less than 1000. Use cursors to navigate through and update the records in both tables."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first updates the Students table by setting the permanent_address_id to the provided parameter where integer_left equals a specified parameter. Utilize a cursor to iterate through the Departments table where department_id is greater than the given parameter. For each department record, if the department_description is null, update it to the provided description parameter. After completing this process, remove entries from the Students table where current_address_id is less than the provided threshold parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_permanent_address_id integer, para_integer_left text, para_current_address_id integer, para_department_id integer, para_department_description text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Departments\" WHERE \"department_id\" > para_department_id; rec RECORD; BEGIN UPDATE \"Students\" SET \"permanent_address_id\" = para_permanent_address_id WHERE \"integer_left\" = para_integer_left; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"department_description\" IS NULL THEN UPDATE \"Departments\" SET \"department_description\" = para_department_description WHERE CURRENT OF ref_cursor; END IF; END LOOP; CLOSE ref_cursor; DELETE FROM \"Students\" WHERE \"current_address_id\" < para_current_address_id; END; $$;",
+    "call": [
+      "call sp(8, '2007-11-28 12:50:21', 7, 11, 'in');",
+      "call sp(5, '1990-09-01 05:03:27', 9, 14, 'nostrum');",
+      "call sp(11, '2017-07-09 21:38:43', 1, 3, 'nisi');",
+      "call sp(5, '1975-10-09 00:49:27', 15, 6, 'consequatur');",
+      "call sp(8, '1999-08-24 00:07:10', 9, 9, 'dolorem');"
+    ],
+    "database": "student_transcripts_tracking",
+    "table": [
+      "Students",
+      "Departments"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Semesters",
+          "table_comment": "",
+          "column_names": [
+            "semester_id",
+            "semester_name",
+            "semester_description",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              "spring 2012",
+              "summer 2010"
+            ],
+            [
+              "c",
+              "y"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Addresses",
+          "table_comment": "",
+          "column_names": [
+            "address_id",
+            "line_1",
+            "line_2",
+            "line_3",
+            "city",
+            "zip_postcode",
+            "state_province_county",
+            "country",
+            "other_address_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              3
+            ],
+            [
+              "16998 Mraz Lodge",
+              "67942 Carlotta Ferry Apt. 686"
+            ],
+            [
+              "Apt. 468",
+              "Suite 703"
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              "Goodwinhaven",
+              "Port Chelsea"
+            ],
+            [
+              "386",
+              "148"
+            ],
+            [
+              "Delaware",
+              "WestVirginia"
+            ],
+            [
+              "Samoa",
+              "Saudi Arabia"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Courses",
+          "table_comment": "",
+          "column_names": [
+            "course_id",
+            "course_name",
+            "course_description",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              9
+            ],
+            [
+              "oop",
+              "cal"
+            ],
+            [
+              "c",
+              "n"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Degree_Programs",
+          "table_comment": "",
+          "column_names": [
+            "degree_program_id",
+            "department_id",
+            "degree_summary_name",
+            "degree_summary_description",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              15,
+              6
+            ],
+            [
+              13,
+              13
+            ],
+            [
+              "Bachelor",
+              "Master"
+            ],
+            [
+              "quam",
+              "unde"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Departments",
+          "table_comment": "",
+          "column_names": [
+            "department_id",
+            "department_name",
+            "department_description",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              12
+            ],
+            [
+              "math",
+              "statistics"
+            ],
+            [
+              "consequatur",
+              "nihil"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Sections",
+          "table_comment": "",
+          "column_names": [
+            "section_id",
+            "course_id",
+            "section_name",
+            "section_description",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              15,
+              10
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              "k",
+              "l"
+            ],
+            [
+              "et",
+              "nesciunt"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Transcript_Contents",
+          "table_comment": "",
+          "column_names": [
+            "student_course_id",
+            "transcript_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              76,
+              28982908
+            ],
+            [
+              2,
+              12
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Student_Enrolment",
+          "table_comment": "",
+          "column_names": [
+            "student_enrolment_id",
+            "degree_program_id",
+            "semester_id",
+            "student_id",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              4
+            ],
+            [
+              2,
+              9
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Student_Enrolment_Courses",
+          "table_comment": "",
+          "column_names": [
+            "student_course_id",
+            "course_id",
+            "student_enrolment_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              96,
+              76
+            ],
+            [
+              13,
+              13
+            ],
+            [
+              6,
+              9
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Students",
+          "table_comment": "",
+          "column_names": [
+            "student_id",
+            "current_address_id",
+            "permanent_address_id",
+            "first_name",
+            "middle_name",
+            "last_name",
+            "cell_mobile_number",
+            "email_address",
+            "ssn",
+            "integer_first_registered",
+            "integer_left",
+            "other_student_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              9
+            ],
+            [
+              1,
+              12
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              "Reva",
+              "Helga"
+            ],
+            [
+              "Violet",
+              "Mossie"
+            ],
+            [
+              "Ward",
+              "Schuppe"
+            ],
+            [
+              "1-879-796-8987x164",
+              "877.549.9067x8723"
+            ],
+            [
+              "qo'kon@example.com",
+              "jillian26@example.net"
+            ],
+            [
+              "668",
+              "6274274"
+            ],
+            [
+              "1971-02-05 07:28:23",
+              "2005-12-15 08:42:10"
+            ],
+            [
+              "1971-05-17 19:28:49",
+              "1990-09-01 05:03:27"
+            ],
+            [
+              "autem",
+              "facilis"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Transcripts",
+          "table_comment": "",
+          "column_names": [
+            "transcript_id",
+            "transcript_integer",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              7
+            ],
+            [
+              "1985-08-21 09:32:39",
+              "1985-08-21 09:32:39"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN UPDATE _ SET _ = _ WHERE _ = _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ IS NULL THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; DELETE FROM _ WHERE _ < _; END; $$;",
+    "table_num": 2,
+    "parameter": 5,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to update student records, setting their permanent address to a specified ID if their integer left value matches a given parameter. Then, for departments with an ID greater than a specified value, check each one: if a description is missing, fill it in with a provided description. Finally, delete student records where their current address ID is below a certain threshold.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first updates the Students table by setting the permanent_address_id to the provided parameter where integer_left equals a specified parameter. Utilize a cursor to iterate through the Departments table where department_id is greater than the given parameter. For each department record, if the department_description is null, update it to the provided description parameter. After completing this process, remove entries from the Students table where current_address_id is less than the provided threshold parameter."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that employs a cursor to traverse through the user_profiles table. For each profile record, check if the partitionid matches the provided para_partitionid parameter. If a match is found, update the name field to the value of para_name. Once all records have been processed, if the update_count remains zero, meaning no records were modified, proceed to insert a new record into the tweets table with the values para_id and para_uid for the id and uid fields, respectively.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_partitionid integer, para_name text, para_id integer, para_uid integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"user_profiles\"; rec RECORD; update_count INTEGER := 0; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"partitionid\" = para_partitionid THEN UPDATE \"user_profiles\" SET \"name\" = para_name WHERE CURRENT OF ref_cursor; update_count := update_count + 1; END IF; END LOOP; CLOSE ref_cursor; IF update_count = 0 THEN INSERT INTO \"tweets\" (\"id\", \"uid\") VALUES (para_id, para_uid); END IF; END; $$;",
+    "call": [
+      "call sp(2, 'Mary', 9, 4);",
+      "call sp(2, 'Iron Man', 5, 1);",
+      "call sp(10, 'Mary', 8, 6);",
+      "call sp(1, 'Susan', 7, 4);",
+      "call sp(2, 'Iron Man', 7, 3);"
+    ],
+    "database": "twitter_1",
+    "table": [
+      "user_profiles",
+      "tweets"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "follows",
+          "table_comment": "",
+          "column_names": [
+            "f1",
+            "f2"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              3
+            ],
+            [
+              5,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "tweets",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "uid",
+            "text",
+            "createinteger"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              "I love my new boyfriend.",
+              "I had a pretty rough time during the last couple of weeks"
+            ],
+            [
+              "2018-03-12 02:30:30",
+              "2018-03-12 02:30:30"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "user_profiles",
+          "table_comment": "",
+          "column_names": [
+            "uid",
+            "name",
+            "email",
+            "partitionid",
+            "followers"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              7
+            ],
+            [
+              "Iron Man",
+              "Iron Man"
+            ],
+            [
+              "ts@richest.com",
+              "cd@superstar.com"
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              99999998,
+              100
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; _ _ := _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; _ := _ + _; END IF; END LOOP; CLOSE _; IF _ = _ THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+    "table_num": 2,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that scans through user profiles. If a profile's partition ID matches the given parameter, update its name with the specified value. After checking all profiles, if none were updated, add a new entry to the tweets database using the provided ID and user ID.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that employs a cursor to traverse through the user_profiles table. For each profile record, check if the partitionid matches the provided para_partitionid parameter. If a match is found, update the name field to the value of para_name. Once all records have been processed, if the update_count remains zero, meaning no records were modified, proceed to insert a new record into the tweets table with the values para_id and para_uid for the id and uid fields, respectively."
+  },
+  {
+    "text": "Create a PL/pgSQL stored procedure that processes records in the \"shop\" table, counting those where \"Number_products\" matches the input parameter `para_Number_products`. Maintain a count of these matches. If this count is odd, update all records in the \"shop\" table to set the \"District\" column to the value of `para_District`. If the count is even, delete records where \"Manager_name\" matches the `para_Manager_name` parameter. Regardless of the count, update the \"Location\" column for all records to the value specified by `para_Location`.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Number_products integer, para_District text, para_Manager_name text, para_Location text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"shop\"; rec RECORD; match_count INTEGER := 0; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"Number_products\" = para_Number_products THEN match_count := match_count + 1; END IF; END LOOP; CLOSE ref_cursor; IF MOD(match_count, 2) = 1 THEN UPDATE \"shop\" SET \"District\" = para_District; ELSE DELETE FROM \"shop\" WHERE \"Manager_name\" = para_Manager_name; END IF; UPDATE \"shop\" SET \"Location\" = para_Location; END; $$;",
+    "call": [
+      "call sp(15000, 'Jakobstads Centralplan', 'Ilkka Mäkelä', 'Valkeakoski');",
+      "call sp(3500, 'Wiklöf Holding Arena', 'Kai Nyyssönen', 'Espoo');",
+      "call sp(3500, 'Lahden Stadion', 'Ilkka Mäkelä', 'Mariehamn');",
+      "call sp(4780, 'Lahden Stadion', 'Job Dragtsma', 'Mariehamn');",
+      "call sp(6000, 'Jakobstads Centralplan', 'Ilkka Mäkelä', 'Mariehamn');"
+    ],
+    "database": "employee_hire_evaluation",
+    "table": [
+      "shop"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "employee",
+          "table_comment": "",
+          "column_names": [
+            "Employee_ID",
+            "Name",
+            "Age",
+            "City"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              4
+            ],
+            [
+              "Matt Stevens",
+              "Steve Borthwick"
+            ],
+            [
+              43,
+              29
+            ],
+            [
+              "Bath",
+              "Sale"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "evaluation",
+          "table_comment": "",
+          "column_names": [
+            "Employee_ID",
+            "Year_awarded",
+            "Bonus"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "1",
+              "2"
+            ],
+            [
+              "2011",
+              "2016"
+            ],
+            [
+              3000.0,
+              3200.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "hiring",
+          "table_comment": "",
+          "column_names": [
+            "Shop_ID",
+            "Employee_ID",
+            "Start_from",
+            "Is_full_time"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              5
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              "2009",
+              "2003"
+            ],
+            [
+              "F",
+              "T"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "shop",
+          "table_comment": "",
+          "column_names": [
+            "Shop_ID",
+            "Name",
+            "Location",
+            "District",
+            "Number_products",
+            "Manager_name"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              6
+            ],
+            [
+              "FC Lahti",
+              "HJK"
+            ],
+            [
+              "Mariehamn",
+              "Mariehamn"
+            ],
+            [
+              "Magnum Areena",
+              "Magnum Areena"
+            ],
+            [
+              4780,
+              4780
+            ],
+            [
+              "Antti Muurinen",
+              "Mika Laurikainen"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; _ _ := _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN _ := _ + _; END IF; END LOOP; CLOSE _; IF MOD(_, _) = _ THEN UPDATE _ SET _ = _; ELSE DELETE FROM _ WHERE _ = _; END IF; UPDATE _ SET _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to check shops having an exact number of products as specified. If the total count of such shops is odd, update their district to a given name. If even, remove entries managed by a specified manager. Finally, update the location of all shops to a new specified value.",
+    "detailed_text": "Create a PL/pgSQL stored procedure that processes records in the \"shop\" table, counting those where \"Number_products\" matches the input parameter `para_Number_products`. Maintain a count of these matches. If this count is odd, update all records in the \"shop\" table to set the \"District\" column to the value of `para_District`. If the count is even, delete records where \"Manager_name\" matches the `para_Manager_name` parameter. Regardless of the count, update the \"Location\" column for all records to the value specified by `para_Location`."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first goes through each entry in the Highschooler table using a cursor. For every entry found, modify the name field to the value given by para_name and the grade field to the value given by para_grade. After processing the Highschooler table, switch to the Friend table using a separate cursor. For each record in this table, if the value of para_student_id is below 1000, update the student_id and friend_id fields to the values specified by para_student_id and para_friend_id, respectively.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_name text, para_grade integer,para_student_id integer, para_friend_id integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Highschooler\"; ref_2cursor CURSOR FOR SELECT * FROM \"Friend\"; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Highschooler\" SET \"name\" = para_name, \"grade\" = para_grade WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; OPEN ref_2cursor; LOOP FETCH ref_2cursor INTO rec; EXIT WHEN NOT FOUND; IF para_student_id < 1000 THEN UPDATE \"Friend\" SET \"student_id\" = para_student_id, \"friend_id\" = para_friend_id WHERE CURRENT OF ref_2cursor; END IF; END LOOP; CLOSE ref_2cursor; END; $$;",
+    "call": [
+      "call sp('Alexis', 9, 1468, 1316);",
+      "call sp('Tiffany', 11, 1468, 1247);",
+      "call sp('Jessica', 12, 1782, 1304);",
+      "call sp('Austin', 10, 1689, 1934);",
+      "call sp('Gabriel', 10, 1247, 1782);"
+    ],
+    "database": "network_1",
+    "table": [
+      "Highschooler",
+      "Friend"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Friend",
+          "table_comment": "",
+          "column_names": [
+            "student_id",
+            "friend_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1689,
+              1911
+            ],
+            [
+              1247,
+              1689
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Highschooler",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "name",
+            "grade"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1911,
+              1934
+            ],
+            [
+              "Jordan",
+              "Kyle"
+            ],
+            [
+              12,
+              11
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Likes",
+          "table_comment": "",
+          "column_names": [
+            "student_id",
+            "liked_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1025,
+              1934
+            ],
+            [
+              1709,
+              1709
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _,_ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _, _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _ < _ THEN UPDATE _ SET _ = _, _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to review all high school students, updating their names and grades to specified values. Then, check all friendship records and, if the given student ID is less than 1000, update the involved student and friend identifiers accordingly.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first goes through each entry in the Highschooler table using a cursor. For every entry found, modify the name field to the value given by para_name and the grade field to the value given by para_grade. After processing the Highschooler table, switch to the Friend table using a separate cursor. For each record in this table, if the value of para_student_id is below 1000, update the student_id and friend_id fields to the values specified by para_student_id and para_friend_id, respectively."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that uses a cursor to fetch all records from the perpetrator table where the Killed attribute is greater than a specified parameter, para_Killed. For each fetched record, update the Year field by setting it to the result of multiplying the supplied para_Year parameter by five. After processing all records, check the people table: if there is no existing record with a Weight equal to para_Weight, insert a new record with this Weight value.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Killed integer, para_Year real, para_Weight real) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"perpetrator\" WHERE \"Killed\" > para_Killed; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"perpetrator\" SET \"Year\" = para_Year * 5 WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; IF NOT EXISTS (SELECT 1 FROM \"people\" WHERE \"Weight\" = para_Weight) THEN INSERT INTO \"people\" (\"Weight\") VALUES (para_Weight); END IF; END; $$;",
+    "call": [
+      "call sp(30, 1994.0, 215.0);",
+      "call sp(23, 1994.0, 170.0);",
+      "call sp(23, 1938.0, 200.0);",
+      "call sp(23, 1950.0, 215.0);",
+      "call sp(23, 1938.0, 160.0);"
+    ],
+    "database": "perpetrator",
+    "table": [
+      "perpetrator",
+      "people"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "people",
+          "table_comment": "",
+          "column_names": [
+            "People_ID",
+            "Name",
+            "Height",
+            "Weight",
+            "Home Town"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              8
+            ],
+            [
+              "Rob Cunningham",
+              "Jim Krivacs"
+            ],
+            [
+              6.6,
+              6.1
+            ],
+            [
+              200.0,
+              220.0
+            ],
+            [
+              "Los Angeles, CA",
+              "Baton Rouge, LA"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "perpetrator",
+          "table_comment": "",
+          "column_names": [
+            "Perpetrator_ID",
+            "People_ID",
+            "integer",
+            "Year",
+            "Location",
+            "Country",
+            "Killed",
+            "Injured"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "real",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              "11.18 Nov. 18",
+              "09.20 Sep. 20"
+            ],
+            [
+              1950.0,
+              1995.0
+            ],
+            [
+              "Beijing",
+              "Nainital"
+            ],
+            [
+              "China",
+              "China"
+            ],
+            [
+              22,
+              23
+            ],
+            [
+              3,
+              37
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ * _ WHERE CURRENT OF _; END LOOP; CLOSE _; IF NOT EXISTS (SELECT _ FROM _ WHERE _ = _) THEN INSERT INTO _ (_) VALUES (_); END IF; END; $$;",
+    "table_num": 2,
+    "parameter": 3,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to process entries in the perpetrator records where the number of kills is higher than the specified threshold. For each applicable record, update the year by multiplying a given year value by five. After processing, if no record in the people dataset has a matching specified weight, add a new entry with that weight.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that uses a cursor to fetch all records from the perpetrator table where the Killed attribute is greater than a specified parameter, para_Killed. For each fetched record, update the Year field by setting it to the result of multiplying the supplied para_Year parameter by five. After processing all records, check the people table: if there is no existing record with a Weight equal to para_Weight, insert a new record with this Weight value."
+  },
+  {
+    "text": "Develop a PLpgSQL procedure that first inserts a new record into the Customer_Addresses table, assigning para_address_type to the address_type column and para_integer_address_to to the integer_address_to column. If para_address_type exceeds the string 'intended_value', then proceed to modify the customer_id column in the Customer_Addresses table for all records where the address_type matches para_address_type, setting it to the given para_customer_id value.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_address_type text, para_integer_address_to text, para_customer_id integer) LANGUAGE plpgsql AS $$ BEGIN INSERT INTO \"Customer_Addresses\" (\"address_type\", \"integer_address_to\") VALUES (para_address_type, para_integer_address_to); IF para_address_type > 'intended_value' THEN UPDATE \"Customer_Addresses\" SET \"customer_id\"= para_customer_id WHERE \"address_type\" = para_address_type; END IF; END; $$;",
+    "call": [
+      "call sp('Billing', '1970-09-18 09:07:32', 2);",
+      "call sp('Residential', '1979-07-16 18:22:39', 4);",
+      "call sp('Residential', '1971-11-17 18:29:57', 6);",
+      "call sp('Residential', '1977-05-17 23:47:09', 11);",
+      "call sp('Billing', '1972-02-17 22:23:38', 14);"
+    ],
+    "database": "customers_and_addresses",
+    "table": [
+      "Customer_Addresses"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Order_Items",
+          "table_comment": "",
+          "column_names": [
+            "order_id",
+            "product_id",
+            "order_quantity"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              13,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              "956125",
+              "956125"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Addresses",
+          "table_comment": "",
+          "column_names": [
+            "address_id",
+            "address_content",
+            "city",
+            "zip_postcode",
+            "state_province_county",
+            "country",
+            "other_address_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              1
+            ],
+            [
+              "9443 Boyle Route Suite 857",
+              "1969 Jabari Port Suite 393"
+            ],
+            [
+              "Stantonville",
+              "South Meghanview"
+            ],
+            [
+              "416",
+              "767"
+            ],
+            [
+              "Arkansas",
+              "Florida"
+            ],
+            [
+              "USA",
+              "USA"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customer_Addresses",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "address_id",
+            "integer_address_from",
+            "address_type",
+            "integer_address_to"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              11,
+              12
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              "2013-01-29 23:14:00",
+              "2005-06-22 09:38:54"
+            ],
+            [
+              "Billing",
+              "Residential"
+            ],
+            [
+              "1990-06-29 13:39:18",
+              "1979-07-16 18:22:39"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customer_Contact_Channels",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "channel_code",
+            "active_from_integer",
+            "active_to_integer",
+            "contact_number"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              2
+            ],
+            [
+              "Email",
+              "Handheld"
+            ],
+            [
+              "2017-09-21 12:41:56",
+              "2017-09-08 14:00:01"
+            ],
+            [
+              "2018-03-02 17:44:49",
+              "2018-03-16 14:00:15"
+            ],
+            [
+              "542.983.0224",
+              "496-074-8589x5477"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customer_Orders",
+          "table_comment": "",
+          "column_names": [
+            "order_id",
+            "customer_id",
+            "order_status",
+            "order_integer",
+            "order_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              9,
+              3
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              "Cancelled",
+              "Delivered"
+            ],
+            [
+              "2018-03-04 07:16:22",
+              "2018-02-28 15:46:06"
+            ],
+            [
+              "Second time",
+              "Second time"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "payment_method",
+            "customer_name",
+            "integer_became_customer",
+            "other_customer_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              11,
+              7
+            ],
+            [
+              "Cash",
+              "Cheque"
+            ],
+            [
+              "Prof. Reyes Berge II",
+              "Devin Mills"
+            ],
+            [
+              "2018-02-24 00:20:18",
+              "2018-03-05 16:52:51"
+            ],
+            [
+              "VIP",
+              "VIP"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Products",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "product_details"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              3
+            ],
+            [
+              "Americano",
+              "Americano"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN INSERT INTO _ (_, _) VALUES (_, _); IF _ > _ THEN UPDATE _ SET _= _ WHERE _ = _; END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that adds a new entry to the addresses record with specified type and numeric address details. If the input type is greater than 'intended_value', update the customer reference for entries matching this type.",
+    "detailed_text": "Develop a PLpgSQL procedure that first inserts a new record into the Customer_Addresses table, assigning para_address_type to the address_type column and para_integer_address_to to the integer_address_to column. If para_address_type exceeds the string 'intended_value', then proceed to modify the customer_id column in the Customer_Addresses table for all records where the address_type matches para_address_type, setting it to the given para_customer_id value."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that initially updates the file_size column in the files table for records where the formats column meets or exceeds the value provided by the para_formats parameter. After this, employ a cursor to iterate through each record in the files table, setting the artist_name column to the value of para_artist_name for every record retrieved by the cursor.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_file_size text, para_formats text, para_artist_name text, para_f_id integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"files\"; rec RECORD; BEGIN UPDATE \"files\" SET \"file_size\" = \"file_size\" WHERE \"formats\" >= para_formats; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"files\" SET \"artist_name\" = para_artist_name WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp('4.58 MB', 'mp4', 'Topu', 3);",
+      "call sp('4.12 MB', 'mp4', 'Farida', 6);",
+      "call sp('3.78 MB', 'mp4', 'Topu', 4);",
+      "call sp('5.10 MB', 'mp4', 'Enrique', 4);",
+      "call sp('3.78 MB', 'mp4', 'Enrique', 2);"
+    ],
+    "database": "music_1",
+    "table": [
+      "files"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "artist",
+          "table_comment": "",
+          "column_names": [
+            "artist_name",
+            "country",
+            "gender",
+            "preferred_genre"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Farida",
+              "Michel"
+            ],
+            [
+              "USA",
+              "USA"
+            ],
+            [
+              "Male",
+              "Male"
+            ],
+            [
+              "nazrul",
+              "pop"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "files",
+          "table_comment": "",
+          "column_names": [
+            "f_id",
+            "artist_name",
+            "file_size",
+            "duration",
+            "formats"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              2
+            ],
+            [
+              "Topu",
+              "Farida"
+            ],
+            [
+              "3.69 MB",
+              "5.10 MB"
+            ],
+            [
+              "4:34",
+              "2:56"
+            ],
+            [
+              "mp4",
+              "mp4"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "genre",
+          "table_comment": "",
+          "column_names": [
+            "g_name",
+            "rating",
+            "most_popular_in"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "nazrul",
+              "tagore"
+            ],
+            [
+              "7",
+              "8"
+            ],
+            [
+              "Bangladesh",
+              "Bangladesh"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "song",
+          "table_comment": "",
+          "column_names": [
+            "song_name",
+            "artist_name",
+            "country",
+            "f_id",
+            "genre_is",
+            "rating",
+            "languages",
+            "releaseinteger",
+            "resolution"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Shukno patar nupur pae",
+              "Just beat it"
+            ],
+            [
+              "Shrikanta",
+              "Farida"
+            ],
+            [
+              "Bangladesh",
+              "UK"
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              "folk",
+              "modern"
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              "bangla",
+              "bangla"
+            ],
+            [
+              "17-MAR-2002",
+              "24-JAN-2007"
+            ],
+            [
+              320,
+              720
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN UPDATE _ SET _ = _ WHERE _ >= _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL that adjusts the file size for all entries in the file list where the file type matches or exceeds a given format tier. Then, loop through each entry in this list to update the creator field with a specified artist's name.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that initially updates the file_size column in the files table for records where the formats column meets or exceeds the value provided by the para_formats parameter. After this, employ a cursor to iterate through each record in the files table, setting the artist_name column to the value of para_artist_name for every record retrieved by the cursor."
+  },
+  {
+    "text": "Draft a PL/pgSQL stored procedure that deletes rows from the Settlements table where the Customer_Policy_ID matches the parameter value para_Customer_Policy_ID. If the parameter para_Payment_ID is greater than zero, initiate an outer loop over the Settlements table and an inner loop over the Payments table. Within the inner loop, if the Payment_ID from the Payments record is greater than the para_Amount_Settled, update the Claims table by modifying the Claim_ID column to be the current Claim_ID plus the para_Claim_ID parameter minus 68.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Customer_Policy_ID integer, para_Payment_ID integer, para_Amount_Settled integer, para_Claim_ID integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Settlements\"; ref_cursor2 CURSOR FOR SELECT * FROM \"Payments\"; rec RECORD; rec2 RECORD; BEGIN DELETE FROM \"Settlements\" WHERE \"Customer_Policy_ID\" = para_Customer_Policy_ID; IF para_Payment_ID > 0 THEN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; OPEN ref_cursor2; LOOP FETCH ref_cursor2 INTO rec2; EXIT WHEN NOT FOUND; IF rec2.\"Payment_ID\" > para_Amount_Settled THEN UPDATE \"Claims\" SET \"Claim_ID\" = \"Claim_ID\" + para_Claim_ID - 68; END IF; END LOOP; CLOSE ref_cursor2; END LOOP; CLOSE ref_cursor; END IF; END; $$;",
+    "call": [
+      "call sp(839, 559, 1353, 442);",
+      "call sp(590, 384, 1372, 761);",
+      "call sp(638, 498, 1637, 957);",
+      "call sp(448, 779, 1050, 486);",
+      "call sp(943, 983, 1639, 546);"
+    ],
+    "database": "insurance_policies",
+    "table": [
+      "Settlements",
+      "Payments",
+      "Claims"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Claims",
+          "table_comment": "",
+          "column_names": [
+            "Claim_ID",
+            "Policy_ID",
+            "integer_Claim_Made",
+            "integer_Claim_Settled",
+            "Amount_Claimed",
+            "Amount_Settled"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              761,
+              563
+            ],
+            [
+              141,
+              143
+            ],
+            [
+              "2016-08-12",
+              "2017-02-24"
+            ],
+            [
+              "2017-11-19",
+              "2017-12-20"
+            ],
+            [
+              70674,
+              35824
+            ],
+            [
+              1724,
+              1353
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customer_Policies",
+          "table_comment": "",
+          "column_names": [
+            "Policy_ID",
+            "Customer_ID",
+            "Policy_Type_Code",
+            "Start_integer",
+            "End_integer"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              744,
+              858
+            ],
+            [
+              1,
+              6
+            ],
+            [
+              "Property",
+              "Property"
+            ],
+            [
+              "2018-06-16",
+              "2016-07-17"
+            ],
+            [
+              "2018-01-25",
+              "2017-12-15"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "Customer_ID",
+            "Customer_Details"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              "Mr. Edwardo Blanda I",
+              "Mrs. Hanna Willms"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Payments",
+          "table_comment": "",
+          "column_names": [
+            "Payment_ID",
+            "Settlement_ID",
+            "Payment_Method_Code",
+            "integer_Payment_Made",
+            "Amount_Payment"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              912,
+              912
+            ],
+            [
+              516,
+              476
+            ],
+            [
+              "MasterCard",
+              "MasterCard"
+            ],
+            [
+              "2017-05-28",
+              "2018-02-24"
+            ],
+            [
+              235893,
+              172309
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Settlements",
+          "table_comment": "",
+          "column_names": [
+            "Settlement_ID",
+            "Claim_ID",
+            "integer_Claim_Made",
+            "integer_Claim_Settled",
+            "Amount_Claimed",
+            "Amount_Settled",
+            "Customer_Policy_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              564,
+              897
+            ],
+            [
+              486,
+              563
+            ],
+            [
+              "2017-05-19",
+              "2018-11-10"
+            ],
+            [
+              "2017-11-04",
+              "2018-02-04"
+            ],
+            [
+              62680,
+              16603
+            ],
+            [
+              1737,
+              1516
+            ],
+            [
+              564,
+              359
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; _ _; BEGIN DELETE FROM _ WHERE _ = _; IF _ > _ THEN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ > _ THEN UPDATE _ SET _ = _ + _ - _; END IF; END LOOP; CLOSE _; END LOOP; CLOSE _; END IF; END; $$;",
+    "table_num": 3,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL to remove entries from the Settlements where a policy ID matches the given parameter. If the payment ID parameter exceeds zero, initiate a process where for each settlement record, every payment record is checked. If any payment's ID is more than the specified settlement amount, adjust the claim records by increasing their ID by a calculated amount.",
+    "detailed_text": "Draft a PL/pgSQL stored procedure that deletes rows from the Settlements table where the Customer_Policy_ID matches the parameter value para_Customer_Policy_ID. If the parameter para_Payment_ID is greater than zero, initiate an outer loop over the Settlements table and an inner loop over the Payments table. Within the inner loop, if the Payment_ID from the Payments record is greater than the para_Amount_Settled, update the Claims table by modifying the Claim_ID column to be the current Claim_ID plus the para_Claim_ID parameter minus 68."
+  }
+]

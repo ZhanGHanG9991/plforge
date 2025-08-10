@@ -1,0 +1,3152 @@
+[
+  {
+    "text": "Develop a PLpgSQL stored procedure that first deletes records from the \"event\" table where \"Stadium_ID\" is less than 80% or more than 120% of the parameter \"para_Stadium_ID\". Next, insert a new row into the \"event\" table with \"Stadium_ID\" set to \"para_Stadium_ID\", \"ID\" set to \"para_ID\", and \"Name\" determined by appending '_even' to \"para_Name\" if \"para_Stadium_ID\" is even, or '_odd' if odd. Lastly, update the \"Year\" column to \"para_Year\" for records where \"Stadium_ID\" matches \"para_Stadium_ID\".",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Stadium_ID integer, para_ID integer, para_Name text, para_Year text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"event\" WHERE \"Stadium_ID\" < (para_Stadium_ID * 0.8) OR \"Stadium_ID\" > (para_Stadium_ID * 1.2); INSERT INTO \"event\" (\"Stadium_ID\", \"ID\", \"Name\") VALUES (para_Stadium_ID, para_ID, CASE WHEN para_Stadium_ID % 2 = 0 THEN para_Name || '_even' ELSE para_Name || '_odd' END); UPDATE \"event\" SET \"Year\" = para_Year WHERE \"Stadium_ID\" = para_Stadium_ID; END; $$;",
+    "call": [
+      "call sp(1, 6, 'World Master', '2014');",
+      "call sp(3, 5, 'World Master', '2011');",
+      "call sp(1, 6, 'European FINA', '2012');",
+      "call sp(2, 6, 'FINA', '2014');",
+      "call sp(2, 4, 'World Master', '2016');"
+    ],
+    "database": "swimming",
+    "table": [
+      "event"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "event",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "Name",
+            "Stadium_ID",
+            "Year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              6
+            ],
+            [
+              "European FINA",
+              "European FINA"
+            ],
+            [
+              1,
+              8
+            ],
+            [
+              "2013",
+              "2011"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "record",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "Result",
+            "Swimmer_ID",
+            "Event_ID"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              "Win",
+              "Win"
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "stadium",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "name",
+            "Capacity",
+            "City",
+            "Country",
+            "Opening_year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              "Fisht Olympic Stadium",
+              "Northumberland Development Project"
+            ],
+            [
+              47659,
+              67500
+            ],
+            [
+              "Saransk",
+              "Saint Petersburg"
+            ],
+            [
+              "Russia",
+              "Russia"
+            ],
+            [
+              2005,
+              2005
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "swimmer",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "name",
+            "Nationality",
+            "meter_100",
+            "meter_200",
+            "meter_300",
+            "meter_400",
+            "meter_500",
+            "meter_600",
+            "meter_700",
+            "Time"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              "Grant Hackett",
+              "Ryan Cochrane"
+            ],
+            [
+              "Canada",
+              "France"
+            ],
+            [
+              57.34,
+              57.66
+            ],
+            [
+              "1:54.40",
+              "1:57.21"
+            ],
+            [
+              "2:57.10",
+              "2:53.46"
+            ],
+            [
+              "3:55.49",
+              "3:55.36"
+            ],
+            [
+              "4:52.85",
+              "4:56.96"
+            ],
+            [
+              "5:54.45",
+              "5:52.92"
+            ],
+            [
+              "6:57.69",
+              "6:53.34"
+            ],
+            [
+              "7:49.98",
+              "7:46.95"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ < (_ * _) OR _ > (_ * _); INSERT INTO _ (_, _, _) VALUES (_, _, _ WHEN _ % _ = _ THEN _ || _ ELSE _ || _ END); UPDATE _ SET _ = _ WHERE _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PLpgSQL procedure that removes events if their stadium ID is either below 80% or above 120% of the given stadium ID. Then, add a new event using the provided stadium ID and ID values, naming it with a suffix indicating if the stadium ID is even or odd. Finally, update the event's year for records with a matching stadium ID.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that first deletes records from the \"event\" table where \"Stadium_ID\" is less than 80% or more than 120% of the parameter \"para_Stadium_ID\". Next, insert a new row into the \"event\" table with \"Stadium_ID\" set to \"para_Stadium_ID\", \"ID\" set to \"para_ID\", and \"Name\" determined by appending '_even' to \"para_Name\" if \"para_Stadium_ID\" is even, or '_odd' if odd. Lastly, update the \"Year\" column to \"para_Year\" for records where \"Stadium_ID\" matches \"para_Stadium_ID\"."
+  },
+  {
+    "text": "Design a PL/pgSQL stored procedure that goes through each record in the Documents table, checking how many have a document_type_code that matches the given parameter. If this count is odd, update the document_structure_code for all documents to the provided document_structure_code parameter. If the count is even, delete documents where the document_name matches the provided parameter. Regardless of the count, set the access_count for all documents to the specified para_access_count.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_document_type_code text, para_document_structure_code text, para_document_name text, para_access_count integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Documents\"; rec RECORD; match_count INTEGER := 0; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"document_type_code\" = para_document_type_code THEN match_count := match_count + 1; END IF; END LOOP; CLOSE ref_cursor; IF MOD(match_count, 2) = 1 THEN UPDATE \"Documents\" SET \"document_structure_code\" = para_document_structure_code; ELSE DELETE FROM \"Documents\" WHERE \"document_name\" = para_document_name; END IF; UPDATE \"Documents\" SET \"access_count\" = para_access_count; END; $$;",
+    "call": [
+      "call sp('CV', '1', 'David CV', 1864);",
+      "call sp('Paper', '8', 'Spring Sails', 5924);",
+      "call sp('Book', '8', 'How to cook pasta', 3479);",
+      "call sp('Advertisement', '1', 'Spring Sails', 8623);",
+      "call sp('Book', '5', 'Humanity: a fact', 6345);"
+    ],
+    "database": "document_management",
+    "table": [
+      "Documents"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Document_Functional_Areas",
+          "table_comment": "",
+          "column_names": [
+            "document_code",
+            "functional_area_code"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "928",
+              "706"
+            ],
+            [
+              "9",
+              "8"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Document_Sections",
+          "table_comment": "",
+          "column_names": [
+            "section_id",
+            "document_code",
+            "section_sequence",
+            "section_code",
+            "section_title"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              15,
+              21
+            ],
+            [
+              "989",
+              "465"
+            ],
+            [
+              6016,
+              6016
+            ],
+            [
+              "49",
+              "18"
+            ],
+            [
+              "after",
+              "after"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Document_Sections_Images",
+          "table_comment": "",
+          "column_names": [
+            "section_id",
+            "image_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              19,
+              23
+            ],
+            [
+              2,
+              14
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Images",
+          "table_comment": "",
+          "column_names": [
+            "image_id",
+            "image_alt_text",
+            "image_name",
+            "image_url"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              -467,
+              -474
+            ],
+            [
+              "Jeanette",
+              "Trycia"
+            ],
+            [
+              "data2",
+              "chapter4"
+            ],
+            [
+              "http://www.heller.com/1.jpg",
+              "http://connellykertzmann.org/1.jpg"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Document_Structures",
+          "table_comment": "",
+          "column_names": [
+            "document_structure_code",
+            "parent_document_structure_code",
+            "document_structure_description"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "8",
+              "1"
+            ],
+            [
+              "6",
+              "1"
+            ],
+            [
+              "Header",
+              "Image section"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Documents",
+          "table_comment": "",
+          "column_names": [
+            "document_code",
+            "document_structure_code",
+            "document_type_code",
+            "access_count",
+            "document_name"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "928",
+              "510"
+            ],
+            [
+              "5",
+              "1"
+            ],
+            [
+              "CV",
+              "Advertisement"
+            ],
+            [
+              5924,
+              8208
+            ],
+            [
+              "Learning Database",
+              "How to cook pasta"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Functional_Areas",
+          "table_comment": "",
+          "column_names": [
+            "functional_area_code",
+            "parent_functional_area_code",
+            "functional_area_description"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "1",
+              "8"
+            ],
+            [
+              "8",
+              "8"
+            ],
+            [
+              "Acknowledgement",
+              "Acknowledgement"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Roles",
+          "table_comment": "",
+          "column_names": [
+            "role_code",
+            "role_description"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "DBA",
+              "DBA"
+            ],
+            [
+              "Database Administrator",
+              "Database Administrator"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Users",
+          "table_comment": "",
+          "column_names": [
+            "user_id",
+            "role_code",
+            "user_name",
+            "user_login",
+            "password"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              15
+            ],
+            [
+              "PROJ-MGR",
+              "DBA"
+            ],
+            [
+              "gussie00",
+              "lynn.haley"
+            ],
+            [
+              "0",
+              "1"
+            ],
+            [
+              "90db8f51449e6c39e2a01f0b649d5a92fe76bbbb",
+              "a0fe5434a5f4c218e37b0082f2408b357feb0fa6"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; _ _ := _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN _ := _ + _; END IF; END LOOP; CLOSE _; IF MOD(_, _) = _ THEN UPDATE _ SET _ = _; ELSE DELETE FROM _ WHERE _ = _; END IF; UPDATE _ SET _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to examine a collection of documents, tallying those with a specific type code. If the count of such documents is odd, change their structure code to a provided value. If even, remove documents with a given name. In both cases, update all documents to have a specified access count.",
+    "detailed_text": "Design a PL/pgSQL stored procedure that goes through each record in the Documents table, checking how many have a document_type_code that matches the given parameter. If this count is odd, update the document_structure_code for all documents to the provided document_structure_code parameter. If the count is even, delete documents where the document_name matches the provided parameter. Regardless of the count, set the access_count for all documents to the specified para_access_count."
+  },
+  {
+    "text": "Develop a PLpgSQL stored procedure that processes every record in the Apartment_Bookings table using a cursor. For each record, update the booking_end_integer by appending the string 'after' to the provided para_booking_end_integer, and set the guest_id to the provided para_guest_id. Then, open another cursor on the View_Unit_Status table, and for each record, update the available_yn to para_available_yn and the apt_booking_id to para_apt_booking_id only if para_available_yn is less than 1000. Close both cursors after the operations are complete.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_booking_end_integer text, para_guest_id integer, para_available_yn integer, para_apt_booking_id integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Apartment_Bookings\"; ref_2cursor CURSOR FOR SELECT * FROM \"View_Unit_Status\"; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Apartment_Bookings\" SET \"booking_end_integer\" = CONCAT(para_booking_end_integer, 'after'), \"guest_id\" = para_guest_id WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; OPEN ref_2cursor; LOOP FETCH ref_2cursor INTO rec; EXIT WHEN NOT FOUND; IF para_available_yn < 1000 THEN UPDATE \"View_Unit_Status\" SET \"available_yn\" = para_available_yn, \"apt_booking_id\" = para_apt_booking_id WHERE CURRENT OF ref_2cursor; END IF; END LOOP; CLOSE ref_2cursor; END; $$;",
+    "call": [
+      "call sp('2017-10-07 20:47:19', 2, 1, 920);",
+      "call sp('2017-11-12 01:05:09', 12, 0, 401);",
+      "call sp('2017-10-25 11:08:42', 2, 1, 623);",
+      "call sp('2017-10-07 11:38:48', 4, 0, 337);",
+      "call sp('2017-09-29 12:43:50', 2, 1, 807);"
+    ],
+    "database": "apartment_rentals",
+    "table": [
+      "Apartment_Bookings",
+      "View_Unit_Status"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "View_Unit_Status",
+          "table_comment": "",
+          "column_names": [
+            "apt_id",
+            "apt_booking_id",
+            "status_integer",
+            "available_yn"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              14,
+              13
+            ],
+            [
+              623,
+              807
+            ],
+            [
+              "2006-02-23 05:50:04",
+              "1972-03-23 22:55:53"
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Apartment_Bookings",
+          "table_comment": "",
+          "column_names": [
+            "apt_booking_id",
+            "apt_id",
+            "guest_id",
+            "booking_status_code",
+            "booking_start_integer",
+            "booking_end_integer"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              807,
+              279
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              "Provisional",
+              "Provisional"
+            ],
+            [
+              "2016-06-07 05:05:18",
+              "2017-02-11 14:34:14"
+            ],
+            [
+              "2018-02-19 16:59:08",
+              "2017-09-30 18:41:04"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Apartment_Buildings",
+          "table_comment": "",
+          "column_names": [
+            "building_id",
+            "building_short_name",
+            "building_full_name",
+            "building_description",
+            "building_address",
+            "building_manager",
+            "building_phone"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              734,
+              556
+            ],
+            [
+              "Stuyvesant Town",
+              "Barclay Tower"
+            ],
+            [
+              "Windsor Court",
+              "Mercedes House"
+            ],
+            [
+              "Flat",
+              "Studio"
+            ],
+            [
+              "6827 Kessler Parkway Suite 908 Ahmedberg, WI 48788",
+              "101 Queenie Mountains Suite 619 New Korbinmouth, KS 88726-1376"
+            ],
+            [
+              "Kyle",
+              "Albert"
+            ],
+            [
+              "(480)480-7401",
+              "1-326-267-3386x613"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Apartment_Facilities",
+          "table_comment": "",
+          "column_names": [
+            "apt_id",
+            "facility_code"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              5
+            ],
+            [
+              "Cable TV",
+              "Swimming Pool"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Apartments",
+          "table_comment": "",
+          "column_names": [
+            "apt_id",
+            "building_id",
+            "apt_type_code",
+            "apt_number",
+            "bathroom_count",
+            "bedroom_count",
+            "room_count"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              6
+            ],
+            [
+              734,
+              744
+            ],
+            [
+              "Flat",
+              "Duplex"
+            ],
+            [
+              "Apt. 908",
+              "Suite 645"
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              "8",
+              "8"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Guests",
+          "table_comment": "",
+          "column_names": [
+            "guest_id",
+            "gender_code",
+            "guest_first_name",
+            "guest_last_name",
+            "integer_of_birth"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              4
+            ],
+            [
+              "Female",
+              "Male"
+            ],
+            [
+              "Else",
+              "Louvenia"
+            ],
+            [
+              "Mante",
+              "Jerde"
+            ],
+            [
+              "1997-01-15 17:37:40",
+              "2007-09-11 19:01:39"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = CONCAT(_, _), _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _ < _ THEN UPDATE _ SET _ = _, _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that iterates over all apartment bookings, appending 'after' to a specified date and updating a guest ID. Then, check each unit's availability status, and if a given availability number is below 1000, update the availability and booking ID for those units.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that processes every record in the Apartment_Bookings table using a cursor. For each record, update the booking_end_integer by appending the string 'after' to the provided para_booking_end_integer, and set the guest_id to the provided para_guest_id. Then, open another cursor on the View_Unit_Status table, and for each record, update the available_yn to para_available_yn and the apt_booking_id to para_apt_booking_id only if para_available_yn is less than 1000. Close both cursors after the operations are complete."
+  },
+  {
+    "text": "Develop a PLpgSQL stored procedure that first deletes records from the \"people\" table where the \"Height\" is less than the value of para_Height plus 10, and \"Age\" is at least the value of para_Age. After this, the procedure utilizes a cursor to go through each record in the \"gymnast\" table. For every record fetched by the cursor, it updates the \"Age\" column in the \"people\" table to the value of para_Age, and updates the \"Horizontal_Bar_Points\" column in the \"gymnast\" table to the value of para_Horizontal_Bar_Points for the current record in the cursor.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Height real, para_Age real, para_Horizontal_Bar_Points real) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"gymnast\"; rec RECORD; BEGIN DELETE FROM \"people\" WHERE \"Height\" < para_Height + 10 and \"Age\" >= para_Age; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"people\" SET \"Age\" = para_Age; UPDATE \"gymnast\" SET \"Horizontal_Bar_Points\" = para_Horizontal_Bar_Points WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(1.7, 21.0, 9.725);",
+      "call sp(1.76, 19.0, 9.55);",
+      "call sp(1.81, 24.0, 9.725);",
+      "call sp(1.79, 22.0, 9.75);",
+      "call sp(1.75, 19.0, 9.55);"
+    ],
+    "database": "gymnast",
+    "table": [
+      "people",
+      "gymnast"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "gymnast",
+          "table_comment": "",
+          "column_names": [
+            "Gymnast_ID",
+            "Floor_Exercise_Points",
+            "Pommel_Horse_Points",
+            "Rings_Points",
+            "Vault_Points",
+            "Parallel_Bars_Points",
+            "Horizontal_Bar_Points",
+            "Total_Points"
+          ],
+          "column_types": [
+            "integer",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              4
+            ],
+            [
+              9.725,
+              8.987
+            ],
+            [
+              9.737,
+              9.525
+            ],
+            [
+              9.512,
+              9.512
+            ],
+            [
+              9.55,
+              9.55
+            ],
+            [
+              9.787,
+              9.787
+            ],
+            [
+              9.725,
+              9.55
+            ],
+            [
+              57.649,
+              58.061
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "people",
+          "table_comment": "",
+          "column_names": [
+            "People_ID",
+            "Name",
+            "Age",
+            "Height",
+            "Hometown"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              9,
+              4
+            ],
+            [
+              "Endis de los Santos Álvarez",
+              "Rosa Clarissa Ortíz Melo"
+            ],
+            [
+              22.0,
+              19.0
+            ],
+            [
+              1.72,
+              1.76
+            ],
+            [
+              "Santo Domingo",
+              "Santo Domingo"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN DELETE FROM _ WHERE _ < _ + _ AND _ >= _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 3,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PLpgSQL procedure that initially removes entries from a list of individuals whose height is less than a specified value plus 10 and whose age is at least a given number. Then, go through each participant in a gymnastics event, updating their age and scoring their performance on the horizontal bar with given values.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that first deletes records from the \"people\" table where the \"Height\" is less than the value of para_Height plus 10, and \"Age\" is at least the value of para_Age. After this, the procedure utilizes a cursor to go through each record in the \"gymnast\" table. For every record fetched by the cursor, it updates the \"Age\" column in the \"people\" table to the value of para_Age, and updates the \"Horizontal_Bar_Points\" column in the \"gymnast\" table to the value of para_Horizontal_Bar_Points for the current record in the cursor."
+  },
+  {
+    "text": "Develop a PLpgSQL stored procedure that modifies the Pigs field in the farm table to the value of para_Pigs wherever the Total_Horses matches para_Total_Horses or Total_Cattle equals para_Total_Cattle. After this update, if the absolute difference between para_Pigs and para_Total_Cattle is greater than 100, proceed to delete entries in the farm table where the Bulls count is less than para_Bulls. If the condition is not met, instead insert a new row into the farm table with the Pigs field set to the sum of para_Pigs and para_Total_Cattle, and Total_Horses and Total_Cattle fields set to para_Total_Horses and para_Total_Cattle, respectively.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Pigs real, para_Total_Horses real, para_Total_Cattle real, para_Bulls real) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"farm\" SET \"Pigs\" = para_Pigs WHERE \"Total_Horses\" = para_Total_Horses OR \"Total_Cattle\" = para_Total_Cattle; IF ABS(para_Pigs - para_Total_Cattle) > 100 THEN DELETE FROM \"farm\" WHERE \"Bulls\" < para_Bulls; ELSE INSERT INTO \"farm\" (\"Pigs\", \"Total_Horses\", \"Total_Cattle\") VALUES (para_Pigs + para_Total_Cattle, para_Total_Horses, para_Total_Cattle); END IF; END; $$;",
+    "call": [
+      "call sp(3373.3, 5607.5, 5277.5, 31.6);",
+      "call sp(2089.2, 2546.9, 4446.3, 26.9);",
+      "call sp(6962.9, 2546.9, 6274.1, 31.6);",
+      "call sp(2089.2, 2604.8, 8604.8, 26.9);",
+      "call sp(4161.2, 5486.9, 4446.3, 32.8);"
+    ],
+    "database": "farm",
+    "table": [
+      "farm"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "city",
+          "table_comment": "",
+          "column_names": [
+            "City_ID",
+            "Official_Name",
+            "Status",
+            "Area_km_2",
+            "Population",
+            "Census_Ranking"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              5
+            ],
+            [
+              "Drummond",
+              "Aroostook"
+            ],
+            [
+              "Village",
+              "Village"
+            ],
+            [
+              2.24,
+              8.89
+            ],
+            [
+              775.0,
+              775.0
+            ],
+            [
+              "636 of 5008",
+              "2418 of 5008"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "competition_record",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Farm_ID",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm",
+          "table_comment": "",
+          "column_names": [
+            "Farm_ID",
+            "Year",
+            "Total_Horses",
+            "Working_Horses",
+            "Total_Cattle",
+            "Oxen",
+            "Bulls",
+            "Cows",
+            "Pigs",
+            "Sheep_and_Goats"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              8
+            ],
+            [
+              1930,
+              1933
+            ],
+            [
+              2546.9,
+              5486.9
+            ],
+            [
+              2197.3,
+              4090.5
+            ],
+            [
+              4446.3,
+              6189.5
+            ],
+            [
+              895.3,
+              113.8
+            ],
+            [
+              46.7,
+              26.9
+            ],
+            [
+              2739.5,
+              3873.0
+            ],
+            [
+              6962.9,
+              2089.2
+            ],
+            [
+              3364.8,
+              2197.1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm_competition",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Year",
+            "Theme",
+            "Host_city_ID",
+            "Hosts"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              2002,
+              2006
+            ],
+            [
+              "Carnival M is back!",
+              "Carnival M is back!"
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              "Alicia Keys",
+              "Shaggy and Coco Lee"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE _ = _ OR _ = _; IF ABS(_ - _) > _ THEN DELETE FROM _ WHERE _ < _; ELSE INSERT INTO _ (_, _, _) VALUES (_ + _, _, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PLpgSQL procedure to update the number of pigs to a specified value in a farm's records where the count of horses or cattle matches given numbers. If the difference between the specified pig count and cattle count exceeds 100, remove records with bulls below a certain number. Otherwise, add a new entry with pigs as the sum of the specified pig and cattle counts, along with the provided horse and cattle counts.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that modifies the Pigs field in the farm table to the value of para_Pigs wherever the Total_Horses matches para_Total_Horses or Total_Cattle equals para_Total_Cattle. After this update, if the absolute difference between para_Pigs and para_Total_Cattle is greater than 100, proceed to delete entries in the farm table where the Bulls count is less than para_Bulls. If the condition is not met, instead insert a new row into the farm table with the Pigs field set to the sum of para_Pigs and para_Total_Cattle, and Total_Horses and Total_Cattle fields set to para_Total_Horses and para_Total_Cattle, respectively."
+  },
+  {
+    "text": "Write a PL/pgSQL stored procedure with nested loops. The outer loop processes each record in the \"player_coach\" table, and for each record, an inner loop goes through the \"match_result\" table. Within this loop, update the \"coach\" table by setting \"Club_ID\" to its current value increased by the parameter \"para_Club_ID\" and then decreased by 65. After completing the loop, delete rows from \"match_result\" where \"Points\" are below the parameter \"para_Points\". Also, remove records from \"player_coach\" where \"Starting_year\" is different from the parameter \"para_Starting_year\".",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Starting_year integer, para_Points integer, para_Club_ID integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"player_coach\"; ref_cursor2 CURSOR FOR SELECT * FROM \"match_result\"; rec RECORD; rec2 RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; OPEN ref_cursor2; LOOP FETCH ref_cursor2 INTO rec2; EXIT WHEN NOT FOUND; UPDATE \"coach\" SET \"Club_ID\" = \"Club_ID\" + para_Club_ID - 65; END LOOP; CLOSE ref_cursor2; END LOOP; CLOSE ref_cursor; DELETE FROM \"match_result\" WHERE \"Points\" < para_Points; DELETE FROM \"player_coach\" WHERE \"Starting_year\" <> para_Starting_year;  END; $$;",
+    "call": [
+      "call sp(2013, 89, 3);",
+      "call sp(2011, 139, 3);",
+      "call sp(2011, 168, 1);",
+      "call sp(2013, 168, 3);",
+      "call sp(2011, 168, 1);"
+    ],
+    "database": "riding_club",
+    "table": [
+      "player_coach",
+      "match_result",
+      "coach"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "club",
+          "table_comment": "",
+          "column_names": [
+            "Club_ID",
+            "Club_name",
+            "Region",
+            "Start_year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              6
+            ],
+            [
+              "Gefle IF",
+              "AIK"
+            ],
+            [
+              "France",
+              "France"
+            ],
+            [
+              2005,
+              2001
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "coach",
+          "table_comment": "",
+          "column_names": [
+            "Coach_ID",
+            "Coach_name",
+            "Gender",
+            "Club_ID",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              1
+            ],
+            [
+              "Jameson Tomas",
+              "Smith Brown"
+            ],
+            [
+              "M",
+              "M"
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "match_result",
+          "table_comment": "",
+          "column_names": [
+            "Rank",
+            "Club_ID",
+            "Gold",
+            "Big_Silver",
+            "Small_Silver",
+            "Bronze",
+            "Points"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              5
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              12,
+              12
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              139,
+              168
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "player",
+          "table_comment": "",
+          "column_names": [
+            "Player_ID",
+            "Sponsor_name",
+            "Player_name",
+            "Gender",
+            "Residence",
+            "Occupation",
+            "Votes",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              1
+            ],
+            [
+              "Dauphin—Swan River—Marquette",
+              "Provencher"
+            ],
+            [
+              "Mohamed Alli",
+              "Fiona Shiells"
+            ],
+            [
+              "M",
+              "M"
+            ],
+            [
+              "Winnipeg",
+              "Winnipeg"
+            ],
+            [
+              "Self Employed / Consultant",
+              "Locomotive Engineer"
+            ],
+            [
+              6055,
+              4673
+            ],
+            [
+              "1st",
+              "1st"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "player_coach",
+          "table_comment": "",
+          "column_names": [
+            "Player_ID",
+            "Coach_ID",
+            "Starting_year"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              14,
+              3
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              2010,
+              2011
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      1,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ + _ - _; END LOOP; CLOSE _; END LOOP; CLOSE _; DELETE FROM _ WHERE _ < _; DELETE FROM _ WHERE _ <> _;  END; $$;",
+    "table_num": 3,
+    "parameter": 3,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that loops through all records in the player-coach list, and for each, loops through the match results. Adjust the club ID in the coach data by adding a specified club ID and subtracting 65. After processing, remove entries from the match results where points scored are less than a given threshold, and from the player-coach list where the starting year does not match a specified year.",
+    "detailed_text": "Write a PL/pgSQL stored procedure with nested loops. The outer loop processes each record in the \"player_coach\" table, and for each record, an inner loop goes through the \"match_result\" table. Within this loop, update the \"coach\" table by setting \"Club_ID\" to its current value increased by the parameter \"para_Club_ID\" and then decreased by 65. After completing the loop, delete rows from \"match_result\" where \"Points\" are below the parameter \"para_Points\". Also, remove records from \"player_coach\" where \"Starting_year\" is different from the parameter \"para_Starting_year\"."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first deletes records from the \"Events\" table where either the \"Service_ID\" matches `para_Service_ID` or the \"Event_ID\" matches `para_Event_ID`. If the \"Participants\" table does not contain a record with \"Participant_ID\" equal to `para_Participant_ID`, insert a new record with the given \"Participant_ID\" and \"Participant_Type_Code\" values. Finally, update the \"Services\" table to set the \"Service_Type_Code\" to `para_Service_Type_Code`.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Service_ID integer, para_Event_ID integer, para_Participant_ID integer, para_Participant_Type_Code text, para_Service_Type_Code text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"Events\" WHERE \"Service_ID\" = para_Service_ID OR \"Event_ID\" = para_Event_ID; IF NOT EXISTS(SELECT 1 FROM \"Participants\" WHERE \"Participant_ID\" = para_Participant_ID) THEN INSERT INTO \"Participants\" (\"Participant_ID\", \"Participant_Type_Code\") VALUES (para_Participant_ID, para_Participant_Type_Code); END IF; UPDATE \"Services\" SET \"Service_Type_Code\" = para_Service_Type_Code; END; $$;",
+    "call": [
+      "call sp(6, 60, 37, 'Organizer', 'Death Proof');",
+      "call sp(5, 40, 37, 'Organizer', 'Birth Proof');",
+      "call sp(8, 57, 28, 'Participant', 'Property Change');",
+      "call sp(6, 13, 64, 'Participant', 'Birth Proof');",
+      "call sp(2, 38, 38, 'Organizer', 'Birth Proof');"
+    ],
+    "database": "local_govt_in_alabama",
+    "table": [
+      "Events",
+      "Participants",
+      "Services"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Events",
+          "table_comment": "",
+          "column_names": [
+            "Event_ID",
+            "Service_ID",
+            "Event_Details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              40,
+              43
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              "Fail",
+              "Success"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Participants",
+          "table_comment": "",
+          "column_names": [
+            "Participant_ID",
+            "Participant_Type_Code",
+            "Participant_Details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              98,
+              9
+            ],
+            [
+              "Participant",
+              "Organizer"
+            ],
+            [
+              "Berniece Weimann",
+              "Karlee Batz"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Participants_in_Events",
+          "table_comment": "",
+          "column_names": [
+            "Event_ID",
+            "Participant_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              60,
+              13
+            ],
+            [
+              86,
+              64
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Services",
+          "table_comment": "",
+          "column_names": [
+            "Service_ID",
+            "Service_Type_Code"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              2
+            ],
+            [
+              "Property Change",
+              "Birth Proof"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ OR _ = _; IF NOT EXISTS(SELECT _ FROM _ WHERE _ = _) THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; UPDATE _ SET _ = _; END; $$;",
+    "table_num": 3,
+    "parameter": 5,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to manage event and participant records: start by removing entries from the event list where the service or event matches given IDs. If a participant with a specific ID is absent, add them using provided type information. Conclude by updating the service type to the specified code.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first deletes records from the \"Events\" table where either the \"Service_ID\" matches `para_Service_ID` or the \"Event_ID\" matches `para_Event_ID`. If the \"Participants\" table does not contain a record with \"Participant_ID\" equal to `para_Participant_ID`, insert a new record with the given \"Participant_ID\" and \"Participant_Type_Code\" values. Finally, update the \"Services\" table to set the \"Service_Type_Code\" to `para_Service_Type_Code`."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first updates the City_Area field to the value of para_City_Area for all entries in the \"district\" table where the District_name does not match the parameter para_District_name. Next, employ a cursor to go through each record in the \"district\" table where City_Population is not null. During this iteration, if a record's District_ID falls between the values specified by para_City_Population and para_District_ID, update the District_name to para_District_name for that record. If the condition is not met, delete the record from the \"district\" table.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_City_Area real, para_District_name text, para_City_Population real, para_District_ID integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"district\" WHERE \"City_Population\" IS NOT NULL; rec RECORD; BEGIN UPDATE \"district\" SET \"City_Area\" = para_City_Area WHERE \"District_name\" != para_District_name; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"District_ID\" BETWEEN para_City_Population AND para_District_ID THEN UPDATE \"district\" SET \"District_name\" = para_District_name WHERE CURRENT OF ref_cursor; ELSE DELETE FROM \"district\" WHERE CURRENT OF ref_cursor; END IF; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(18.0, 'Chiniot District', 113524.0, 14);",
+      "call sp(15.0, 'Jhang District', 365198.0, 12);",
+      "call sp(25.0, 'Jhelum District', 165038.0, 1);",
+      "call sp(20.0, 'Hafizabad District', 219254.0, 15);",
+      "call sp(25.0, 'Chakwal District', 365198.0, 12);"
+    ],
+    "database": "store_product",
+    "table": [
+      "district"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "district",
+          "table_comment": "",
+          "column_names": [
+            "District_ID",
+            "District_name",
+            "Headquartered_City",
+            "City_Population",
+            "City_Area"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              "Chiniot District",
+              "Faisalabad District"
+            ],
+            [
+              "Gujranwala City",
+              "Jhelum City"
+            ],
+            [
+              219254.0,
+              219254.0
+            ],
+            [
+              28.0,
+              147.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "product",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "product",
+            "dimensions",
+            "dpi",
+            "pages_per_minute_color",
+            "max_page_size",
+            "interface"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              5
+            ],
+            [
+              "Canon imageFORMULA P-150",
+              "Plustek MobileOffice D28 Corporate"
+            ],
+            [
+              "301 x 160 x 158",
+              "300 x 50 x 45"
+            ],
+            [
+              600.0,
+              600.0
+            ],
+            [
+              36.0,
+              3.0
+            ],
+            [
+              "A4",
+              "A4"
+            ],
+            [
+              "USB 2.0",
+              "USB 2.0"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "store",
+          "table_comment": "",
+          "column_names": [
+            "Store_ID",
+            "Store_Name",
+            "Type",
+            "Area_size",
+            "Number_of_product_category",
+            "Ranking"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              2
+            ],
+            [
+              "Miramichi",
+              "Doaktown"
+            ],
+            [
+              "City Mall",
+              "City Mall"
+            ],
+            [
+              21.73,
+              26.69
+            ],
+            [
+              17811.0,
+              990.0
+            ],
+            [
+              10,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "store_district",
+          "table_comment": "",
+          "column_names": [
+            "Store_ID",
+            "District_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              4
+            ],
+            [
+              11,
+              15
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "store_product",
+          "table_comment": "",
+          "column_names": [
+            "Store_ID",
+            "Product_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              3
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ IS NOT NULL; _ _; BEGIN UPDATE _ SET _ = _ WHERE _ != _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ BETWEEN _ AND _ THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; ELSE DELETE FROM _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to update the city size in areas where the district name is different from a specified name. Then, review districts with known populations: if their ID falls within a given population and ID range, change their names; otherwise, remove them from the records.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first updates the City_Area field to the value of para_City_Area for all entries in the \"district\" table where the District_name does not match the parameter para_District_name. Next, employ a cursor to go through each record in the \"district\" table where City_Population is not null. During this iteration, if a record's District_ID falls between the values specified by para_City_Population and para_District_ID, update the District_name to para_District_name for that record. If the condition is not met, delete the record from the \"district\" table."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that initiates by removing records from the \"people\" table where the \"District\" column matches the provided para_District parameter or the \"Age\" column equals the given para_Age parameter. Following this, if no records are present in the \"debate_people\" table, insert a new record with the \"If_Affirmative_Win\" field set to the para_If_Affirmative_Win parameter. Lastly, update the \"debate\" table by setting the \"Venue\" and \"integer\" fields to the values of para_Venue and para_integer, respectively, for records where the \"Num_of_Audience\" exceeds the para_Num_of_Audience parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_District text, para_Age integer, para_If_Affirmative_Win text, para_Venue text, para_integer text, para_Num_of_Audience integer) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"people\" WHERE \"District\" = para_District OR \"Age\" = para_Age; IF NOT EXISTS(SELECT 1 FROM \"debate_people\") THEN INSERT INTO \"debate_people\" (\"If_Affirmative_Win\") VALUES (para_If_Affirmative_Win); END IF; UPDATE \"debate\" SET \"Venue\" = para_Venue, \"integer\" = para_integer WHERE \"Num_of_Audience\" > para_Num_of_Audience; END; $$;",
+    "call": [
+      "call sp('New York 5', 48, 'T', 'Abu Dhabi , UAE', 'October 27, 2015', 209);",
+      "call sp('New York 1', 48, 'T', 'Abu Dhabi , UAE', 'October 27, 2015', 313);",
+      "call sp('New York 8', 42, 'T', 'Manama , Bahrain', 'October 27, 2015', 134);",
+      "call sp('New York 4', 36, 'T', 'Manama , Bahrain', 'August 3, 2015', 134);",
+      "call sp('New York 3', 35, 'F', 'Manama , Bahrain', 'October 27, 2015', 313);"
+    ],
+    "database": "debate",
+    "table": [
+      "people",
+      "debate_people",
+      "debate"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "debate",
+          "table_comment": "",
+          "column_names": [
+            "Debate_ID",
+            "integer",
+            "Venue",
+            "Num_of_Audience"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              "October 27, 2015",
+              "October 27, 2015"
+            ],
+            [
+              "Dubai , UAE",
+              "Manama , Bahrain"
+            ],
+            [
+              134,
+              90
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "debate_people",
+          "table_comment": "",
+          "column_names": [
+            "Debate_ID",
+            "Affirmative",
+            "Negative",
+            "If_Affirmative_Win"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              3
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              "F",
+              "T"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "people",
+          "table_comment": "",
+          "column_names": [
+            "People_ID",
+            "District",
+            "Name",
+            "Party",
+            "Age"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              2
+            ],
+            [
+              "New York 2",
+              "New York 3"
+            ],
+            [
+              "William B. Maclay",
+              "Luther C. Carter"
+            ],
+            [
+              "Democratic",
+              "Republican"
+            ],
+            [
+              46,
+              36
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _ OR _ = _; IF NOT EXISTS(SELECT _ FROM _) THEN INSERT INTO _ (_) VALUES (_); END IF; UPDATE _ SET _ = _, _ = _ WHERE _ > _; END; $$;",
+    "table_num": 3,
+    "parameter": 6,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PLpgSQL procedure to first remove entries from the people list where the district matches a specified region or the age matches a given number. If there are no entries in the list of debate participants, add a new entry with a specified outcome. Finally, update the location and a numeric detail for debates with an audience size greater than a specified number.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that initiates by removing records from the \"people\" table where the \"District\" column matches the provided para_District parameter or the \"Age\" column equals the given para_Age parameter. Following this, if no records are present in the \"debate_people\" table, insert a new record with the \"If_Affirmative_Win\" field set to the para_If_Affirmative_Win parameter. Lastly, update the \"debate\" table by setting the \"Venue\" and \"integer\" fields to the values of para_Venue and para_integer, respectively, for records where the \"Num_of_Audience\" exceeds the para_Num_of_Audience parameter."
+  },
+  {
+    "text": "Design a PL/pgSQL stored procedure that utilizes a cursor to go through each record in the farm table where the Sheep_and_Goats field exceeds the specified parameter para_Sheep_and_Goats. For each record, perform the following checks: if the Year field equals the parameter para_Year, set the Working_Horses field to the value of para_Working_Horses; if the Bulls field is less than the parameter para_Bulls, delete that record; otherwise, update the Working_Horses field to be twice the value of para_Working_Horses. Continue this process until all records have been evaluated, then close the cursor.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Sheep_and_Goats real, para_Year integer, para_Working_Horses real, para_Bulls real) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"farm\" WHERE \"Sheep_and_Goats\" > para_Sheep_and_Goats; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"Year\" = para_Year THEN UPDATE \"farm\" SET \"Working_Horses\" = para_Working_Horses WHERE CURRENT OF ref_cursor; ELSIF rec.\"Bulls\" < para_Bulls THEN DELETE FROM \"farm\" WHERE CURRENT OF ref_cursor; ELSE UPDATE \"farm\" SET \"Working_Horses\" = para_Working_Horses * 2 WHERE CURRENT OF ref_cursor; END IF; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(4533.4, 1930, 2197.3, 49.6);",
+      "call sp(2197.1, 1927, 4090.5, 31.6);",
+      "call sp(3364.8, 1930, 3593.7, 31.6);",
+      "call sp(2004.7, 1931, 3721.6, 40.0);",
+      "call sp(4533.4, 1933, 4198.8, 49.6);"
+    ],
+    "database": "farm",
+    "table": [
+      "farm"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "city",
+          "table_comment": "",
+          "column_names": [
+            "City_ID",
+            "Official_Name",
+            "Status",
+            "Area_km_2",
+            "Population",
+            "Census_Ranking"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              5
+            ],
+            [
+              "Aroostook",
+              "Perth-Andover"
+            ],
+            [
+              "Town",
+              "Town"
+            ],
+            [
+              8.91,
+              8.89
+            ],
+            [
+              775.0,
+              775.0
+            ],
+            [
+              "3460 of 5008",
+              "636 of 5008"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "competition_record",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Farm_ID",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm",
+          "table_comment": "",
+          "column_names": [
+            "Farm_ID",
+            "Year",
+            "Total_Horses",
+            "Working_Horses",
+            "Total_Cattle",
+            "Oxen",
+            "Bulls",
+            "Cows",
+            "Pigs",
+            "Sheep_and_Goats"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              6
+            ],
+            [
+              1932,
+              1933
+            ],
+            [
+              5056.5,
+              5308.2
+            ],
+            [
+              2197.3,
+              3900.1
+            ],
+            [
+              8604.8,
+              4446.3
+            ],
+            [
+              895.3,
+              116.9
+            ],
+            [
+              40.0,
+              71.6
+            ],
+            [
+              3987.0,
+              3873.0
+            ],
+            [
+              6962.9,
+              3373.3
+            ],
+            [
+              3364.8,
+              3364.8
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm_competition",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Year",
+            "Theme",
+            "Host_city_ID",
+            "Hosts"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              1
+            ],
+            [
+              2002,
+              2002
+            ],
+            [
+              "Codehunters",
+              "MTV Cube"
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              "Vanness Wu and Michelle Branch",
+              "Alicia Keys"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; ELSIF _._ < _ THEN DELETE FROM _ WHERE CURRENT OF _; ELSE UPDATE _ SET _ = _ * _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL that examines farm records where the count of sheep and goats is above a given number. For each entry, if the year matches the specified year, adjust the working horses to a particular value. If the number of bulls is below a certain threshold, remove the entry. Otherwise, double the working horses value.",
+    "detailed_text": "Design a PL/pgSQL stored procedure that utilizes a cursor to go through each record in the farm table where the Sheep_and_Goats field exceeds the specified parameter para_Sheep_and_Goats. For each record, perform the following checks: if the Year field equals the parameter para_Year, set the Working_Horses field to the value of para_Working_Horses; if the Bulls field is less than the parameter para_Bulls, delete that record; otherwise, update the Working_Horses field to be twice the value of para_Working_Horses. Continue this process until all records have been evaluated, then close the cursor."
+  }
+]

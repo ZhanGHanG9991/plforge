@@ -1,0 +1,2537 @@
+[
+  {
+    "text": "Design a PL/pgSQL procedure that updates records in the player table. For each record where the Player_ID is evenly divisible by a specified para_Player_ID, update the Team column to the nearest multiple of the para_Team parameter by rounding the current team number divided by para_Team and then multiplying by para_Team.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Team integer, para_Player_ID integer) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"player\" SET \"Team\" = ROUND(\"Team\" / para_Team) * para_Team WHERE MOD(\"Player_ID\", para_Player_ID) = 0; END; $$;",
+    "call": [
+      "call sp(8, 4);",
+      "call sp(8, 4);",
+      "call sp(1, 10);",
+      "call sp(8, 2);",
+      "call sp(1, 10);"
+    ],
+    "database": "match_season",
+    "table": [
+      "player"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "country",
+          "table_comment": "",
+          "column_names": [
+            "Country_id",
+            "Country_name",
+            "Capital",
+            "Official_native_language"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              3
+            ],
+            [
+              "Isle of Man",
+              "Indonesia"
+            ],
+            [
+              "Baghdad",
+              "Baghdad"
+            ],
+            [
+              "English",
+              "English"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "match_season",
+          "table_comment": "",
+          "column_names": [
+            "Season",
+            "Player",
+            "Position",
+            "Country",
+            "Team",
+            "Draft_Pick_Number",
+            "Draft_Class",
+            "College"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2001.0,
+              2001.0
+            ],
+            [
+              "Clint Dempsey Category:Articles with hCards",
+              "Maurice Edu Category:Articles with hCards"
+            ],
+            [
+              "Defender",
+              "Forward"
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              1,
+              9
+            ],
+            [
+              87,
+              8
+            ],
+            [
+              "2002 MLS SuperDraft",
+              "2001 MLS SuperDraft"
+            ],
+            [
+              "Maryland",
+              "Wake Forest"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "player",
+          "table_comment": "",
+          "column_names": [
+            "Player_ID",
+            "Player",
+            "Years_Played",
+            "Total_WL",
+            "Singles_WL",
+            "reals_WL",
+            "Team"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              7
+            ],
+            [
+              "Kim Hyun-Joon (908)",
+              "Kim Young-Jun (474)"
+            ],
+            [
+              "1 (2011)",
+              "4 (2003–2004, 2010–2011)"
+            ],
+            [
+              "4–3",
+              "2–2"
+            ],
+            [
+              "6–3",
+              "2–1"
+            ],
+            [
+              "0–0",
+              "0–0"
+            ],
+            [
+              8,
+              1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "team",
+          "table_comment": "",
+          "column_names": [
+            "Team_id",
+            "Name"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              "Columbus Crew",
+              "Los Angeles Galaxy"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = ROUND(_ / _) * _ WHERE MOD(_, _) = _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to modify the team number for players. For each player whose ID is divisible by a specified ID parameter, adjust their team number to the closest multiple of a given team parameter.",
+    "detailed_text": "Design a PL/pgSQL procedure that updates records in the player table. For each record where the Player_ID is evenly divisible by a specified para_Player_ID, update the Team column to the nearest multiple of the para_Team parameter by rounding the current team number divided by para_Team and then multiplying by para_Team."
+  },
+  {
+    "text": "Design a PL/pgSQL stored procedure to insert a record into the swimmer table. This record should have the ID set to the nearest integer value of the provided para_ID and the name set to para_name. The insertion will be executed only if the length of para_name is less than 10 characters.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_ID integer, para_name text) LANGUAGE plpgsql AS $$ BEGIN IF LENGTH(para_name) < 10 THEN INSERT INTO \"swimmer\" (\"ID\", \"name\") VALUES (ROUND(para_ID), para_name); END IF; END; $$;",
+    "call": [
+      "call sp(7, 'Sébastien Rouault');",
+      "call sp(5, 'Sergiy Fesenko');",
+      "call sp(4, 'Federico Colbertaldo');",
+      "call sp(8, 'Sébastien Rouault');",
+      "call sp(3, 'Sergiy Fesenko');"
+    ],
+    "database": "swimming",
+    "table": [
+      "swimmer"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "event",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "Name",
+            "Stadium_ID",
+            "Year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              1
+            ],
+            [
+              "World Junior",
+              "Pacific"
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              "2014",
+              "2016"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "record",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "Result",
+            "Swimmer_ID",
+            "Event_ID"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              10
+            ],
+            [
+              "Win",
+              "Win"
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "stadium",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "name",
+            "Capacity",
+            "City",
+            "Country",
+            "Opening_year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              4
+            ],
+            [
+              "Fisht Olympic Stadium",
+              "Baku Olympic Stadium"
+            ],
+            [
+              45015,
+              45015
+            ],
+            [
+              "Valencia",
+              "Baku"
+            ],
+            [
+              "Spain",
+              "Russia"
+            ],
+            [
+              2004,
+              2004
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "swimmer",
+          "table_comment": "",
+          "column_names": [
+            "ID",
+            "name",
+            "Nationality",
+            "meter_100",
+            "meter_200",
+            "meter_300",
+            "meter_400",
+            "meter_500",
+            "meter_600",
+            "meter_700",
+            "Time"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              6
+            ],
+            [
+              "Grant Hackett",
+              "Sergiy Fesenko"
+            ],
+            [
+              "Tunisia",
+              "Canada"
+            ],
+            [
+              57.31,
+              55.67
+            ],
+            [
+              "1:57.10",
+              "1:57.26"
+            ],
+            [
+              "2:55.90",
+              "2:56.02"
+            ],
+            [
+              "3:55.36",
+              "3:55.36"
+            ],
+            [
+              "4:54.48",
+              "4:54.21"
+            ],
+            [
+              "5:53.53",
+              "5:52.92"
+            ],
+            [
+              "6:57.69",
+              "6:52.69"
+            ],
+            [
+              "7:52.04",
+              "7:53.43"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF LENGTH(_) < _ THEN INSERT INTO _ (_, _) VALUES (ROUND(_), _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 1,
+    "select": 0,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to add a new swimmer entry with a rounded ID and the given name, only if the name is shorter than 10 characters.",
+    "detailed_text": "Design a PL/pgSQL stored procedure to insert a record into the swimmer table. This record should have the ID set to the nearest integer value of the provided para_ID and the name set to para_name. The insertion will be executed only if the length of para_name is less than 10 characters."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first checks the \"captain\" table for records. If no records exist, it inserts a new row using the provided parameter as the Captain_ID. If records are present, it calculates the new Captain_ID by adding the input parameter to the existing maximum Captain_ID in the table, then inserts this new value.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Captain_ID integer) LANGUAGE plpgsql AS $$ DECLARE count_records INTEGER; max_val NUMERIC; BEGIN SELECT COUNT(*) INTO count_records FROM \"captain\"; IF count_records = 0 THEN INSERT INTO \"captain\" (\"Captain_ID\") VALUES (para_Captain_ID); ELSE SELECT MAX(\"Captain_ID\") INTO max_val FROM \"captain\"; INSERT INTO \"captain\" (\"Captain_ID\") VALUES (max_val + para_Captain_ID); END IF; END; $$;",
+    "call": [
+      "call sp(4);",
+      "call sp(4);",
+      "call sp(4);",
+      "call sp(5);",
+      "call sp(4);"
+    ],
+    "database": "ship_1",
+    "table": [
+      "captain"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Ship",
+          "table_comment": "",
+          "column_names": [
+            "Ship_ID",
+            "Name",
+            "Type",
+            "Built_Year",
+            "Class",
+            "Flag"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              4
+            ],
+            [
+              "HMS Gorgon",
+              "HMS Destiny"
+            ],
+            [
+              "Panamax",
+              "Panamax"
+            ],
+            [
+              1997.0,
+              1998.0
+            ],
+            [
+              "KR",
+              "KR"
+            ],
+            [
+              "Panama",
+              "Panama"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "captain",
+          "table_comment": "",
+          "column_names": [
+            "Captain_ID",
+            "Name",
+            "Ship_ID",
+            "age",
+            "Class",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              "Lieutenant Montagu Verling",
+              "Lieutenant Hugh Bolitho"
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              "45",
+              "38"
+            ],
+            [
+              "Third-rate ship of the line",
+              "Armed schooner"
+            ],
+            [
+              "Lieutenant",
+              "Lieutenant"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ DECLARE _ _; _ _; BEGIN SELECT COUNT(*) INTO _ FROM _; IF _ = _ THEN INSERT INTO _ (_) VALUES (_); ELSE SELECT MAX(_) INTO _ FROM _; INSERT INTO _ (_) VALUES (_ + _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 1,
+    "insert": 1,
+    "select": 1,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to add a new captain's ID. If there are no records, use the provided ID directly. Otherwise, add the provided ID to the current highest ID and insert the result.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first checks the \"captain\" table for records. If no records exist, it inserts a new row using the provided parameter as the Captain_ID. If records are present, it calculates the new Captain_ID by adding the input parameter to the existing maximum Captain_ID in the table, then inserts this new value."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure to delete entries from the \"track\" table. The deletion criteria are that the \"Year_Opened\" column must not match the provided parameter para_Year_Opened, and the \"Location\" column must contain the substring specified by the para_Location parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Year_Opened real, para_Location text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"track\" WHERE \"Year_Opened\" <> para_Year_Opened AND \"Location\" LIKE '%' || para_Location || '%'; END; $$;",
+    "call": [
+      "call sp(1995.0, 'Joliet, IL');",
+      "call sp(1950.0, 'Kansas City, KS');",
+      "call sp(1968.0, 'Darlington, SC');",
+      "call sp(1947.0, 'Fontana, CA');",
+      "call sp(1995.0, 'Daytona Beach, FL');"
+    ],
+    "database": "race_track",
+    "table": [
+      "track"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "race",
+          "table_comment": "",
+          "column_names": [
+            "Race_ID",
+            "Name",
+            "Class",
+            "integer",
+            "Track_ID"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              2
+            ],
+            [
+              "Gainsco Grand Prix of Miami",
+              "Gainsco Grand Prix of Miami"
+            ],
+            [
+              "DP/GT",
+              "DP/GT"
+            ],
+            [
+              "May 26",
+              "April 19"
+            ],
+            [
+              "1",
+              "7"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "track",
+          "table_comment": "",
+          "column_names": [
+            "Track_ID",
+            "Name",
+            "Location",
+            "Seating",
+            "Year_Opened"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              1
+            ],
+            [
+              "Kansas Speedway",
+              "Martinsville Speedway"
+            ],
+            [
+              "Darlington, SC",
+              "Kansas City, KS"
+            ],
+            [
+              63000.0,
+              65000.0
+            ],
+            [
+              1997.0,
+              1997.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ <> _ AND _ _ _ || _ || _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 0,
+    "delete": 1,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL that removes records from a dataset where the establishment year is different from a given year and the location includes a specified keyword.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure to delete entries from the \"track\" table. The deletion criteria are that the \"Year_Opened\" column must not match the provided parameter para_Year_Opened, and the \"Location\" column must contain the substring specified by the para_Location parameter."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure to update the \"Name\" and \"Type\" fields in the \"ship\" table with values provided by the parameters para_Name and para_Type, respectively. This update occurs only for records where the \"Nationality\" field value exceeds the specified parameter para_Nationality.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Name text, para_Type text, para_Nationality text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"ship\" SET \"Name\" = para_Name, \"Type\" = para_Type WHERE \"Nationality\" > para_Nationality; END; $$;",
+    "call": [
+      "call sp('Farringford', 'Cargo ship', 'United Kingdom');",
+      "call sp('Author', 'Cargo ship', 'United Kingdom');",
+      "call sp('Author', 'Cargo ship', 'United Kingdom');",
+      "call sp('Corbridge', 'Battle ship', 'United States');",
+      "call sp('Ariadne', 'Battle ship', 'United States');"
+    ],
+    "database": "ship_mission",
+    "table": [
+      "ship"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "mission",
+          "table_comment": "",
+          "column_names": [
+            "Mission_ID",
+            "Ship_ID",
+            "Code",
+            "Launched_Year",
+            "Location",
+            "Speed_knots",
+            "Fate"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              "VMV-5",
+              "VMV-3"
+            ],
+            [
+              1930,
+              1916
+            ],
+            [
+              "Uusikaupunki , Finland",
+              "Uusikaupunki , Finland"
+            ],
+            [
+              16,
+              23
+            ],
+            [
+              "Lost (burned) 1931",
+              "Decommissioned 1950"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "ship",
+          "table_comment": "",
+          "column_names": [
+            "Ship_ID",
+            "Name",
+            "Type",
+            "Nationality",
+            "Tonnage"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              3
+            ],
+            [
+              "Author",
+              "Ariadne"
+            ],
+            [
+              "Cargo ship",
+              "Cargo ship"
+            ],
+            [
+              "United Kingdom",
+              "United Kingdom"
+            ],
+            [
+              3146,
+              3496
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _, _ = _ WHERE _ > _; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to update a ship's name and type to specified values if its nationality rank is higher than a given threshold.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure to update the \"Name\" and \"Type\" fields in the \"ship\" table with values provided by the parameters para_Name and para_Type, respectively. This update occurs only for records where the \"Nationality\" field value exceeds the specified parameter para_Nationality."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that deletes entries from the Problem_Category_Codes table where the problem_category_code matches the provided parameter. If records are found and removed, proceed to update the problem_category_description by appending the specified 'suffix' to the parameter's description value.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_problem_category_code text, para_problem_category_description text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"Problem_Category_Codes\" WHERE \"problem_category_code\" = para_problem_category_code; IF FOUND THEN UPDATE \"Problem_Category_Codes\" SET \"problem_category_description\" = CONCAT(\"para_problem_category_description\", 'suffix'); END IF; END; $$;",
+    "call": [
+      "call sp('Middleware', 'User Interface.');",
+      "call sp('Middleware', 'User Interface.');",
+      "call sp('GUI', 'User Interface.');",
+      "call sp('Middleware', 'User Interface.');",
+      "call sp('Middleware', 'User Interface.');"
+    ],
+    "database": "tracking_software_problems",
+    "table": [
+      "Problem_Category_Codes"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Staff",
+          "table_comment": "",
+          "column_names": [
+            "staff_id",
+            "staff_first_name",
+            "staff_last_name",
+            "other_staff_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              14,
+              11
+            ],
+            [
+              "Kenyatta",
+              "Lysanne"
+            ],
+            [
+              "Schumm",
+              "Schumm"
+            ],
+            [
+              "w",
+              "p"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Problem_Category_Codes",
+          "table_comment": "",
+          "column_names": [
+            "problem_category_code",
+            "problem_category_description"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Middleware",
+              "GUI"
+            ],
+            [
+              "User Interface.",
+              "User Interface."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Problem_Log",
+          "table_comment": "",
+          "column_names": [
+            "problem_log_id",
+            "assigned_to_staff_id",
+            "problem_id",
+            "problem_category_code",
+            "problem_status_code",
+            "log_entry_integer",
+            "log_entry_description",
+            "log_entry_fix",
+            "other_log_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              4
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              13,
+              10
+            ],
+            [
+              "GUI",
+              "Middleware"
+            ],
+            [
+              "Reported",
+              "Solved"
+            ],
+            [
+              "2011-11-12 23:30:53",
+              "1974-09-13 00:37:26"
+            ],
+            [
+              "c",
+              "a"
+            ],
+            [
+              "i",
+              "k"
+            ],
+            [
+              "v",
+              "f"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Problem_Status_Codes",
+          "table_comment": "",
+          "column_names": [
+            "problem_status_code",
+            "problem_status_description"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Solved",
+              "Reported"
+            ],
+            [
+              "Reported",
+              "Reported"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Problems",
+          "table_comment": "",
+          "column_names": [
+            "problem_id",
+            "product_id",
+            "closure_authorised_by_staff_id",
+            "reported_by_staff_id",
+            "integer_problem_reported",
+            "integer_problem_closed",
+            "problem_description",
+            "other_problem_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              "1970-02-23 17:46:12",
+              "1977-10-22 15:48:13"
+            ],
+            [
+              "1974-09-20 13:42:19",
+              "1997-02-26 05:06:15"
+            ],
+            [
+              "j",
+              "s"
+            ],
+            [
+              "p",
+              "l"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Product",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "product_name",
+            "product_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              11
+            ],
+            [
+              "rose",
+              "rose"
+            ],
+            [
+              "h",
+              "m"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _; IF FOUND THEN UPDATE _ SET _ = CONCAT(_, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to remove entries from the problem category list that match a given code, and if any records were deleted, update their descriptions by appending a specified suffix to them.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that deletes entries from the Problem_Category_Codes table where the problem_category_code matches the provided parameter. If records are found and removed, proceed to update the problem_category_description by appending the specified 'suffix' to the parameter's description value."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that updates the Score field in the \"match\" table. This update is applied to records where the substring of the \"integer\" column, beginning at the second character and spanning three characters, equals the para_integer parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Score text, para_integer text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"match\" SET \"Score\" = para_Score WHERE SUBSTRING(\"integer\" FROM 2 FOR 3) = para_integer; END; $$;",
+    "call": [
+      "call sp('3-0', '23 July 1992');",
+      "call sp('1-0', '4 April 1993');",
+      "call sp('2–1', '18 February 1992');",
+      "call sp('2–1', '23 July 1992');",
+      "call sp('1–0', '23 July 1992');"
+    ],
+    "database": "city_record",
+    "table": [
+      "match"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "city",
+          "table_comment": "",
+          "column_names": [
+            "City_ID",
+            "City",
+            "Hanzi",
+            "Hanyu_Pinyin",
+            "Regional_Population",
+            "GDP"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              4
+            ],
+            [
+              "Nanjing ( Jiangsu )",
+              "Jinhua ( Zhejiang )"
+            ],
+            [
+              "宁波/ 寧波嘉兴/ 嘉興苏州/ 蘇州苏州/ 蘇州苏州/ 蘇州嘉兴/ 嘉興",
+              "扬州/ 揚州嘉兴/ 嘉興苏州/ 蘇州苏州/ 蘇州苏州/ 蘇州嘉兴/ 嘉興"
+            ],
+            [
+              "Níngbō",
+              "Tāizhōu"
+            ],
+            [
+              4459760,
+              4459760
+            ],
+            [
+              408.02,
+              358.04
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "hosting_city",
+          "table_comment": "",
+          "column_names": [
+            "Year",
+            "Match_ID",
+            "Host_City"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2008,
+              2009
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              "2",
+              "1"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "match",
+          "table_comment": "",
+          "column_names": [
+            "Match_ID",
+            "integer",
+            "Venue",
+            "Score",
+            "Result",
+            "Competition"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              "23 July 1992",
+              "18 February 1992"
+            ],
+            [
+              "Estadio Rigoberto López , Managua , Nicaragua",
+              "Estadio Rigoberto López , Managua , Nicaragua"
+            ],
+            [
+              "2–1",
+              "1–0"
+            ],
+            [
+              "5-1",
+              "7–1"
+            ],
+            [
+              "1994 FIFA World Cup qualification",
+              "2002 FIFA World Cup qualification"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "temperature",
+          "table_comment": "",
+          "column_names": [
+            "City_ID",
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+          ],
+          "column_types": [
+            "integer",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              11,
+              1
+            ],
+            [
+              17.8,
+              17.8
+            ],
+            [
+              17.2,
+              17.8
+            ],
+            [
+              19.4,
+              19.4
+            ],
+            [
+              26.1,
+              20.0
+            ],
+            [
+              28.3,
+              30.6
+            ],
+            [
+              20.6,
+              31.1
+            ],
+            [
+              28.3,
+              28.3
+            ],
+            [
+              31.7,
+              23.3
+            ],
+            [
+              20.6,
+              30.6
+            ],
+            [
+              27.2,
+              21.7
+            ],
+            [
+              20.0,
+              27.8
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE SUBSTRING(_ FROM _ FOR _) = _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to update scores in the match records. The update occurs when the substring, starting from the second character and extending three characters long, matches the specified integer value.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that updates the Score field in the \"match\" table. This update is applied to records where the substring of the \"integer\" column, beginning at the second character and spanning three characters, equals the para_integer parameter."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure to update the \"Name\" field in the \"singer\" table, setting it to the parameter \"para_Name\" for records where the \"Name\" field is currently NULL.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Name text) LANGUAGE plpgsql AS $$ BEGIN UPDATE \"singer\" SET \"Name\" = para_Name WHERE \"Name\" IS NULL; END; $$;",
+    "call": [
+      "call sp('Alice Walton');",
+      "call sp('Gina Rinehart');",
+      "call sp('Alice Walton');",
+      "call sp('Abigail Johnson');",
+      "call sp('Alice Walton');"
+    ],
+    "database": "singer",
+    "table": [
+      "singer"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "singer",
+          "table_comment": "",
+          "column_names": [
+            "Singer_ID",
+            "Name",
+            "Birth_Year",
+            "Net_Worth_Millions",
+            "Citizenship"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              4
+            ],
+            [
+              "Alice Walton",
+              "Susanne Klatten"
+            ],
+            [
+              1961.0,
+              1940.0
+            ],
+            [
+              12.7,
+              17.8
+            ],
+            [
+              "United States",
+              "Chile"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "song",
+          "table_comment": "",
+          "column_names": [
+            "Song_ID",
+            "Title",
+            "Singer_ID",
+            "Sales",
+            "Highest_Position"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              7
+            ],
+            [
+              "Yeah",
+              "Do They Know It's Christmas"
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              292000.0,
+              261000.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _ WHERE _ IS NULL; END; $$;",
+    "table_num": 1,
+    "parameter": 1,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL that modifies entries in the singer list, assigning a new name where the current name is absent.",
+    "detailed_text": "Develop a PL/pgSQL procedure to update the \"Name\" field in the \"singer\" table, setting it to the parameter \"para_Name\" for records where the \"Name\" field is currently NULL."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that deletes entries from the \"city\" table. This deletion occurs for records where the \"City_ID\" field is less than the given parameter, para_City_ID, and the \"Census_Ranking\" field contains the substring specified by para_Census_Ranking.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_City_ID integer, para_Census_Ranking text) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"city\" WHERE \"City_ID\" < para_City_ID AND \"Census_Ranking\" LIKE '%' || para_Census_Ranking || '%'; END; $$;",
+    "call": [
+      "call sp(2, '3460 of 5008');",
+      "call sp(5, '2418 of 5008');",
+      "call sp(2, '636 of 5008');",
+      "call sp(1, '1442 of 5,008');",
+      "call sp(5, '636 of 5008');"
+    ],
+    "database": "farm",
+    "table": [
+      "city"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "city",
+          "table_comment": "",
+          "column_names": [
+            "City_ID",
+            "Official_Name",
+            "Status",
+            "Area_km_2",
+            "Population",
+            "Census_Ranking"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              1
+            ],
+            [
+              "Perth-Andover",
+              "Perth-Andover"
+            ],
+            [
+              "Village",
+              "Village"
+            ],
+            [
+              8.89,
+              2.24
+            ],
+            [
+              775.0,
+              1778.0
+            ],
+            [
+              "1936 of 5,008",
+              "636 of 5008"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "competition_record",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Farm_ID",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              5
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm",
+          "table_comment": "",
+          "column_names": [
+            "Farm_ID",
+            "Year",
+            "Total_Horses",
+            "Working_Horses",
+            "Total_Cattle",
+            "Oxen",
+            "Bulls",
+            "Cows",
+            "Pigs",
+            "Sheep_and_Goats"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              3
+            ],
+            [
+              1931,
+              1929
+            ],
+            [
+              2546.9,
+              3658.9
+            ],
+            [
+              3721.6,
+              3593.7
+            ],
+            [
+              6274.1,
+              8604.8
+            ],
+            [
+              156.5,
+              156.5
+            ],
+            [
+              31.6,
+              32.8
+            ],
+            [
+              3471.6,
+              2518.0
+            ],
+            [
+              6962.9,
+              6962.9
+            ],
+            [
+              4533.4,
+              2109.5
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "farm_competition",
+          "table_comment": "",
+          "column_names": [
+            "Competition_ID",
+            "Year",
+            "Theme",
+            "Host_city_ID",
+            "Hosts"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              5
+            ],
+            [
+              2002,
+              2003
+            ],
+            [
+              "Aliens",
+              "Carnival M is back!"
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              "Leehom Wang and Kelly Rowland",
+              "Shaggy and Coco Lee"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ < _ AND _ _ _ || _ || _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 0,
+    "delete": 1,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to remove city records when their ID is below a specified limit and their ranking includes a specific keyword.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that deletes entries from the \"city\" table. This deletion occurs for records where the \"City_ID\" field is less than the given parameter, para_City_ID, and the \"Census_Ranking\" field contains the substring specified by para_Census_Ranking."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure that first verifies whether any records in the \"singer\" table have a \"Name\" matching the provided parameter, para_Name. If such records exist, proceed to delete all rows from the \"singer\" table where the \"Citizenship\" value is less than the parameter, para_Citizenship.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Name text, para_Citizenship text) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT 1 FROM \"singer\" WHERE \"Name\" = para_Name) THEN DELETE FROM \"singer\" WHERE \"Citizenship\" < para_Citizenship; END IF; END; $$;",
+    "call": [
+      "call sp('Liliane Bettencourt', 'United States');",
+      "call sp('Abigail Johnson', 'Germany');",
+      "call sp('Abigail Johnson', 'United States');",
+      "call sp('Alice Walton', 'United States');",
+      "call sp('Alice Walton', 'United States');"
+    ],
+    "database": "singer",
+    "table": [
+      "singer"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "singer",
+          "table_comment": "",
+          "column_names": [
+            "Singer_ID",
+            "Name",
+            "Birth_Year",
+            "Net_Worth_Millions",
+            "Citizenship"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              8
+            ],
+            [
+              "Alice Walton",
+              "Abigail Johnson"
+            ],
+            [
+              1948.0,
+              1940.0
+            ],
+            [
+              30.0,
+              14.3
+            ],
+            [
+              "Germany",
+              "Australia"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "song",
+          "table_comment": "",
+          "column_names": [
+            "Song_ID",
+            "Title",
+            "Singer_ID",
+            "Sales",
+            "Highest_Position"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              3
+            ],
+            [
+              "F**k It (I Don't Want You Back)",
+              "Call on Me"
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              261000.0,
+              275000.0
+            ],
+            [
+              3.0,
+              1.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT _ FROM _ WHERE _ = _) THEN DELETE FROM _ WHERE _ < _; END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 0,
+    "update": 0,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that checks if a singer with the specified name exists. If such a singer is found, delete all singers whose citizenship level is below the given threshold.",
+    "detailed_text": "Develop a PL/pgSQL procedure that first verifies whether any records in the \"singer\" table have a \"Name\" matching the provided parameter, para_Name. If such records exist, proceed to delete all rows from the \"singer\" table where the \"Citizenship\" value is less than the parameter, para_Citizenship."
+  }
+]

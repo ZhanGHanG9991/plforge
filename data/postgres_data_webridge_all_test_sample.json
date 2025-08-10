@@ -1,0 +1,2702 @@
+[
+  {
+    "text": "Develop a PL/pgSQL stored procedure that retrieves the organization_details from the Organizations table by filtering with both organization_id and parent_organization_id. Subsequently, update the organization_details field for the same row using the provided para_organization_details parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_organization_id integer, para_parent_organization_id integer, para_organization_details text) LANGUAGE plpgsql AS $$ DECLARE v_desc TEXT; BEGIN SELECT \"organization_details\" INTO v_desc FROM \"Organizations\" WHERE \"organization_id\" = para_organization_id AND \"parent_organization_id\" = para_parent_organization_id; UPDATE \"Organizations\" SET \"organization_details\" = para_organization_details WHERE \"organization_id\" = para_organization_id AND \"parent_organization_id\" = para_parent_organization_id; END; $$;",
+    "call": [
+      "call sp(8, 7, 'Reinger, Hudson and Nolan Group');",
+      "call sp(7, 7, 'Denesik and Sons Party');",
+      "call sp(8, 7, 'Denesik and Sons Party');",
+      "call sp(7, 7, 'Reinger, Hudson and Nolan Group');",
+      "call sp(7, 7, 'Denesik and Sons Party');"
+    ],
+    "database": "local_govt_and_lot",
+    "table": [
+      "Organizations"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Customer_Event_Notes",
+          "table_comment": "",
+          "column_names": [
+            "Customer_Event_Note_ID",
+            "Customer_Event_ID",
+            "service_type_code",
+            "resident_id",
+            "property_id",
+            "integer_moved_in"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              56,
+              50
+            ],
+            [
+              606,
+              817
+            ],
+            [
+              "Check",
+              "Cleanning"
+            ],
+            [
+              67,
+              37
+            ],
+            [
+              748,
+              605
+            ],
+            [
+              "2016-11-04 12:46:21",
+              "2017-04-28 10:17:13"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customer_Events",
+          "table_comment": "",
+          "column_names": [
+            "Customer_Event_ID",
+            "customer_id",
+            "integer_moved_in",
+            "property_id",
+            "resident_id",
+            "thing_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              817,
+              428
+            ],
+            [
+              91,
+              19
+            ],
+            [
+              "2015-03-27 12:00:00",
+              "2016-09-27 12:00:00"
+            ],
+            [
+              879,
+              605
+            ],
+            [
+              45,
+              83
+            ],
+            [
+              80,
+              46
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_details"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              63,
+              69
+            ],
+            [
+              "Jeff McCullough MD",
+              "Jayme Marquardt"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Organizations",
+          "table_comment": "",
+          "column_names": [
+            "organization_id",
+            "parent_organization_id",
+            "organization_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              "Denesik and Sons Party",
+              "Reinger, Hudson and Nolan Group"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Properties",
+          "table_comment": "",
+          "column_names": [
+            "property_id",
+            "property_type_code",
+            "property_address",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              605,
+              24
+            ],
+            [
+              "flat",
+              "flat"
+            ],
+            [
+              "91002 Melvina Haven",
+              "85456 Annie Lodge Suite 449"
+            ],
+            [
+              "USA",
+              "USA"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Residents",
+          "table_comment": "",
+          "column_names": [
+            "resident_id",
+            "property_id",
+            "integer_moved_in",
+            "integer_moved_out",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              58,
+              38
+            ],
+            [
+              748,
+              879
+            ],
+            [
+              "2015-03-27 12:00:00",
+              "2015-03-27 12:00:00"
+            ],
+            [
+              "2017-12-18 03:46:04",
+              "2017-11-29 21:24:08"
+            ],
+            [
+              "Tiffany Jaskolski",
+              "Tiffany Jaskolski"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Residents_Services",
+          "table_comment": "",
+          "column_names": [
+            "resident_id",
+            "service_id",
+            "integer_moved_in",
+            "property_id",
+            "integer_requested",
+            "integer_provided",
+            "other_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              67,
+              47
+            ],
+            [
+              65,
+              11
+            ],
+            [
+              "2015-03-27 12:00:00",
+              "2015-03-27 12:00:00"
+            ],
+            [
+              954,
+              629
+            ],
+            [
+              "2016-06-18 20:09:24",
+              "2016-10-10 21:42:21"
+            ],
+            [
+              "2017-10-17 03:30:08",
+              "2017-11-13 10:28:34"
+            ],
+            [
+              "Unsatisfied",
+              "Unsatisfied"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Services",
+          "table_comment": "",
+          "column_names": [
+            "service_id",
+            "organization_id",
+            "service_type_code",
+            "service_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              65,
+              11
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              "Pay bills",
+              "Moving Out"
+            ],
+            [
+              "Satisfied",
+              "Satisfied"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Things",
+          "table_comment": "",
+          "column_names": [
+            "thing_id",
+            "organization_id",
+            "Type_of_Thing_Code",
+            "service_type_code",
+            "service_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              84,
+              10
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              "Commen",
+              "Electronics"
+            ],
+            [
+              "Cleanning",
+              "Cleanning"
+            ],
+            [
+              "Unsatisfied",
+              "Satisfied"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Timed_Locations_of_Things",
+          "table_comment": "",
+          "column_names": [
+            "thing_id",
+            "integer_and_Time",
+            "Location_Code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              26,
+              14
+            ],
+            [
+              "2017-01-02 23:26:47",
+              "2016-04-26 16:34:09"
+            ],
+            [
+              "192 Kub Rapids",
+              "2677 Runolfsson"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Timed_Status_of_Things",
+          "table_comment": "",
+          "column_names": [
+            "thing_id",
+            "integer_and_integer",
+            "Status_of_Thing_Code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              80
+            ],
+            [
+              "2016-12-02 11:08:16",
+              "2016-10-08 08:02:57"
+            ],
+            [
+              "In Progress",
+              "In Progress"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; BEGIN SELECT _ INTO _ FROM _ WHERE _ = _ AND _ = _; UPDATE _ SET _ = _ WHERE _ = _ AND _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL to fetch details for an organization using its ID and its parent’s ID as criteria, then update its description with new details provided.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that retrieves the organization_details from the Organizations table by filtering with both organization_id and parent_organization_id. Subsequently, update the organization_details field for the same row using the provided para_organization_details parameter."
+  },
+  {
+    "text": "Create a PL/pgSQL stored procedure that uses a cursor to iterate through each entry in the \"track\" table. For every entry, if the \"Year_Opened\" is greater than the provided parameter \"para_Year_Opened,\" update the \"Name\" and \"Location\" fields with the values given by \"para_Name\" and \"para_Location.\" Once all track entries are processed, remove any rows from the \"race\" table where \"Race_ID\" is lower than \"para_Race_ID.\" Finally, if the number of processed records is an even number, update every entry in the \"race\" table to set the \"Track_ID\" to \"para_Track_ID.\"",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Year_Opened real, para_Name text, para_Location text, para_Race_ID integer, para_Track_ID text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"track\"; rec RECORD; process_count INTEGER := 0; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; process_count := process_count + 1; IF rec.\"Year_Opened\" > para_Year_Opened THEN UPDATE \"track\" SET \"Name\" = para_Name, \"Location\" = para_Location WHERE CURRENT OF ref_cursor; END IF; END LOOP; CLOSE ref_cursor; DELETE FROM \"race\" WHERE \"Race_ID\" < para_Race_ID; IF process_count % 2 = 0 THEN UPDATE \"race\" SET \"Track_ID\" = para_Track_ID; END IF; END; $$;",
+    "call": [
+      "call sp(1997.0, 'Michigan International Speedway', 'Ridgeway, VA', 5, '5');",
+      "call sp(1995.0, 'Homestead-Miami Speedway', 'Darlington, SC', 2, '6');",
+      "call sp(1947.0, 'Darlington Raceway', 'Ridgeway, VA', 1, '4');",
+      "call sp(2001.0, 'Kansas Speedway', 'Daytona Beach, FL', 3, '4');",
+      "call sp(1959.0, 'Kansas Speedway', 'Ridgeway, VA', 6, '6');"
+    ],
+    "database": "race_track",
+    "table": [
+      "track",
+      "race"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "race",
+          "table_comment": "",
+          "column_names": [
+            "Race_ID",
+            "Name",
+            "Class",
+            "integer",
+            "Track_ID"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              7
+            ],
+            [
+              "Bosch Engineering 250 at VIR",
+              "Sahlen's Six Hours of the Glen"
+            ],
+            [
+              "DP/GT",
+              "DP/GT"
+            ],
+            [
+              "March 29",
+              "May 26"
+            ],
+            [
+              "4",
+              "4"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "track",
+          "table_comment": "",
+          "column_names": [
+            "Track_ID",
+            "Name",
+            "Location",
+            "Seating",
+            "Year_Opened"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              6
+            ],
+            [
+              "Phoenix International Raceway",
+              "Daytona International Speedway"
+            ],
+            [
+              "Kansas City, KS",
+              "Darlington, SC"
+            ],
+            [
+              81687.0,
+              63000.0
+            ],
+            [
+              1997.0,
+              1995.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _CURSOR FOR SELECT * FROM _; _ _; _ _ := _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; _ := _ + _; IF _._ > _ THEN UPDATE _ SET _ = _, _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; DELETE FROM _ WHERE _ < _; IF _ % _ = _ THEN UPDATE _ SET _ = _; END IF; END; $$;",
+    "table_num": 2,
+    "parameter": 5,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to review all entries in the track record. If a track's opening year is more recent than the specified year, update its name and location with provided values. Upon completing all entries, remove races with IDs below a given threshold. Lastly, if the total number of processed entries is even, set the track identifier in all races to the specified value.",
+    "detailed_text": "Create a PL/pgSQL stored procedure that uses a cursor to iterate through each entry in the \"track\" table. For every entry, if the \"Year_Opened\" is greater than the provided parameter \"para_Year_Opened,\" update the \"Name\" and \"Location\" fields with the values given by \"para_Name\" and \"para_Location.\" Once all track entries are processed, remove any rows from the \"race\" table where \"Race_ID\" is lower than \"para_Race_ID.\" Finally, if the number of processed records is an even number, update every entry in the \"race\" table to set the \"Track_ID\" to \"para_Track_ID.\""
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first checks if a student exists in the Student table by comparing the first name (Fname) and last name (LName) with the given parameters, para_Fname and para_LName. If such a student exists, proceed to verify if there's an entry for the restaurant name (ResName) in the Restaurant table. If the restaurant is found, update its address to the provided para_Address; otherwise, insert a new restaurant entry with the given name and address. The same process is applied to the Restaurant_Type table: check if a restaurant type name (ResTypeName) exists, update its description to para_ResTypeDescription if it does, or insert a new type and description if it does not.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Fname text, para_LName text, para_ResName text, para_Address text, para_ResTypeName text, para_ResTypeDescription text) LANGUAGE plpgsql AS $$ DECLARE v_module_exists text; v_config_exists text; BEGIN SELECT COUNT(*) INTO v_module_exists FROM \"Student\" WHERE \"Fname\" = para_Fname AND \"LName\" = para_LName; IF v_module_exists = '0' THEN RETURN; END IF; SELECT COUNT(*) INTO v_config_exists FROM \"Restaurant\" WHERE \"ResName\" = para_ResName; IF v_config_exists > '0' THEN UPDATE \"Restaurant\" SET \"Address\" = para_Address WHERE \"ResName\" = para_ResName; ELSE INSERT INTO \"Restaurant\" (\"ResName\", \"Address\") VALUES (para_ResName, para_Address); END IF; SELECT COUNT(*) INTO v_config_exists FROM \"Restaurant_Type\" WHERE \"ResTypeName\" = para_ResTypeName; IF v_config_exists > '0' THEN UPDATE \"Restaurant_Type\" SET \"ResTypeDescription\" = para_ResTypeDescription WHERE \"ResTypeName\" = para_ResTypeName; ELSE INSERT INTO \"Restaurant_Type\" (\"ResTypeName\", \"ResTypeDescription\") VALUES (para_ResTypeName, para_ResTypeDescription); END IF; END; $$;",
+    "call": [
+      "call sp('Ian', 'Adams', 'Subway', '3212 St Paul St, Baltimore, MD 21218', 'Stir-fry', 'Simplest there is.');",
+      "call sp('Steven', 'Pang', 'Subway', '3233 St Paul St, Baltimore, MD 21218', 'Sandwich', 'Simplest there is.');",
+      "call sp('Tracy', 'Jones', 'Subway', '3212 St Paul St, Baltimore, MD 21218', 'Sandwich', 'Classic Chinese cooking.');",
+      "call sp('Derek', 'Gompers', 'Subway', '3212 St Paul St, Baltimore, MD 21218', 'Stir-fry', 'Classic Chinese cooking.');",
+      "call sp('George', 'Leighton', 'Subway', '3233 St Paul St, Baltimore, MD 21218', 'Stir-fry', 'Classic Chinese cooking.');"
+    ],
+    "database": "restaurant_1",
+    "table": [
+      "Student",
+      "Restaurant",
+      "Restaurant_Type"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "ResID",
+            "ResName",
+            "Address",
+            "Rating"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              2
+            ],
+            [
+              "Subway",
+              "Subway"
+            ],
+            [
+              "3212 St Paul St, Baltimore, MD 21218",
+              "3233 St Paul St, Baltimore, MD 21218"
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Restaurant_Type",
+          "table_comment": "",
+          "column_names": [
+            "ResTypeID",
+            "ResTypeName",
+            "ResTypeDescription"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              2
+            ],
+            [
+              "Sandwich",
+              "Sandwich"
+            ],
+            [
+              "Simplest there is.",
+              "Classic Chinese cooking."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Student",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "LName",
+            "Fname",
+            "Age",
+            "Sex",
+            "Major",
+            "Advisor",
+            "city_code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1012,
+              1016
+            ],
+            [
+              "Nelson",
+              "Smith"
+            ],
+            [
+              "Ian",
+              "Paul"
+            ],
+            [
+              19,
+              18
+            ],
+            [
+              "F",
+              "M"
+            ],
+            [
+              600,
+              600
+            ],
+            [
+              8741,
+              9172
+            ],
+            [
+              "WAS",
+              "PIT"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Type_Of_Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "ResID",
+            "ResTypeID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Visits_Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "ResID",
+            "Time",
+            "Spent"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "timestamp without time zone",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1001,
+              1032
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              "2017-10-08T13:00:30",
+              "2017-10-09T18:15:00"
+            ],
+            [
+              6.53,
+              6.53
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; _ _; BEGIN SELECT COUNT(*) INTO _ FROM _ WHERE _ = _ AND _ = _; IF _ = _ THEN RETURN; END IF; SELECT COUNT(*) INTO _ FROM _ WHERE _ = _; IF _ > _ THEN UPDATE _ SET _ = _ WHERE _ = _; ELSE INSERT INTO _ (_, _) VALUES (_, _); END IF; SELECT COUNT(*) INTO _ FROM _ WHERE _ = _; IF _ > _ THEN UPDATE _ SET _ = _ WHERE _ = _; ELSE INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+    "table_num": 3,
+    "parameter": 6,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to verify if a student module exists by matching first and last names with provided parameters. If it exists, check for a restaurant configuration using the restaurant name; update the address if it exists or insert a new record otherwise. Similarly, for restaurant types, either update the description if the type exists or insert a new type with description.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first checks if a student exists in the Student table by comparing the first name (Fname) and last name (LName) with the given parameters, para_Fname and para_LName. If such a student exists, proceed to verify if there's an entry for the restaurant name (ResName) in the Restaurant table. If the restaurant is found, update its address to the provided para_Address; otherwise, insert a new restaurant entry with the given name and address. The same process is applied to the Restaurant_Type table: check if a restaurant type name (ResTypeName) exists, update its description to para_ResTypeDescription if it does, or insert a new type and description if it does not."
+  },
+  {
+    "text": "Create a PLpgSQL procedure that operates on restaurant and visit data based on the provided para_ResTypeID parameter. If para_ResTypeID is less than 10, update the Restaurant_Type table to set ResTypeName to 'INACTIVE' for entries with ResTypeID less than para_ResTypeID and set a flag to 1. If para_ResTypeID is between 10 and 25, open a cursor on the Restaurant table for rows with ResID greater than para_ResID and ResName matching para_ResName, setting flag to 2. If para_ResTypeID is between 25 and 40, open a cursor on Visits_Restaurant for rows where Spent is between para_Spent and twice para_Spent, setting flag to 3. Otherwise, open a cursor on Restaurant_Type for rows where ResTypeID exceeds half of para_ResTypeID, setting flag to 4. For flags 2 through 4, iterate over cursor results: for flag 2, update the current restaurant's ResName to 'COMPLETED' if ResID is below 50 or accumulate ResID values; for flag 3, set a temporary text to 'OVER_LIMIT', 'WITHIN_RANGE', or 'BELOW_MIN' based on the Spent value; for flag 4, increase a counter for even ResTypeID values. After processing, if flag equals 1, delete Restaurant entries with ResID below para_ResID. If flag equals 2 and the accumulated sum exceeds 100, decrease Spent by 10 in Visits_Restaurant where Spent exceeds 200. If flag equals 3 and the temporary text is 'OVER_LIMIT', delete Visits_Restaurant entries with Spent over 150. If flag equals 4 and the counter exceeds 5, update Restaurant_Type to set ResTypeName to 'PROCESSED' for entries with ResTypeID below para_ResTypeID. Otherwise, set Restaurant ResName to 'DEFAULT' where ResID is NULL.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_ResTypeID integer, para_ResTypeName text, para_ResID integer, para_ResName text, para_Spent real) LANGUAGE plpgsql AS $$ DECLARE cur REFCURSOR; rec RECORD; temp_num INTEGER; temp_text TEXT; row_count INTEGER; flag INTEGER; BEGIN temp_num := 0; temp_text := ''; row_count := 0; flag := 0; IF para_ResTypeID < 10 THEN UPDATE \"Restaurant_Type\" SET \"ResTypeName\" = 'INACTIVE' WHERE \"ResTypeID\" < para_ResTypeID; flag := 1; ELSIF para_ResTypeID < 25 THEN OPEN cur FOR SELECT \"ResID\", \"ResName\" FROM \"Restaurant\" WHERE \"ResID\" > para_ResID AND \"ResName\" LIKE para_ResName FOR UPDATE; flag := 2; ELSIF para_ResTypeID < 40 THEN OPEN cur FOR SELECT \"Spent\" FROM \"Visits_Restaurant\" WHERE \"Spent\" BETWEEN para_Spent AND para_Spent * 2; flag := 3; ELSE OPEN cur FOR SELECT \"ResTypeID\", \"ResTypeName\" FROM \"Restaurant_Type\" WHERE \"ResTypeID\" > para_ResTypeID / 2; flag := 4; END IF; IF flag = 2 OR flag = 3 OR flag = 4 THEN LOOP FETCH cur INTO rec; EXIT WHEN NOT FOUND; row_count := row_count + 1; IF flag = 2 THEN IF rec.\"ResID\" < 50 THEN UPDATE \"Restaurant\" SET \"ResName\" = 'COMPLETED' WHERE CURRENT OF cur; ELSE temp_num := temp_num + rec.\"ResID\"; END IF; ELSIF flag = 3 THEN IF rec.\"Spent\" > 100 THEN temp_text := 'OVER_LIMIT'; ELSIF rec.\"Spent\" > 50 THEN temp_text := 'WITHIN_RANGE'; ELSE temp_text := 'BELOW_MIN'; END IF; ELSIF flag = 4 THEN IF rec.\"ResTypeID\" % 2 = 0 THEN temp_num := temp_num + 1; END IF; END IF; END LOOP; CLOSE cur; END IF; IF flag = 1 THEN DELETE FROM \"Restaurant\" WHERE \"ResID\" < para_ResID; ELSIF flag = 2 AND temp_num > 100 THEN UPDATE \"Visits_Restaurant\" SET \"Spent\" = \"Spent\" - 10 WHERE \"Spent\" > 200; ELSIF flag = 3 AND temp_text = 'OVER_LIMIT' THEN DELETE FROM \"Visits_Restaurant\" WHERE \"Spent\" > 150; ELSIF flag = 4 AND temp_num > 5 THEN UPDATE \"Restaurant_Type\" SET \"ResTypeName\" = 'PROCESSED' WHERE \"ResTypeID\" < para_ResTypeID; ELSE UPDATE \"Restaurant\" SET \"ResName\" = 'DEFAULT' WHERE \"ResID\" IS NULL; END IF; END; $$;",
+    "call": [
+      "call sp(2, 'Stir-fry', 2, 'PROCESSED', 6.53);",
+      "call sp(1, 'Stir-fry', 2, 'PROCESSED', 6.53);",
+      "call sp(1, 'Stir-fry', 2, 'PROCESSED', 13.2);",
+      "call sp(1, 'Stir-fry', 2, 'PROCESSED', 6.53);",
+      "call sp(2, 'Sandwich', 2, 'PROCESSED', 6.53);"
+    ],
+    "database": "restaurant_1",
+    "table": [
+      "Restaurant_Type",
+      "Restaurant",
+      "Visits_Restaurant"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "ResID",
+            "ResName",
+            "Address",
+            "Rating"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              2
+            ],
+            [
+              "PROCESSED",
+              "PROCESSED"
+            ],
+            [
+              "3233 St Paul St, Baltimore, MD 21218",
+              "3233 St Paul St, Baltimore, MD 21218"
+            ],
+            [
+              13,
+              13
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Restaurant_Type",
+          "table_comment": "",
+          "column_names": [
+            "ResTypeID",
+            "ResTypeName",
+            "ResTypeDescription"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              1
+            ],
+            [
+              "Stir-fry",
+              "Sandwich"
+            ],
+            [
+              "Classic Chinese cooking.",
+              "Simplest there is."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Student",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "LName",
+            "Fname",
+            "Age",
+            "Sex",
+            "Major",
+            "Advisor",
+            "city_code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1012,
+              1015
+            ],
+            [
+              "Kumar",
+              "Davis"
+            ],
+            [
+              "Michael",
+              "Shiela"
+            ],
+            [
+              20,
+              20
+            ],
+            [
+              "M",
+              "M"
+            ],
+            [
+              600,
+              600
+            ],
+            [
+              1148,
+              2192
+            ],
+            [
+              "WAS",
+              "DAL"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Type_Of_Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "ResID",
+            "ResTypeID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Visits_Restaurant",
+          "table_comment": "",
+          "column_names": [
+            "StuID",
+            "ResID",
+            "Time",
+            "Spent"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "timestamp without time zone",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1032,
+              1001
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              "2017-10-09T18:15:00",
+              "2017-10-08T13:00:30"
+            ],
+            [
+              6.53,
+              6.53
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; _ _; _ _; _ _; ___ _; _ _; BEGIN _ := _; _ := _; ROW_COUNT := _; _ := _; IF _ < _ THEN UPDATE _ SET _ = _ WHERE _ < _; _ := _; ELSIF _ < _ THEN OPEN _ FOR SELECT _, _ FROM _ WHERE _ > _ AND _ _ _ FOR UPDATE; _ := _; ELSIF _ < _ THEN OPEN _ FOR SELECT _ FROM _ WHERE _ BETWEEN _ AND _ * _; _ := _; ELSE OPEN _ FOR SELECT _, _ FROM _ WHERE _ > _ / _; _ := _; END IF; IF _ = _ OR _ = _ OR _ = _ THEN LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; ROW_COUNT := ROW_COUNT + _; IF _ = _ THEN IF _._ < _ THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; ELSE _ := _ + _._; END IF; ELSIF _ = _ THEN IF _._ > _ THEN _ := _; ELSIF _._ > _ THEN _ := _; ELSE _ := _; END IF; ELSIF _ = _ THEN IF _._ % _ = _ THEN _ := _ + _; END IF; END IF; END LOOP; CLOSE _; END IF; IF _ = _ THEN DELETE FROM _ WHERE _ < _; ELSIF _ = _ AND _ > _ THEN UPDATE _ SET _ = _ - _ WHERE _ > _; ELSIF _ = _ AND _ = _ THEN DELETE FROM _ WHERE _ > _; ELSIF _ = _ AND _ > _ THEN UPDATE _ SET _ = _ WHERE _ < _; ELSE UPDATE _ SET _ = _ WHERE _ IS NULL; END IF; END; $$;",
+    "table_num": 3,
+    "parameter": 5,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to manage restaurant and visit data based on the type ID provided. If the type ID is below 10, mark types as 'INACTIVE' for those with IDs less than the provided type ID. If the type ID is between 10 and 25, review restaurants with IDs greater than the specified ID and names matching a pattern. For type IDs from 25 to 40, examine visit records with spending between a given amount and its double. For type IDs of 40 or more, inspect type entries with IDs greater than half the specified type ID. Based on these reviews, update or delete records: mark restaurants as 'COMPLETED' if their ID is less than 50; categorize spending as 'OVER_LIMIT', 'WITHIN_RANGE', or 'BELOW_MIN'; count even type IDs. Final actions depend on flags and counts, adjusting restaurant names, visit spending, or type names accordingly.",
+    "detailed_text": "Create a PLpgSQL procedure that operates on restaurant and visit data based on the provided para_ResTypeID parameter. If para_ResTypeID is less than 10, update the Restaurant_Type table to set ResTypeName to 'INACTIVE' for entries with ResTypeID less than para_ResTypeID and set a flag to 1. If para_ResTypeID is between 10 and 25, open a cursor on the Restaurant table for rows with ResID greater than para_ResID and ResName matching para_ResName, setting flag to 2. If para_ResTypeID is between 25 and 40, open a cursor on Visits_Restaurant for rows where Spent is between para_Spent and twice para_Spent, setting flag to 3. Otherwise, open a cursor on Restaurant_Type for rows where ResTypeID exceeds half of para_ResTypeID, setting flag to 4. For flags 2 through 4, iterate over cursor results: for flag 2, update the current restaurant's ResName to 'COMPLETED' if ResID is below 50 or accumulate ResID values; for flag 3, set a temporary text to 'OVER_LIMIT', 'WITHIN_RANGE', or 'BELOW_MIN' based on the Spent value; for flag 4, increase a counter for even ResTypeID values. After processing, if flag equals 1, delete Restaurant entries with ResID below para_ResID. If flag equals 2 and the accumulated sum exceeds 100, decrease Spent by 10 in Visits_Restaurant where Spent exceeds 200. If flag equals 3 and the temporary text is 'OVER_LIMIT', delete Visits_Restaurant entries with Spent over 150. If flag equals 4 and the counter exceeds 5, update Restaurant_Type to set ResTypeName to 'PROCESSED' for entries with ResTypeID below para_ResTypeID. Otherwise, set Restaurant ResName to 'DEFAULT' where ResID is NULL."
+  },
+  {
+    "text": "Develop a PLpgSQL stored procedure that processes records in the \"injury_accident\" table, filtering by specific \"Injury\" and \"Number_of_matches\" values provided as parameters. For each matching record where the \"Player\" field matches the parameter value, check the \"stadium\" table to see if a record with the specified \"name\" exists. If such a record is found, insert a new row into the \"game\" table with the \"Score\" set to the value of the parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Injury text, para_Number_of_matches text, para_Player text, para_name text, para_Score text) LANGUAGE plpgsql AS $$ DECLARE rec_cursor CURSOR FOR SELECT * FROM \"injury_accident\" WHERE \"Injury\" = para_Injury AND \"Number_of_matches\" = para_Number_of_matches; rec RECORD; v_module_exists text; BEGIN OPEN rec_cursor; LOOP FETCH rec_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"Player\" = para_Player THEN SELECT COUNT(*) INTO v_module_exists FROM \"stadium\" WHERE \"name\" = para_name; IF v_module_exists > '0' THEN INSERT INTO \"game\" (\"Score\") VALUES (para_Score); END IF; END IF; END LOOP; CLOSE rec_cursor; END; $$;",
+    "call": [
+      "call sp('Foot injury', '10', 'Diego Milito', 'Reliant Stadium', '1–2');",
+      "call sp('Post-traumatic pneumothrorax', '4', 'Dejan Stanković (2)', 'Lambeau Field', '0–0');",
+      "call sp('Sustained posterior thigh strains in his left leg', '3', 'Esteban Cambiasso (2)', 'FedExField', '1–1');",
+      "call sp('Slight thigh strain in right leg', '1', 'Wesley Sneijder (2)', 'Lincoln Financial Field', '1–1');",
+      "call sp('Right calf strain', '2', 'Davide Santon', 'Cowboys Stadium', '3–1');"
+    ],
+    "database": "game_injury",
+    "table": [
+      "injury_accident",
+      "stadium",
+      "game"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "game",
+          "table_comment": "",
+          "column_names": [
+            "stadium_id",
+            "id",
+            "Season",
+            "integer",
+            "Home_team",
+            "Away_team",
+            "Score",
+            "Competition"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              12
+            ],
+            [
+              20,
+              11
+            ],
+            [
+              2010,
+              2008
+            ],
+            [
+              "14 October 2009",
+              "8 August 2013"
+            ],
+            [
+              "Pakhtakor",
+              "Pakhtakor"
+            ],
+            [
+              "Bunyodkor",
+              "Pakhtakor"
+            ],
+            [
+              "2–1",
+              "1–1"
+            ],
+            [
+              "Cup",
+              "League"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "injury_accident",
+          "table_comment": "",
+          "column_names": [
+            "game_id",
+            "id",
+            "Player",
+            "Injury",
+            "Number_of_matches",
+            "Source"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              4
+            ],
+            [
+              2,
+              14
+            ],
+            [
+              "Javier Zanetti",
+              "Dejan Stanković (2)"
+            ],
+            [
+              "Slight thigh strain in right leg",
+              "First-degree strain left hamstring muscles"
+            ],
+            [
+              "1 (2)",
+              "3"
+            ],
+            [
+              "inter.it",
+              "inter.it"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "stadium",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "name",
+            "Home_Games",
+            "Average_Attendance",
+            "Total_Attendance",
+            "Capacity_Percentage"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              2
+            ],
+            [
+              "Invesco Field at Mile High",
+              "Gillette Stadium"
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              74908.0,
+              71080.0
+            ],
+            [
+              568643.0,
+              665380.0
+            ],
+            [
+              90.7,
+              98.4
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _CURSOR FOR SELECT * FROM _ WHERE _ = _ AND _ = _; _ _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN SELECT COUNT(*) INTO _ FROM _ WHERE _ = _; IF _ > _ THEN INSERT INTO _ (_) VALUES (_); END IF; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 3,
+    "parameter": 5,
+    "insert": 1,
+    "select": 1,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to check injury incidents matching specific injury type and match count. For each entry with a designated player, confirm if a stadium with a specific name exists. If it does, record the player's score in the game records.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that processes records in the \"injury_accident\" table, filtering by specific \"Injury\" and \"Number_of_matches\" values provided as parameters. For each matching record where the \"Player\" field matches the parameter value, check the \"stadium\" table to see if a record with the specified \"name\" exists. If such a record is found, insert a new row into the \"game\" table with the \"Score\" set to the value of the parameter."
+  },
+  {
+    "text": "Create a PL/pgSQL procedure that begins by declaring integer `result_val` as 0 and text `status_text` as 'pending'. If `para_Ship_ID` is less than 0, set `result_val` to the positive of `para_Ship_ID`, and update the `Ship_ID` in the `mission` table where `Location` matches `para_Location`. If the ID is less than 10, increase it by 5 and delete the mission with that `Ship_ID`. For IDs under 20, double the ID, update `ship` tonnage using this result added to `para_Tonnage`, where `Nationality` matches `para_Nationality`. If below 30, subtract 8 from the ID and delete ships with matching `Tonnage`. Otherwise, halve the ID and set `status_text` to 'processed'. Append `status_text` to `Location` in `mission` where `Ship_ID` matches and increase `result_val` by 3. Update `ship` nationality with '_updated', and change `Tonnage` to `para_Tonnage + 12` then `result_val - 7`, deleting entries with `_old` nationality. Update the final steps by multiplying `Tonnage` by 3, and adjusting missions with location `status_text`.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Ship_ID integer, para_Location text, para_Tonnage integer, para_Nationality text) LANGUAGE plpgsql AS $$ DECLARE result_val integer := 0; status_text text := 'pending'; BEGIN IF para_Ship_ID < 0 THEN result_val := para_Ship_ID * -1; UPDATE \"mission\" SET \"Ship_ID\" = result_val WHERE \"Location\" = para_Location; ELSIF para_Ship_ID < 10 THEN result_val := para_Ship_ID + 5; DELETE FROM \"mission\" WHERE \"Ship_ID\" = para_Ship_ID; ELSIF para_Ship_ID < 20 THEN result_val := para_Ship_ID * 2; UPDATE \"ship\" SET \"Tonnage\" = para_Tonnage + result_val WHERE \"Nationality\" = para_Nationality; ELSIF para_Ship_ID < 30 THEN result_val := para_Ship_ID - 8; DELETE FROM \"ship\" WHERE \"Tonnage\" = para_Tonnage; ELSE result_val := para_Ship_ID / 2; status_text := 'processed'; END IF; UPDATE \"mission\" SET \"Location\" = para_Location || status_text WHERE \"Ship_ID\" = para_Ship_ID; result_val := result_val + 3; UPDATE \"ship\" SET \"Nationality\" = para_Nationality || '_updated' WHERE \"Tonnage\" = para_Tonnage; DELETE FROM \"mission\" WHERE \"Ship_ID\" > result_val; status_text := 'active'; UPDATE \"ship\" SET \"Tonnage\" = para_Tonnage + 12 WHERE \"Nationality\" = para_Nationality; UPDATE \"mission\" SET \"Ship_ID\" = result_val WHERE \"Location\" = para_Location; result_val := result_val - 7; DELETE FROM \"ship\" WHERE \"Nationality\" = para_Nationality || '_old'; UPDATE \"mission\" SET \"Location\" = para_Location || '_final' WHERE \"Ship_ID\" = para_Ship_ID; status_text := 'completed'; UPDATE \"ship\" SET \"Tonnage\" = para_Tonnage * 3 WHERE \"Nationality\" = para_Nationality; DELETE FROM \"mission\" WHERE \"Location\" = para_Location || status_text; END; $$;",
+    "call": [
+      "call sp(6, 'Turku , Finland', 3687, 'United Kingdom');",
+      "call sp(7, 'Norway', 5816, 'United Kingdom');",
+      "call sp(2, 'Germany', 3035, 'United Kingdom');",
+      "call sp(3, 'Germany', 3496, 'United States');",
+      "call sp(7, 'Uusikaupunki , Finland', 3496, 'United States');"
+    ],
+    "database": "ship_mission",
+    "table": [
+      "mission",
+      "ship"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "mission",
+          "table_comment": "",
+          "column_names": [
+            "Mission_ID",
+            "Ship_ID",
+            "Code",
+            "Launched_Year",
+            "Location",
+            "Speed_knots",
+            "Fate"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              "VMV-4 Former: Sterling",
+              "VMV-6"
+            ],
+            [
+              1916,
+              1932
+            ],
+            [
+              "Germany",
+              "Germany"
+            ],
+            [
+              25,
+              16
+            ],
+            [
+              "Decommissioned 1959",
+              "Decommissioned 1960"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "ship",
+          "table_comment": "",
+          "column_names": [
+            "Ship_ID",
+            "Name",
+            "Type",
+            "Nationality",
+            "Tonnage"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              3
+            ],
+            [
+              "Farringford",
+              "Appam"
+            ],
+            [
+              "Cargo ship",
+              "Cargo ship"
+            ],
+            [
+              "United States",
+              "United Kingdom"
+            ],
+            [
+              3146,
+              3627
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _ := _; _ _ := _; BEGIN IF _ < _ THEN _ := _ * -_; UPDATE _ SET _ = _ WHERE _ = _; ELSIF _ < _ THEN _ := _ + _; DELETE FROM _ WHERE _ = _; ELSIF _ < _ THEN _ := _ * _; UPDATE _ SET _ = _ + _ WHERE _ = _; ELSIF _ < _ THEN _ := _ - _; DELETE FROM _ WHERE _ = _; ELSE _ := _ / _; _ := _; END IF; UPDATE _ SET _ = _ || _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ || _ WHERE _ = _; DELETE FROM _ WHERE _ > _; _ := _; UPDATE _ SET _ = _ + _ WHERE _ = _; UPDATE _ SET _ = _ WHERE _ = _; _ := _ - _; DELETE FROM _ WHERE _ = _ || _; UPDATE _ SET _ = _ || _ WHERE _ = _; _ := _; UPDATE _ SET _ = _ * _ WHERE _ = _; DELETE FROM _ WHERE _ = _ || _; END; $$;",
+    "table_num": 2,
+    "parameter": 4,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that adjusts ship missions and records based on the Ship ID value. If the Ship ID is negative, convert it to positive and update the mission's ID. For Ship IDs less than 10, increment it by 5 and delete the mission. For IDs under 20, double the ID, adjust ship tonnage by this value, and update based on nationality. For IDs below 30, reduce the ID by 8 and delete the ship by tonnage. Otherwise, halve the ID and mark it as processed. Subsequently, append 'pending', 'active', 'final', or 'completed' to locations and update ships and missions accordingly, adjusting tonnage and nationality with specified conditions.",
+    "detailed_text": "Create a PL/pgSQL procedure that begins by declaring integer `result_val` as 0 and text `status_text` as 'pending'. If `para_Ship_ID` is less than 0, set `result_val` to the positive of `para_Ship_ID`, and update the `Ship_ID` in the `mission` table where `Location` matches `para_Location`. If the ID is less than 10, increase it by 5 and delete the mission with that `Ship_ID`. For IDs under 20, double the ID, update `ship` tonnage using this result added to `para_Tonnage`, where `Nationality` matches `para_Nationality`. If below 30, subtract 8 from the ID and delete ships with matching `Tonnage`. Otherwise, halve the ID and set `status_text` to 'processed'. Append `status_text` to `Location` in `mission` where `Ship_ID` matches and increase `result_val` by 3. Update `ship` nationality with '_updated', and change `Tonnage` to `para_Tonnage + 12` then `result_val - 7`, deleting entries with `_old` nationality. Update the final steps by multiplying `Tonnage` by 3, and adjusting missions with location `status_text`."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure to handle school bus records. Initially, it verifies if the provided driver ID surpasses 30. If this condition is satisfied, a new row is inserted into the school_bus table, assigning the given driver ID and school ID to the respective columns. Subsequently, it updates the Years_Working field for all entries where the School_ID matches the provided parameter, setting this field to the value of para_Years_Working.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Driver_ID integer, para_School_ID integer, para_Years_Working integer) LANGUAGE plpgsql AS $$ BEGIN IF para_Driver_ID > 30 THEN INSERT INTO \"school_bus\" (\"Driver_ID\", \"School_ID\") VALUES (para_Driver_ID, para_School_ID); END IF; UPDATE \"school_bus\" SET \"Years_Working\" = para_Years_Working WHERE \"School_ID\" = para_School_ID; END; $$;",
+    "call": [
+      "call sp(4, 3, 10);",
+      "call sp(9, 3, 10);",
+      "call sp(4, 1, 3);",
+      "call sp(3, 5, 3);",
+      "call sp(9, 3, 3);"
+    ],
+    "database": "school_bus",
+    "table": [
+      "school_bus"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "driver",
+          "table_comment": "",
+          "column_names": [
+            "Driver_ID",
+            "Name",
+            "Party",
+            "Home_city",
+            "Age"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              4
+            ],
+            [
+              "Dan Carter",
+              "Geoff Luxenberg"
+            ],
+            [
+              "Dem",
+              "Dem"
+            ],
+            [
+              "Hartford",
+              "Hartford"
+            ],
+            [
+              35,
+              52
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "school",
+          "table_comment": "",
+          "column_names": [
+            "School_ID",
+            "Grade",
+            "School",
+            "Location",
+            "Type"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              "Kindergarten",
+              "Kindergarten"
+            ],
+            [
+              "Harvard Law School",
+              "St. Francis Assisi"
+            ],
+            [
+              "Los Angeles, California",
+              "Los Angeles, California"
+            ],
+            [
+              "Public",
+              "Private"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "school_bus",
+          "table_comment": "",
+          "column_names": [
+            "School_ID",
+            "Driver_ID",
+            "Years_Working",
+            "If_full_time"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              "F",
+              "T"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF _ > _ THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; UPDATE _ SET _ = _ WHERE _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that first checks if a driver's ID is greater than 30. If true, add a new entry to the school bus records with the driver's ID and school ID. Then, update the working years for all records matching the given school ID.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure to handle school bus records. Initially, it verifies if the provided driver ID surpasses 30. If this condition is satisfied, a new row is inserted into the school_bus table, assigning the given driver ID and school ID to the respective columns. Subsequently, it updates the Years_Working field for all entries where the School_ID matches the provided parameter, setting this field to the value of para_Years_Working."
+  },
+  {
+    "text": "Construct a PL/pgSQL procedure that involves a series of updates and deletes interspersed with variable manipulation. Start by initializing `v_counter` to 0 and `v_offset` to the `para_Area` parameter. Initially, update all entries in the `country` table to set `Population` to 1, then increment `v_counter`. Remove entries in `country` where `Area` equals `v_offset`, followed by increasing `v_offset` by 1. Update `roller_coaster` entries to set `Country_ID` to 1 and increment `v_counter` again. Proceed to delete `roller_coaster` entries where `Roller_Coaster_ID` equals `v_offset` and update `v_offset`. Repeat this cycle three more times, adjusting `Population` by adding `v_counter` to `para_Population` and `Country_ID` by adding `v_counter` to `para_Country_ID`, each followed by deletion and offset increment. Conclude with setting `Population` and `Country_ID` to -99 for all entries and remove those where `Population` or `Country_ID` was previously set to 1.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Area integer, para_Languages text, para_Population integer, para_Roller_Coaster_ID integer, para_Name text, para_Country_ID integer) LANGUAGE plpgsql AS $$ DECLARE v_counter integer := 0; v_offset integer := para_Area; BEGIN UPDATE \"country\" SET \"Population\" = 1; v_counter := v_counter + 1; DELETE FROM \"country\" WHERE \"Area\" = v_offset; v_offset := v_offset + 1; UPDATE \"roller_coaster\" SET \"Country_ID\" = 1; v_counter := v_counter + 1; DELETE FROM \"roller_coaster\" WHERE \"Roller_Coaster_ID\" = v_offset; v_offset := v_offset + 1; UPDATE \"country\" SET \"Population\" = para_Population + v_counter; v_counter := v_counter + 1; DELETE FROM \"country\" WHERE \"Area\" = v_offset; v_offset := v_offset + 1; UPDATE \"roller_coaster\" SET \"Country_ID\" = para_Country_ID + v_counter; v_counter := v_counter + 1; DELETE FROM \"roller_coaster\" WHERE \"Roller_Coaster_ID\" = v_offset; v_offset := v_offset + 1; UPDATE \"country\" SET \"Population\" = para_Population + v_counter; v_counter := v_counter + 1; DELETE FROM \"country\" WHERE \"Area\" = v_offset; v_offset := v_offset + 1; UPDATE \"roller_coaster\" SET \"Country_ID\" = para_Country_ID + v_counter; v_counter := v_counter + 1; DELETE FROM \"roller_coaster\" WHERE \"Roller_Coaster_ID\" = v_offset; v_offset := v_offset + 1; UPDATE \"country\" SET \"Population\" = para_Population + v_counter; v_counter := v_counter + 1; DELETE FROM \"country\" WHERE \"Area\" = v_offset; v_offset := v_offset + 1; UPDATE \"roller_coaster\" SET \"Country_ID\" = para_Country_ID + v_counter; v_counter := v_counter + 1; DELETE FROM \"roller_coaster\" WHERE \"Roller_Coaster_ID\" = v_offset; v_offset := v_offset + 1; UPDATE \"country\" SET \"Population\" = -99; UPDATE \"roller_coaster\" SET \"Country_ID\" = -99; DELETE FROM \"country\" WHERE \"Population\" = 1; DELETE FROM \"roller_coaster\" WHERE \"Country_ID\" = 1; END; $$;",
+    "call": [
+      "call sp(449964, 'German', 8206524, 1, 'Twister', 2);",
+      "call sp(83871, 'Finnish Swedish', 9047752, 1, 'Hades 360', 2);",
+      "call sp(338145, 'Swedish', 9047752, 3, 'Boardwalk Bullet', 1);",
+      "call sp(83871, 'Finnish Swedish', 8206524, 3, 'Ravine Flyer II', 1);",
+      "call sp(83871, 'Finnish Swedish', 8206524, 6, 'The Voyage', 2);"
+    ],
+    "database": "roller_coaster",
+    "table": [
+      "country",
+      "roller_coaster"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "country",
+          "table_comment": "",
+          "column_names": [
+            "Country_ID",
+            "Name",
+            "Population",
+            "Area",
+            "Languages"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              2
+            ],
+            [
+              "Finland",
+              "Austria"
+            ],
+            [
+              9047752,
+              8206524
+            ],
+            [
+              449964,
+              83871
+            ],
+            [
+              "Finnish Swedish",
+              "German"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "roller_coaster",
+          "table_comment": "",
+          "column_names": [
+            "Roller_Coaster_ID",
+            "Name",
+            "Park",
+            "Country_ID",
+            "Length",
+            "Height",
+            "Speed",
+            "Opened",
+            "Status"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "real",
+            "real",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              5
+            ],
+            [
+              "Hades 360",
+              "The Voyage"
+            ],
+            [
+              "Gröna Lund",
+              "Holiday World"
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2900.0,
+              3914.0
+            ],
+            [
+              96.0,
+              163.0
+            ],
+            [
+              "37.9",
+              "70"
+            ],
+            [
+              "May 17, 2008",
+              "August 31, 2007"
+            ],
+            [
+              "Operating",
+              "Operating"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _ := _; _ _ := _; BEGIN UPDATE _ SET _ = _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = _ + _; _ := _ + _; DELETE FROM _ WHERE _ = _; _ := _ + _; UPDATE _ SET _ = -_; UPDATE _ SET _ = -_; DELETE FROM _ WHERE _ = _; DELETE FROM _ WHERE _ = _; END; $$;",
+    "table_num": 2,
+    "parameter": 6,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that starts with initializing two counters, one set to 0 and another set to a given area parameter. It updates the population of every country to a base value and then increments the first counter. It removes countries with an area matching the current offset, then increases the offset. This process repeats for roller coasters, updating their country IDs and using the same increment logic. In multiple cycles, it adjusts population and country IDs by adding the counter value to given parameters and deletes entities based on offset matches. Finally, it resets all populations and country IDs to a fixed negative value, removing previous entities set to the initial base value.",
+    "detailed_text": "Construct a PL/pgSQL procedure that involves a series of updates and deletes interspersed with variable manipulation. Start by initializing `v_counter` to 0 and `v_offset` to the `para_Area` parameter. Initially, update all entries in the `country` table to set `Population` to 1, then increment `v_counter`. Remove entries in `country` where `Area` equals `v_offset`, followed by increasing `v_offset` by 1. Update `roller_coaster` entries to set `Country_ID` to 1 and increment `v_counter` again. Proceed to delete `roller_coaster` entries where `Roller_Coaster_ID` equals `v_offset` and update `v_offset`. Repeat this cycle three more times, adjusting `Population` by adding `v_counter` to `para_Population` and `Country_ID` by adding `v_counter` to `para_Country_ID`, each followed by deletion and offset increment. Conclude with setting `Population` and `Country_ID` to -99 for all entries and remove those where `Population` or `Country_ID` was previously set to 1."
+  },
+  {
+    "text": "Develop a PLpgSQL stored procedure that begins by verifying the para_Party and para_Name parameters are not null. If they are null, remove all entries in the people table with the specified Party. If valid, utilize a cursor to go through the people table, finding records where the Party is equal to para_Party and Name is equal to para_Name. For any record where the District matches para_District, insert the provided Age into the people table and update the Age for all records with the specified Party to para_Age. Use a boolean flag to indicate if a matching configuration was found and updated.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Party text, para_Name text, para_District text, para_Age integer) LANGUAGE plpgsql AS $$ DECLARE config_cursor CURSOR FOR SELECT * FROM \"people\" WHERE \"Party\" = para_Party AND \"Name\" = para_Name; rec RECORD; v_config_found BOOLEAN := FALSE; BEGIN IF para_Party IS NULL OR para_Name IS NULL THEN DELETE FROM \"people\" WHERE \"Party\" = para_Party; RETURN; END IF; OPEN config_cursor; LOOP FETCH config_cursor INTO rec; EXIT WHEN NOT FOUND; IF LOWER(rec.\"District\") = LOWER(para_District) THEN INSERT INTO \"people\" (\"Age\") VALUES (para_Age); UPDATE \"people\" SET \"Age\" = para_Age WHERE \"Party\" = para_Party; v_config_found := TRUE; EXIT; END IF; END LOOP; CLOSE config_cursor; END; $$;",
+    "call": [
+      "call sp('Republican', 'William B. Maclay', 'New York 4', 48);",
+      "call sp('Democratic', 'Horace F. Clark', 'New York 6', 45);",
+      "call sp('Democratic', 'Daniel Sickles', 'New York 3', 43);",
+      "call sp('Republican', 'William B. Maclay', 'New York 6', 38);",
+      "call sp('Republican', 'Daniel Sickles', 'New York 9', 36);"
+    ],
+    "database": "debate",
+    "table": [
+      "people"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "debate",
+          "table_comment": "",
+          "column_names": [
+            "Debate_ID",
+            "integer",
+            "Venue",
+            "Num_of_Audience"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              4
+            ],
+            [
+              "October 21, 2011",
+              "January 21, 2017"
+            ],
+            [
+              "Doha , Qatar",
+              "Abu Dhabi , UAE"
+            ],
+            [
+              313,
+              159
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "debate_people",
+          "table_comment": "",
+          "column_names": [
+            "Debate_ID",
+            "Affirmative",
+            "Negative",
+            "If_Affirmative_Win"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              "T",
+              "F"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "people",
+          "table_comment": "",
+          "column_names": [
+            "People_ID",
+            "District",
+            "Name",
+            "Party",
+            "Age"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              5
+            ],
+            [
+              "New York 10",
+              "New York 6"
+            ],
+            [
+              "Horace F. Clark",
+              "John B. Haskin"
+            ],
+            [
+              "Republican",
+              "Independent Democrat"
+            ],
+            [
+              45,
+              43
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _CURSOR FOR SELECT * FROM _ WHERE _ = _ AND _ = _; _ _; _ _ := _; BEGIN IF _ IS NULL OR _ IS NULL THEN DELETE FROM _ WHERE _ = _; RETURN; END IF; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF LOWER(_._) = LOWER(_) THEN INSERT INTO _ (_) VALUES (_); UPDATE _ SET _ = _ WHERE _ = _; _ := _; EXIT; END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that first confirms the Party and Name inputs are provided. If they are, scan through individuals whose Party and Name match these inputs. If their District matches the specified District, update their Age to the given value and add the new Age entry.",
+    "detailed_text": "Develop a PLpgSQL stored procedure that begins by verifying the para_Party and para_Name parameters are not null. If they are null, remove all entries in the people table with the specified Party. If valid, utilize a cursor to go through the people table, finding records where the Party is equal to para_Party and Name is equal to para_Name. For any record where the District matches para_District, insert the provided Age into the people table and update the Age for all records with the specified Party to para_Age. Use a boolean flag to indicate if a matching configuration was found and updated."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure that first retrieves a single record from the mission table where the Speed_knots equals the input parameter para_Speed_knots, the Fate matches para_Fate, and the Code corresponds to para_Code. After fetching the appropriate record, update its Location field to the value specified by the para_Location parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Speed_knots integer, para_Fate text, para_Code text, para_Location text) LANGUAGE plpgsql AS $$ DECLARE rec RECORD; BEGIN SELECT * INTO rec FROM \"mission\" WHERE \"Speed_knots\" = para_Speed_knots AND \"Fate\" = para_Fate AND \"Code\" = para_Code LIMIT 1; UPDATE \"mission\" SET \"Location\" = para_Location WHERE \"Speed_knots\" = para_Speed_knots AND \"Fate\" = para_Fate AND \"Code\" = para_Code; END; $$;",
+    "call": [
+      "call sp(25, 'Decommissioned 1960', 'VMV-6', 'Turku , Finland');",
+      "call sp(23, 'Decommissioned 1960', 'VMV-7', 'Germany');",
+      "call sp(25, 'Decommissioned 1950', 'VMV-4 Former: Sterling', 'Germany');",
+      "call sp(23, 'Decommissioned 1959', 'VMV-5', 'Germany');",
+      "call sp(25, 'Decommissioned 1959', 'VMV-6', 'Germany');"
+    ],
+    "database": "ship_mission",
+    "table": [
+      "mission"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "mission",
+          "table_comment": "",
+          "column_names": [
+            "Mission_ID",
+            "Ship_ID",
+            "Code",
+            "Launched_Year",
+            "Location",
+            "Speed_knots",
+            "Fate"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              2
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              "VMV-6",
+              "VMV-6"
+            ],
+            [
+              1931,
+              1916
+            ],
+            [
+              "Turku , Finland",
+              "Germany"
+            ],
+            [
+              23,
+              23
+            ],
+            [
+              "Decommissioned 1960",
+              "Decommissioned 1960"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "ship",
+          "table_comment": "",
+          "column_names": [
+            "Ship_ID",
+            "Name",
+            "Type",
+            "Nationality",
+            "Tonnage"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              3
+            ],
+            [
+              "Clan McTavish",
+              "Dromonby"
+            ],
+            [
+              "Cargo ship",
+              "Cargo ship"
+            ],
+            [
+              "United Kingdom",
+              "United Kingdom"
+            ],
+            [
+              7781,
+              5816
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; BEGIN SELECT * INTO _ FROM _ WHERE _ = _ AND _ = _ AND _ = _ LIMIT _; UPDATE _ SET _ = _ WHERE _ = _ AND _ = _ AND _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PLpgSQL procedure to find a mission where the speed matches the given knots, the outcome corresponds to the specified fate, and the code aligns with the provided identifier. Update this mission's location to the new specified value.",
+    "detailed_text": "Develop a PL/pgSQL procedure that first retrieves a single record from the mission table where the Speed_knots equals the input parameter para_Speed_knots, the Fate matches para_Fate, and the Code corresponds to para_Code. After fetching the appropriate record, update its Location field to the value specified by the para_Location parameter."
+  }
+]

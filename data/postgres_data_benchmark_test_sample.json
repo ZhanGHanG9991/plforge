@@ -1,0 +1,3090 @@
+[
+  {
+    "text": "Develop a PL/pgSQL stored procedure that first checks if there are any entries in the Accounts table where the other_account_details column matches the provided parameter para_other_account_details. If no such entries exist, an exception 'No records found for this parameter' is raised. If entries do exist, the procedure updates the integer_account_opened and account_name fields with the provided values para_integer_account_opened and para_account_name, respectively, for those matching records.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_other_account_details text, para_integer_account_opened text, para_account_name text) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT 1 FROM \"Accounts\" WHERE \"other_account_details\" = para_other_account_details) THEN RAISE EXCEPTION 'No records found for this parameter'; ELSE UPDATE \"Accounts\" SET \"integer_account_opened\" = para_integer_account_opened, \"account_name\" = para_account_name WHERE \"other_account_details\" = para_other_account_details; END IF; END; $$;",
+    "call": [
+      "call sp('VIP', '2010-10-22 13:33:45', '935');",
+      "call sp('VIP', '2014-05-30 12:16:52', '337');",
+      "call sp('Regular', '2011-03-29 15:06:59', '390');",
+      "call sp('Regular', '2017-05-29 16:45:17', '337');",
+      "call sp('Regular', '2009-06-13 11:41:52', '398');"
+    ],
+    "database": "customers_and_invoices",
+    "table": [
+      "Accounts"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Order_Items",
+          "table_comment": "",
+          "column_names": [
+            "order_item_id",
+            "order_id",
+            "product_id",
+            "product_quantity",
+            "other_order_item_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              1
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              3,
+              14
+            ],
+            [
+              "4",
+              "5"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Accounts",
+          "table_comment": "",
+          "column_names": [
+            "account_id",
+            "customer_id",
+            "integer_account_opened",
+            "account_name",
+            "other_account_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              13,
+              13
+            ],
+            [
+              "2010-06-16 09:35:00",
+              "2009-06-13 11:41:52"
+            ],
+            [
+              "337",
+              "662"
+            ],
+            [
+              "Regular",
+              "VIP"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_first_name",
+            "customer_middle_initial",
+            "customer_last_name",
+            "gender",
+            "email_address",
+            "login_name",
+            "login_password",
+            "phone_number",
+            "town_city",
+            "state_county_province",
+            "country"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              7
+            ],
+            [
+              "Dangelo",
+              "Percival"
+            ],
+            [
+              "G",
+              "L"
+            ],
+            [
+              "Larkin",
+              "Trantow"
+            ],
+            [
+              "1",
+              "0"
+            ],
+            [
+              "roosevelt.collier@example.org",
+              "homenick.ambrose@example.net"
+            ],
+            [
+              "dubuque.gina",
+              "camilla.dubuque"
+            ],
+            [
+              "5fe7c12dc3176ddf67c4",
+              "035f2ba1e2a675c4f426"
+            ],
+            [
+              "1-546-302-5676",
+              "(488)524-5345"
+            ],
+            [
+              "East Stephaniafort",
+              "Port Hollie"
+            ],
+            [
+              "Oklahoma",
+              "Mississippi"
+            ],
+            [
+              "USA",
+              "USA"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Financial_Transactions",
+          "table_comment": "",
+          "column_names": [
+            "transaction_id",
+            "account_id",
+            "invoice_number",
+            "transaction_type",
+            "transaction_integer",
+            "transaction_amount",
+            "transaction_comment",
+            "other_transaction_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "numeric",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              6
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              14,
+              12
+            ],
+            [
+              "Payment",
+              "Payment"
+            ],
+            [
+              "2018-03-23 04:56:12",
+              "2018-03-13 13:27:46"
+            ],
+            [
+              1903.41,
+              1425.41
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Invoice_Line_Items",
+          "table_comment": "",
+          "column_names": [
+            "order_item_id",
+            "invoice_number",
+            "product_id",
+            "product_title",
+            "product_quantity",
+            "product_price",
+            "derived_product_cost",
+            "derived_vat_payable",
+            "derived_total_cost"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "numeric",
+            "numeric",
+            "numeric",
+            "numeric"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              15
+            ],
+            [
+              5,
+              11
+            ],
+            [
+              11,
+              1
+            ],
+            [
+              "prod_name",
+              "prod_name"
+            ],
+            [
+              "5",
+              "2"
+            ],
+            [
+              884.4,
+              429.05
+            ],
+            [
+              64.67,
+              89.16
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              58.24,
+              59.93
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Invoices",
+          "table_comment": "",
+          "column_names": [
+            "invoice_number",
+            "order_id",
+            "invoice_integer"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              8
+            ],
+            [
+              9,
+              3
+            ],
+            [
+              "2018-03-01 01:44:08",
+              "2018-03-07 02:04:32"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Orders",
+          "table_comment": "",
+          "column_names": [
+            "order_id",
+            "customer_id",
+            "integer_order_placed",
+            "order_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              14
+            ],
+            [
+              5,
+              1
+            ],
+            [
+              "2010-01-28 03:43:26",
+              "2017-11-05 15:32:38"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Products",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "parent_product_id",
+            "production_type_code",
+            "unit_price",
+            "product_name",
+            "product_color",
+            "product_size"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "numeric",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              1
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              "Books",
+              "DVDs"
+            ],
+            [
+              558.49,
+              694.31
+            ],
+            [
+              "Harry Potter 2",
+              "Learning English"
+            ],
+            [
+              "Red",
+              "Red"
+            ],
+            [
+              "Medium",
+              "Large"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Product_Categories",
+          "table_comment": "",
+          "column_names": [
+            "production_type_code",
+            "product_type_description",
+            "vat_rating"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "numeric"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Electronics",
+              "Books"
+            ],
+            [
+              "Electrical devices",
+              "Food"
+            ],
+            [
+              13.95,
+              11.4
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT _ FROM _ WHERE _ = _) THEN RAISE EXCEPTION _; ELSE UPDATE _ SET _ = _, _ = _ WHERE _ = _; END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to verify the existence of account details matching a specified identifier. If matching records are found, update their account opening status and name to new specified values.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that first checks if there are any entries in the Accounts table where the other_account_details column matches the provided parameter para_other_account_details. If no such entries exist, an exception is raised. If entries do exist, the procedure updates the integer_account_opened and account_name fields with the provided values para_integer_account_opened and para_account_name, respectively, for those matching records."
+  },
+  {
+    "text": "Create a PLpgSQL stored procedure named sp that accepts five parameters: para_transaction_type, para_previous_transaction_id, para_card_id, para_transaction_id, and para_transaction_amount. This procedure manages transactions by first evaluating if para_transaction_type is 'c'. If so, it inserts para_previous_transaction_id, para_card_id, and para_transaction_id into the Financial_Transactions table. If para_transaction_type is 'w', it instead inserts para_previous_transaction_id, para_card_id, and para_transaction_amount. Afterwards, it checks whether a record with para_transaction_id already exists in the Financial_Transactions table. If no such record is found, it inserts a new entry with para_transaction_id and additional information.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_transaction_type text, para_previous_transaction_id integer, para_card_id integer, para_transaction_id integer, para_transaction_amount real) LANGUAGE plpgsql AS $$ DECLARE current_date_val date; reason_text text; BEGIN current_date_val := CURRENT_DATE; IF(para_transaction_type='c') THEN INSERT INTO \"Financial_Transactions\" (\"transaction_type\", \"previous_transaction_id\", \"card_id\") VALUES (para_previous_transaction_id, para_card_id, para_transaction_id); ELSIF(para_transaction_type='w') THEN INSERT INTO \"Financial_Transactions\" (\"transaction_type\", \"previous_transaction_id\", \"card_id\") VALUES (para_previous_transaction_id, para_card_id, para_transaction_amount); END IF; IF NOT EXISTS (SELECT 1 FROM \"Financial_Transactions\" WHERE \"transaction_id\"=para_transaction_id) THEN INSERT INTO \"Financial_Transactions\" (\"transaction_id\", \"transaction_amount\") VALUES (para_transaction_id, reason_text); END IF; END; $$;",
+    "call": [
+      "call sp('Payment', 885, 12, 6, 1298.73);",
+      "call sp('Payment', 986, 3, 15, 462.63);",
+      "call sp('Refund', 642, 6, 12, 1795.66);",
+      "call sp('Refund', 642, 1, 7, 1336.21);",
+      "call sp('Refund', 494, 7, 5, 1529.97);"
+    ],
+    "database": "customers_card_transactions",
+    "table": [
+      "Financial_Transactions"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Accounts",
+          "table_comment": "",
+          "column_names": [
+            "account_id",
+            "customer_id",
+            "account_name",
+            "other_account_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              14
+            ],
+            [
+              9,
+              6
+            ],
+            [
+              "621",
+              "234"
+            ],
+            [
+              "VIP",
+              "Regular"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_address",
+            "customer_phone",
+            "customer_email",
+            "other_customer_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              4
+            ],
+            [
+              "Nat",
+              "Bryce"
+            ],
+            [
+              "Huels",
+              "Swift"
+            ],
+            [
+              "6478 Moen Isle Suite 910 Schimmelmouth, VT 96364-4898",
+              "74962 Hugh Mills North Laurenland, KY 46376"
+            ],
+            [
+              "(703)950-4708x8972",
+              "284.749.0453"
+            ],
+            [
+              "kling.catalina@example.com",
+              "dauer@example.net"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers_Cards",
+          "table_comment": "",
+          "column_names": [
+            "card_id",
+            "customer_id",
+            "card_type_code",
+            "card_number",
+            "integer_valid_from",
+            "integer_valid_to",
+            "other_card_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              9,
+              2
+            ],
+            [
+              2,
+              13
+            ],
+            [
+              "Credit",
+              "Debit"
+            ],
+            [
+              "4859448397570735",
+              "5122249720639438"
+            ],
+            [
+              "2008-08-20 17:59:51",
+              "2009-11-05 09:26:01"
+            ],
+            [
+              "2018-02-25 15:43:32",
+              "2018-03-20 02:08:02"
+            ],
+            [
+              "377852690396160",
+              "5513587359761653"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Financial_Transactions",
+          "table_comment": "",
+          "column_names": [
+            "transaction_id",
+            "previous_transaction_id",
+            "account_id",
+            "card_id",
+            "transaction_type",
+            "transaction_integer",
+            "transaction_amount",
+            "transaction_comment",
+            "other_transaction_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              1
+            ],
+            [
+              494,
+              965
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              "Payment",
+              "Refund"
+            ],
+            [
+              "2018-03-24 17:00:41",
+              "2018-03-24 06:41:41"
+            ],
+            [
+              1795.66,
+              486.56
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; _ _; BEGIN _ := CURRENT_DATE; IF(_=_) THEN INSERT INTO _ (_, _, _) VALUES (_, _, _); ELSIF(_=_) THEN INSERT INTO _ (_, _, _) VALUES (_, _, _); END IF; IF NOT EXISTS (SELECT _ FROM _ WHERE _=_) THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 5,
+    "insert": 1,
+    "select": 0,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that takes five parameters to handle transactions. It first checks the type of transaction: if it is 'c', record previous transaction ID, card ID, and current transaction ID into the transaction log. If the type is 'w', record previous transaction ID, card ID, and transaction amount. Then, verify if the current transaction ID is already logged; if not, add it with extra information.",
+    "detailed_text": "Create a PLpgSQL stored procedure named sp that accepts five parameters: para_transaction_type, para_previous_transaction_id, para_card_id, para_transaction_id, and para_transaction_amount. This procedure manages transactions by first evaluating if para_transaction_type is 'c'. If so, it inserts para_previous_transaction_id, para_card_id, and para_transaction_id into the Financial_Transactions table. If para_transaction_type is 'w', it instead inserts para_previous_transaction_id, para_card_id, and para_transaction_amount. Afterwards, it checks whether a record with para_transaction_id already exists in the Financial_Transactions table. If no such record is found, it inserts a new entry with para_transaction_id and additional information."
+  },
+  {
+    "text": "Create a PL/pgSQL stored procedure called sp that accepts three parameters: para_Type, para_Tonnage, and para_Name. This procedure will first check if there is any record in the ship table where the \"Name\" column matches para_Name. If such a record exists, it will be deleted. If no such record is found, the procedure will update all records in the ship table, setting the \"Type\" column to para_Type and the \"Tonnage\" column to para_Tonnage.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Type text, para_Tonnage integer, para_Name text) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT 1 FROM ship WHERE \"Name\" = para_Name) THEN DELETE FROM ship WHERE \"Name\" = para_Name; ELSE UPDATE ship SET \"Type\" = para_Type, \"Tonnage\" = para_Tonnage; END IF; END; $$;",
+    "call": [
+      "call sp('Battle ship', 7781, 'Ariadne');",
+      "call sp('Battle ship', 3687, 'Appam');",
+      "call sp('Cargo ship', 3608, 'Ariadne');",
+      "call sp('Cargo ship', 3496, 'Ariadne');",
+      "call sp('Cargo ship', 3687, 'Clan McTavish');"
+    ],
+    "database": "ship_mission",
+    "table": [
+      "ship"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "mission",
+          "table_comment": "",
+          "column_names": [
+            "Mission_ID",
+            "Ship_ID",
+            "Code",
+            "Launched_Year",
+            "Location",
+            "Speed_knots",
+            "Fate"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              "VMV-5",
+              "VMV-4 Former: Sterling"
+            ],
+            [
+              1930,
+              1931
+            ],
+            [
+              "Helsinki , Finland",
+              "Helsinki , Finland"
+            ],
+            [
+              23,
+              23
+            ],
+            [
+              "Decommissioned 1959",
+              "Lost (burned) 1931"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "ship",
+          "table_comment": "",
+          "column_names": [
+            "Ship_ID",
+            "Name",
+            "Type",
+            "Nationality",
+            "Tonnage"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              2
+            ],
+            [
+              "Author",
+              "Ariadne"
+            ],
+            [
+              "Battle ship",
+              "Cargo ship"
+            ],
+            [
+              "United Kingdom",
+              "United States"
+            ],
+            [
+              3146,
+              3627
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT _ FROM _ WHERE _ = _) THEN DELETE FROM _ WHERE _ = _; ELSE UPDATE _ SET _ = _, _ = _; END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure to manage ship records. If a ship with a given Name exists, remove it; otherwise, update all ships to have a specified Type and Tonnage.",
+    "detailed_text": "Create a PL/pgSQL stored procedure called sp that accepts three parameters: para_Type, para_Tonnage, and para_Name. This procedure will first check if there is any record in the ship table where the \"Name\" column matches para_Name. If such a record exists, it will be deleted. If no such record is found, the procedure will update all records in the ship table, setting the \"Type\" column to para_Type and the \"Tonnage\" column to para_Tonnage."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that verifies the presence of a record in the TV_series table with the Channel column matching the para_Channel parameter. If such a record exists, update that record by setting the Episode column to the value of para_Episode and the 18_49_Rating_Share column to the value of para_18_49_Rating_Share.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Channel text, para_Episode text, para_18_49_Rating_Share text) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT 1 FROM \"TV_series\" WHERE \"Channel\" = para_Channel) THEN UPDATE \"TV_series\" SET \"Episode\" = para_Episode, \"18_49_Rating_Share\" = para_18_49_Rating_Share WHERE \"Channel\" = para_Channel; END IF; END; $$;",
+    "call": [
+      "call sp('707', 'Winterland', '2.2/6');",
+      "call sp('717', 'Friendly Skies', '2.2/6');",
+      "call sp('728', 'Blowback', '2.1/5');",
+      "call sp('714', 'The Year of the Rabbit', '1.7/5');",
+      "call sp('714', 'Game Three', '2.2/6');"
+    ],
+    "database": "tvshow",
+    "table": [
+      "TV_series"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Cartoon",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "Title",
+            "Directed_by",
+            "Written_by",
+            "Original_air_integer",
+            "Production_code",
+            "Channel"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6.0,
+              3.0
+            ],
+            [
+              "Dawn of the Dead Man!",
+              "Journey to the Center of the Bat!"
+            ],
+            [
+              "Brandon Vietti",
+              "Michael Chang"
+            ],
+            [
+              "Todd Casey",
+              "Joseph Kuhr"
+            ],
+            [
+              "January2,2009",
+              "November14,2008"
+            ],
+            [
+              109.0,
+              109.0
+            ],
+            [
+              "703",
+              "706"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "TV_Channel",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "series_name",
+            "Country",
+            "Language",
+            "Content",
+            "Pixel_aspect_ratio_PAR",
+            "Hight_definition_TV",
+            "Pay_per_view_PPV",
+            "Package_Option"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "705",
+              "708"
+            ],
+            [
+              "Sky Music",
+              "Rock TV"
+            ],
+            [
+              "Italy",
+              "Italy"
+            ],
+            [
+              "Italian",
+              "English"
+            ],
+            [
+              "music",
+              "music"
+            ],
+            [
+              "16:9",
+              "4:3 / 16:9"
+            ],
+            [
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no"
+            ],
+            [
+              "Sky Famiglia",
+              "Sky Famiglia"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "TV_series",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "Episode",
+            "Air_integer",
+            "Rating",
+            "Share",
+            "18_49_Rating_Share",
+            "Viewers_m",
+            "Weekly_Rank",
+            "Channel"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text",
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3.0,
+              11.0
+            ],
+            [
+              "Friendly Skies",
+              "Game Three"
+            ],
+            [
+              "September 24, 2007",
+              "November 12, 2007"
+            ],
+            [
+              "4.4",
+              "3.7"
+            ],
+            [
+              9.0,
+              6.0
+            ],
+            [
+              "2.1/5",
+              "2.2/6"
+            ],
+            [
+              "6.09",
+              "5.13"
+            ],
+            [
+              65.0,
+              62.0
+            ],
+            [
+              "719",
+              "713"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF EXISTS (SELECT _ FROM _ WHERE _ = _) THEN UPDATE _ SET _ = _, _ = _ WHERE _ = _; END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 0,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that checks if a TV series is aired on a specified channel. If the channel matches the given parameter, update the episode information and the rating share for the 18-49 demographic to the provided values.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that verifies the presence of a record in the TV_series table with the Channel column matching the para_Channel parameter. If such a record exists, update that record by setting the Episode column to the value of para_Episode and the 18_49_Rating_Share column to the value of para_18_49_Rating_Share."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure called sp that accepts three parameters: para_previous_transaction_id, para_transaction_type, and para_transaction_amount. This procedure will first delete entries in the Financial_Transactions table where the previous_transaction_id matches the value of para_previous_transaction_id. If the para_transaction_type parameter is not null, the procedure will insert a new record into the Financial_Transactions table, setting the transaction_type to para_transaction_type and the transaction_amount to para_transaction_amount.",
+    "plsql": "CREATE PROCEDURE sp(para_previous_transaction_id integer, para_transaction_type text, para_transaction_amount real) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"Financial_Transactions\" WHERE \"previous_transaction_id\" = para_previous_transaction_id; IF para_transaction_type IS NOT NULL THEN INSERT INTO \"Financial_Transactions\" (\"transaction_type\", \"transaction_amount\") VALUES (para_transaction_type, para_transaction_amount); END IF; END; $$;",
+    "call": [
+      "call sp(642, 'Refund', 1475.56);",
+      "call sp(495, 'Refund', 462.63);",
+      "call sp(924, 'Payment', 945.43);",
+      "call sp(495, 'Payment', 1658.32);",
+      "call sp(368, 'Refund', 1795.66);"
+    ],
+    "database": "customers_card_transactions",
+    "table": [
+      "Financial_Transactions"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Accounts",
+          "table_comment": "",
+          "column_names": [
+            "account_id",
+            "customer_id",
+            "account_name",
+            "other_account_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              9
+            ],
+            [
+              4,
+              14
+            ],
+            [
+              "767",
+              "621"
+            ],
+            [
+              "VIP",
+              "VIP"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_first_name",
+            "customer_last_name",
+            "customer_address",
+            "customer_phone",
+            "customer_email",
+            "other_customer_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              6
+            ],
+            [
+              "Armani",
+              "Izabella"
+            ],
+            [
+              "Farrell",
+              "Feest"
+            ],
+            [
+              "74962 Hugh Mills North Laurenland, KY 46376",
+              "71560 Eulah Squares Torphyberg, OK 34312-0380"
+            ],
+            [
+              "(673)872-5338",
+              "+12(6)9024410984"
+            ],
+            [
+              "dauer@example.net",
+              "enrique59@example.com"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers_Cards",
+          "table_comment": "",
+          "column_names": [
+            "card_id",
+            "customer_id",
+            "card_type_code",
+            "card_number",
+            "integer_valid_from",
+            "integer_valid_to",
+            "other_card_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              14,
+              11
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              "Debit",
+              "Credit"
+            ],
+            [
+              "6011225247353230",
+              "4859448397570735"
+            ],
+            [
+              "2015-03-27 02:01:12",
+              "2013-11-17 02:58:22"
+            ],
+            [
+              "2018-03-16 16:00:19",
+              "2018-03-11 01:12:33"
+            ],
+            [
+              "5388642773088467",
+              "4539333582760"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Financial_Transactions",
+          "table_comment": "",
+          "column_names": [
+            "transaction_id",
+            "previous_transaction_id",
+            "account_id",
+            "card_id",
+            "transaction_type",
+            "transaction_integer",
+            "transaction_amount",
+            "transaction_comment",
+            "other_transaction_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              15,
+              6
+            ],
+            [
+              333,
+              296
+            ],
+            [
+              13,
+              10
+            ],
+            [
+              2,
+              7
+            ],
+            [
+              "Refund",
+              "Refund"
+            ],
+            [
+              "2018-03-24 14:47:05",
+              "2018-03-23 21:59:28"
+            ],
+            [
+              486.56,
+              1483.05
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE PROCEDURE _(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _; IF _ IS NOT NULL THEN INSERT INTO _ (_, _) VALUES (_, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 0,
+    "delete": 1,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that removes records from the financial transactions where the previous transaction ID matches a specified ID. If a transaction type is provided, add a new transaction entry using the given type and amount.",
+    "detailed_text": "Develop a PL/pgSQL procedure called sp that accepts three parameters: para_previous_transaction_id, para_transaction_type, and para_transaction_amount. This procedure will first delete entries in the Financial_Transactions table where the previous_transaction_id matches the value of para_previous_transaction_id. If the para_transaction_type parameter is not null, the procedure will insert a new record into the Financial_Transactions table, setting the transaction_type to para_transaction_type and the transaction_amount to para_transaction_amount."
+  },
+  {
+    "text": "Design a PL/pgSQL stored procedure to check for a train record in the \"train\" table where the \"Train_ID\" matches the parameter \"para_Train_ID\". If no such record exists, promptly insert a new entry into the \"train\" table with \"Train_ID\" set to \"para_Train_ID\", \"Name\" to \"para_Name\", and \"Service\" to \"para_Service\".",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Train_ID integer, para_Name text, para_Service text) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT 1 FROM \"train\" WHERE \"Train_ID\" = para_Train_ID) THEN INSERT INTO \"train\" (\"Train_ID\", \"Name\", \"Service\") VALUES (para_Train_ID, para_Name, para_Service); END IF; END; $$;",
+    "call": [
+      "call sp(3, 'Ananthapuri Express', 'Daily');",
+      "call sp(11, 'Jayanthi Janatha Express', 'Daily');",
+      "call sp(4, 'Jayanthi Janatha Express', 'Daily');",
+      "call sp(4, 'Madurai Fast Passenger', 'Daily');",
+      "call sp(1, 'Madurai Fast Passenger', 'Daily');"
+    ],
+    "database": "train_station",
+    "table": [
+      "train"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "station",
+          "table_comment": "",
+          "column_names": [
+            "Station_ID",
+            "Name",
+            "Annual_entry_exit",
+            "Annual_interchanges",
+            "Total_Passengers",
+            "Location",
+            "Main_Services",
+            "Number_of_Platforms"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "real",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              10
+            ],
+            [
+              "London Liverpool Street",
+              "London St Pancras"
+            ],
+            [
+              52.634,
+              76.231
+            ],
+            [
+              3.676,
+              1.99
+            ],
+            [
+              36.331,
+              85.38
+            ],
+            [
+              "London",
+              "London"
+            ],
+            [
+              "West Coast Main Line",
+              "South Eastern Main Line Thameslink"
+            ],
+            [
+              19,
+              13
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "train",
+          "table_comment": "",
+          "column_names": [
+            "Train_ID",
+            "Name",
+            "Time",
+            "Service"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              4
+            ],
+            [
+              "Madurai Fast Passenger",
+              "Island Express"
+            ],
+            [
+              "16:59",
+              "04:20"
+            ],
+            [
+              "Daily",
+              "Daily"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "train_station",
+          "table_comment": "",
+          "column_names": [
+            "Train_ID",
+            "Station_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              8
+            ],
+            [
+              2,
+              9
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT _ FROM _ WHERE _ = _) THEN INSERT INTO _ (_, _, _) VALUES (_, _, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL that verifies the existence of a train entry by its ID. If the train ID matches the specified ID and is absent, add a new train record with the given ID, name, and service type.",
+    "detailed_text": "Design a PL/pgSQL stored procedure to check for a train record in the \"train\" table where the \"Train_ID\" matches the parameter \"para_Train_ID\". If no such record exists, promptly insert a new entry into the \"train\" table with \"Train_ID\" set to \"para_Train_ID\", \"Name\" to \"para_Name\", and \"Service\" to \"para_Service\"."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure called 'sp' which takes two parameters of text type. Inside the procedure, declare a text variable and a cursor to iterate over the 'airline' column from the 'routes' table. Open the cursor and loop through each record, checking if the 'airline' matches either the 'para_airline' or 'para_src_ap' values. The loop exits when all records are processed, and the cursor is then closed.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_airline text, para_src_ap text) LANGUAGE plpgsql AS $$ DECLARE val text; c1 CURSOR FOR SELECT airline FROM routes; BEGIN OPEN c1; LOOP FETCH c1 INTO val; EXIT WHEN NOT FOUND; IF val = para_airline OR val = para_src_ap THEN END IF; END LOOP; CLOSE c1; END; $$;",
+    "call": [
+      "call sp('2B', 'CEK');",
+      "call sp('2B', 'EGO');",
+      "call sp('2B', 'DME');",
+      "call sp('2B', 'KGD');",
+      "call sp('2B', 'ED');"
+    ],
+    "database": "flight_4",
+    "table": [
+      "routes"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "airlines",
+          "table_comment": "",
+          "column_names": [
+            "alid",
+            "name",
+            "iata",
+            "icao",
+            "callsign",
+            "country",
+            "active"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              18
+            ],
+            [
+              "Aero Biniza",
+              "2 Sqn No 1 Elementary Flying Training School"
+            ],
+            [
+              "-",
+              ""
+            ],
+            [
+              "SII",
+              "RNX"
+            ],
+            [
+              "DONUT",
+              ""
+            ],
+            [
+              "Mexico",
+              "United States"
+            ],
+            [
+              "Y",
+              "N"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "airports",
+          "table_comment": "",
+          "column_names": [
+            "apid",
+            "name",
+            "city",
+            "country",
+            "x",
+            "y",
+            "elevation",
+            "iata",
+            "icao"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "real",
+            "real",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              16,
+              19
+            ],
+            [
+              "Patreksfjörður Airport",
+              "Narsarsuaq Airport"
+            ],
+            [
+              "Halifax",
+              "Nadzab"
+            ],
+            [
+              "Iceland",
+              "Papua New Guinea"
+            ],
+            [
+              -68.7032,
+              144.296
+            ],
+            [
+              50.0564,
+              66.1333
+            ],
+            [
+              20,
+              112
+            ],
+            [
+              "RKV",
+              "YAV"
+            ],
+            [
+              "AYMH",
+              "BIHU"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "routes",
+          "table_comment": "",
+          "column_names": [
+            "rid",
+            "dst_apid",
+            "dst_ap",
+            "src_apid",
+            "src_ap",
+            "alid",
+            "airline",
+            "codeshare"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              46,
+              40
+            ],
+            [
+              2990,
+              2968
+            ],
+            [
+              "KZ",
+              "DME"
+            ],
+            [
+              2990,
+              2966
+            ],
+            [
+              "KZ",
+              "EGO"
+            ],
+            [
+              410,
+              410
+            ],
+            [
+              "2B",
+              "2B"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ _; _ CURSOR FOR ___ _ ___ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _ = _ OR _ = _ THEN END IF; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 1,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure named 'sp' that takes two text inputs. It scans through airline records, checking if each airline matches either of the given inputs, and then finishes processing.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure called 'sp' which takes two parameters of text type. Inside the procedure, declare a text variable and a cursor to iterate over the 'airline' column from the 'routes' table. Open the cursor and loop through each record, checking if the 'airline' matches either the 'para_airline' or 'para_src_ap' values. The loop exits when all records are processed, and the cursor is then closed."
+  },
+  {
+    "text": "Define a PL/pgSQL procedure called sp, which accepts three parameters: Roller_Coaster_ID, Height, and Park. This procedure updates the roller_coaster table by setting the Height and Park fields to para_Height and para_Park for the specified Roller_Coaster_ID. If no matching record is found, the procedure inserts a new row with the provided ID, height, and park information.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Roller_Coaster_ID integer, para_Height real, para_Park text) LANGUAGE plpgsql AS $$ BEGIN UPDATE roller_coaster SET \"Height\" = para_Height, \"Park\" = para_Park WHERE \"Roller_Coaster_ID\" = para_Roller_Coaster_ID; IF NOT FOUND THEN INSERT INTO roller_coaster (\"Roller_Coaster_ID\", \"Height\", \"Park\") VALUES (para_Roller_Coaster_ID, para_Height, para_Park); END IF; END; $$;",
+    "call": [
+      "call sp(2, 163.0, 'Mt. Olympus');",
+      "call sp(1, 163.0, 'Mt. Olympus');",
+      "call sp(4, 163.0, 'Kemah Boardwalk');",
+      "call sp(1, 105.0, 'Happy Valley');",
+      "call sp(4, 105.0, 'Kemah Boardwalk');"
+    ],
+    "database": "roller_coaster",
+    "table": [
+      "roller_coaster"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "country",
+          "table_comment": "",
+          "column_names": [
+            "Country_ID",
+            "Name",
+            "Population",
+            "Area",
+            "Languages"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              "Austria",
+              "Austria"
+            ],
+            [
+              5261008,
+              9047752
+            ],
+            [
+              338145,
+              338145
+            ],
+            [
+              "German",
+              "German"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "roller_coaster",
+          "table_comment": "",
+          "column_names": [
+            "Roller_Coaster_ID",
+            "Name",
+            "Park",
+            "Country_ID",
+            "Length",
+            "Height",
+            "Speed",
+            "Opened",
+            "Status"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "real",
+            "real",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              1
+            ],
+            [
+              "Twister",
+              "Ravine Flyer II"
+            ],
+            [
+              "Mt. Olympus",
+              "Happy Valley"
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              6442.0,
+              6442.0
+            ],
+            [
+              50.0,
+              163.0
+            ],
+            [
+              "67",
+              "67"
+            ],
+            [
+              "August 31, 2007",
+              "May 6, 2006"
+            ],
+            [
+              "Operating",
+              "Operating"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN UPDATE _ SET _ = _, _ = _ WHERE _ = _; IF NOT FOUND THEN INSERT INTO _ (_, _, _) VALUES (_, _, _); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that adjusts the height and park location of a roller coaster based on a specified ID. If the ID doesn't match any existing record, add a new roller coaster entry with the given details.",
+    "detailed_text": "Define a PL/pgSQL procedure called sp, which accepts three parameters: Roller_Coaster_ID, Height, and Park. This procedure updates the roller_coaster table by setting the Height and Park fields to para_Height and para_Park for the specified Roller_Coaster_ID. If no matching record is found, the procedure inserts a new row with the provided ID, height, and park information."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure called sp which accepts three parameters: para_Airline, para_FlightNo, and para_SourceAirport. The procedure first verifies whether a flight record exists in the flights table by matching the Airline with para_Airline and the FlightNo with para_FlightNo. If no matching record is identified, it inserts a new row into the flights table, setting the SourceAirport to the value of para_SourceAirport.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Airline integer, para_FlightNo integer, para_SourceAirport text) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT 1 FROM flights WHERE \"Airline\" = para_Airline AND \"FlightNo\" = para_FlightNo) THEN INSERT INTO flights (\"SourceAirport\") VALUES (para_SourceAirport); END IF; END; $$;",
+    "call": [
+      "call sp(1, 143, ' KKI');",
+      "call sp(1, 148, ' CVO');",
+      "call sp(1, 198, ' AHT');",
+      "call sp(1, 55, ' ABL');",
+      "call sp(1, 44, ' AKC');"
+    ],
+    "database": "flight_2",
+    "table": [
+      "flights"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "airlines",
+          "table_comment": "",
+          "column_names": [
+            "uid",
+            "Airline",
+            "Abbreviation",
+            "Country"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              6
+            ],
+            [
+              "AirTran Airways",
+              "Allegiant Air"
+            ],
+            [
+              "Continental",
+              "USAir"
+            ],
+            [
+              "USA",
+              "USA"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "airports",
+          "table_comment": "",
+          "column_names": [
+            "City",
+            "AirportCode",
+            "AirportName",
+            "Country",
+            "CountryAbbrev"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Akiachak ",
+              "Akron/Canton "
+            ],
+            [
+              "AKI",
+              "ADK"
+            ],
+            [
+              "Akutan ",
+              "Akron/canton Regional "
+            ],
+            [
+              "United States ",
+              "United States "
+            ],
+            [
+              "US",
+              "US"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "flights",
+          "table_comment": "",
+          "column_names": [
+            "Airline",
+            "FlightNo",
+            "SourceAirport",
+            "DestAirport"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              29,
+              109
+            ],
+            [
+              " ATO",
+              " CVO"
+            ],
+            [
+              " ALI",
+              " AKC"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ BEGIN IF NOT EXISTS (SELECT _ FROM _ WHERE _ = _ AND _ = _) THEN INSERT INTO _ (_) VALUES (_); END IF; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 0,
+    "update": 0,
+    "delete": 0,
+    "if": 1,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL procedure that checks if a flight, identified by the airline and flight number, is present in the database. If the flight is not found, add a new entry to the system with the specified source airport.",
+    "detailed_text": "Develop a PL/pgSQL procedure called sp which accepts three parameters: para_Airline, para_FlightNo, and para_SourceAirport. The procedure first verifies whether a flight record exists in the flights table by matching the Airline with para_Airline and the FlightNo with para_FlightNo. If no matching record is identified, it inserts a new row into the flights table, setting the SourceAirport to the value of para_SourceAirport."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that deletes records from the \"repair\" table where the \"repair_ID\" is equal to the provided parameter value, para_repair_ID.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_repair_ID integer) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM \"repair\" WHERE \"repair_ID\" = para_repair_ID; END; $$;",
+    "call": [
+      "call sp(3);",
+      "call sp(8);",
+      "call sp(8);",
+      "call sp(7);",
+      "call sp(7);"
+    ],
+    "database": "machine_repair",
+    "table": [
+      "repair"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "machine",
+          "table_comment": "",
+          "column_names": [
+            "Machine_ID",
+            "Making_Year",
+            "Class",
+            "Team",
+            "Machine_series",
+            "value_points",
+            "quality_rank"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "real",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              4
+            ],
+            [
+              1994,
+              1998
+            ],
+            [
+              "125cc",
+              "125cc"
+            ],
+            [
+              "Honda",
+              "Team Givi- Honda LCR"
+            ],
+            [
+              "RS125",
+              "RS125"
+            ],
+            [
+              129.0,
+              105.0
+            ],
+            [
+              7,
+              5
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "repair",
+          "table_comment": "",
+          "column_names": [
+            "repair_ID",
+            "name",
+            "Launch_integer",
+            "Notes"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              8
+            ],
+            [
+              "OPS 3236",
+              "OPS 3754"
+            ],
+            [
+              "03 Jun 2009",
+              "13 Jun 2014"
+            ],
+            [
+              "Cameras operated successfully.",
+              "Cameras operated successfully."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "repair_assignment",
+          "table_comment": "",
+          "column_names": [
+            "technician_id",
+            "repair_ID",
+            "Machine_ID"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "technician",
+          "table_comment": "",
+          "column_names": [
+            "technician_id",
+            "Name",
+            "Team",
+            "Starting_Year",
+            "Age"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "real",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8.0,
+              1.0
+            ],
+            [
+              "Joe Cochrane",
+              "Lou Boudreau"
+            ],
+            [
+              "PHA",
+              "PHA"
+            ],
+            [
+              2009.0,
+              2006.0
+            ],
+            [
+              38,
+              43
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _) LANGUAGE plpgsql AS $$ BEGIN DELETE FROM _ WHERE _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 1,
+    "insert": 0,
+    "select": 0,
+    "update": 0,
+    "delete": 1,
+    "if": 0,
+    "loop": 0,
+    "declare": 0,
+    "concise_text": "Create a PL/pgSQL to remove entries from the repair list where the repair ID matches the given parameter.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that deletes records from the \"repair\" table where the \"repair_ID\" is equal to the provided parameter value, para_repair_ID."
+  }
+]

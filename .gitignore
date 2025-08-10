@@ -1,0 +1,8 @@
+**/.DS_Store
+
+# 压缩文件
+**/.zip
+**/.tar.gz
+**/.rar
+
+**/__pycache__/

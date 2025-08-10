@@ -1,0 +1,4768 @@
+[
+  {
+    "text": "Create a PLpgSQL stored procedure to first verify whether a record exists in the Team_Attributes table where chanceCreationPassingClass equals the specified parameter para_chanceCreationPassingClass and defenceAggressionClass matches para_defenceAggressionClass. If such a record exists, update its chanceCreationPassing field with para_chanceCreationPassing; otherwise, insert a new record setting chanceCreationPassingClass to para_chanceCreationPassingClass, defenceAggressionClass to para_defenceAggressionClass, and chanceCreationPassing to para_chanceCreationPassing. Following this, open a cursor to process each record in the Team_Attributes table where chanceCreationCrossingClass is currently null. For each such record, update the chanceCreationCrossingClass to be the COALESCE value of the record's chanceCreationPassing field or the parameter para_chanceCreationCrossingClass, as applicable.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_chanceCreationPassingClass text, para_defenceAggressionClass text, para_chanceCreationPassing integer, para_chanceCreationCrossingClass text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Team_Attributes\" WHERE \"chanceCreationCrossingClass\" IS NULL; rec RECORD; BEGIN IF EXISTS (SELECT 1 FROM \"Team_Attributes\" WHERE \"chanceCreationPassingClass\" = para_chanceCreationPassingClass AND \"defenceAggressionClass\" = para_defenceAggressionClass) THEN UPDATE \"Team_Attributes\" SET \"chanceCreationPassing\" = para_chanceCreationPassing WHERE \"chanceCreationPassingClass\" = para_chanceCreationPassingClass AND \"defenceAggressionClass\" = para_defenceAggressionClass; ELSE INSERT INTO \"Team_Attributes\" (\"chanceCreationPassingClass\", \"defenceAggressionClass\", \"chanceCreationPassing\") VALUES (para_chanceCreationPassingClass, para_defenceAggressionClass, para_chanceCreationPassing); END IF; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Team_Attributes\" SET \"chanceCreationCrossingClass\" = COALESCE(rec.\"chanceCreationPassing\", para_chanceCreationCrossingClass) WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp('Normal', 'Press', 45, 'Normal');",
+      "call sp('Normal', 'Press', 70, 'Normal');",
+      "call sp('Normal', 'Press', 50, 'Normal');",
+      "call sp('Normal', 'Press', 48, 'Normal');",
+      "call sp('Normal', 'Press', 56, 'Normal');"
+    ],
+    "database": "soccer_1",
+    "table": [
+      "Team_Attributes"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Team_Attributes",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "team_fifa_api_id",
+            "team_api_id",
+            "integer",
+            "buildUpPlaySpeed",
+            "buildUpPlaySpeedClass",
+            "buildUpPlayDribbling",
+            "buildUpPlayDribblingClass",
+            "buildUpPlayPassing",
+            "buildUpPlayPassingClass",
+            "buildUpPlayPositioningClass",
+            "chanceCreationPassing",
+            "chanceCreationPassingClass",
+            "chanceCreationCrossing",
+            "chanceCreationCrossingClass",
+            "chanceCreationShooting",
+            "chanceCreationShootingClass",
+            "chanceCreationPositioningClass",
+            "defencePressure",
+            "defencePressureClass",
+            "defenceAggression",
+            "defenceAggressionClass",
+            "defenceTeamWidth",
+            "defenceTeamWidthClass",
+            "defenceDefenderLineClass"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              19
+            ],
+            [
+              614,
+              614
+            ],
+            [
+              9930,
+              8564
+            ],
+            [
+              "2013-09-20 00:00:00",
+              "2012-02-22 00:00:00"
+            ],
+            [
+              65,
+              47
+            ],
+            [
+              "Fast",
+              "Balanced"
+            ],
+            [
+              41,
+              53
+            ],
+            [
+              "Lots",
+              "Normal"
+            ],
+            [
+              52,
+              50
+            ],
+            [
+              "Mixed",
+              "Mixed"
+            ],
+            [
+              "Organised",
+              "Organised"
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              "Normal",
+              "Normal"
+            ],
+            [
+              72,
+              50
+            ],
+            [
+              "Normal",
+              "Normal"
+            ],
+            [
+              52,
+              63
+            ],
+            [
+              "Normal",
+              "Lots"
+            ],
+            [
+              "Organised",
+              "Free Form"
+            ],
+            [
+              47,
+              30
+            ],
+            [
+              "Medium",
+              "Medium"
+            ],
+            [
+              57,
+              40
+            ],
+            [
+              "Press",
+              "Press"
+            ],
+            [
+              52,
+              30
+            ],
+            [
+              "Normal",
+              "Normal"
+            ],
+            [
+              "Cover",
+              "Offside Trap"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Country",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "name"
+          ],
+          "column_types": [
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              24558,
+              13274
+            ],
+            [
+              "Spain",
+              "Belgium"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "League",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "country_id",
+            "name"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4769,
+              10257
+            ],
+            [
+              21518,
+              15722
+            ],
+            [
+              "England Premier League",
+              "Germany 1. Bundesliga"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Player",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "player_api_id",
+            "player_name",
+            "player_fifa_api_id",
+            "birthday",
+            "height",
+            "weight"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              9,
+              14
+            ],
+            [
+              101042,
+              161644
+            ],
+            [
+              "Aaron Hunt",
+              "Aaron Appindangoye"
+            ],
+            [
+              187939,
+              17725
+            ],
+            [
+              "1993-02-19 00:00:00",
+              "1989-12-15 00:00:00"
+            ],
+            [
+              183,
+              165
+            ],
+            [
+              161,
+              163
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Player_Attributes",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "player_fifa_api_id",
+            "player_api_id",
+            "integer",
+            "overall_rating",
+            "potential",
+            "preferred_foot",
+            "attacking_work_rate",
+            "defensive_work_rate",
+            "crossing",
+            "finishing",
+            "heading_accuracy",
+            "short_passing",
+            "volleys",
+            "dribbling",
+            "curve",
+            "free_kick_accuracy",
+            "long_passing",
+            "ball_control",
+            "acceleration",
+            "sprint_speed",
+            "agility",
+            "reactions",
+            "balance",
+            "shot_power",
+            "jumping",
+            "stamina",
+            "strength",
+            "long_shots",
+            "aggression",
+            "interceptions",
+            "positioning",
+            "vision",
+            "penalties",
+            "marking",
+            "standing_tackle",
+            "sliding_tackle",
+            "gk_diving",
+            "gk_handling",
+            "gk_kicking",
+            "gk_positioning",
+            "gk_reflexes"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              19,
+              20
+            ],
+            [
+              189615,
+              218353
+            ],
+            [
+              155782,
+              505942
+            ],
+            [
+              "2016-04-21 00:00:00",
+              "2016-04-07 00:00:00"
+            ],
+            [
+              71,
+              73
+            ],
+            [
+              75,
+              71
+            ],
+            [
+              "right",
+              "left"
+            ],
+            [
+              "high",
+              "high"
+            ],
+            [
+              "medium",
+              "medium"
+            ],
+            [
+              79,
+              78
+            ],
+            [
+              50,
+              44
+            ],
+            [
+              71,
+              58
+            ],
+            [
+              70,
+              70
+            ],
+            [
+              32,
+              28
+            ],
+            [
+              73,
+              71
+            ],
+            [
+              67,
+              66
+            ],
+            [
+              69,
+              69
+            ],
+            [
+              67,
+              64
+            ],
+            [
+              70,
+              70
+            ],
+            [
+              84,
+              79
+            ],
+            [
+              78,
+              78
+            ],
+            [
+              78,
+              79
+            ],
+            [
+              67,
+              69
+            ],
+            [
+              90,
+              65
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              58,
+              58
+            ],
+            [
+              79,
+              79
+            ],
+            [
+              56,
+              76
+            ],
+            [
+              35,
+              56
+            ],
+            [
+              66,
+              67
+            ],
+            [
+              62,
+              62
+            ],
+            [
+              58,
+              57
+            ],
+            [
+              54,
+              64
+            ],
+            [
+              47,
+              48
+            ],
+            [
+              65,
+              76
+            ],
+            [
+              75,
+              66
+            ],
+            [
+              72,
+              72
+            ],
+            [
+              14,
+              13
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Team",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "team_api_id",
+            "team_fifa_api_id",
+            "team_long_name",
+            "team_short_name"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4,
+              3
+            ],
+            [
+              8635,
+              9987
+            ],
+            [
+              670,
+              15005
+            ],
+            [
+              "SV Zulte-Waregem",
+              "KAA Gent"
+            ],
+            [
+              "LOK",
+              "STL"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ IS NULL; _ _; BEGIN IF EXISTS (SELECT _ FROM _ WHERE _ = _ AND _ = _) THEN UPDATE _ SET _ = _ WHERE _ = _ AND _ = _; ELSE INSERT INTO _ (_, _, _) VALUES (_, _, _); END IF; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = COALESCE(_._, _) WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PLpgSQL procedure to first check if any team attribute has matching passing and aggression classes. If found, update the team's passing attribute; otherwise, add a new team attribute with the given classes and passing value. Then, review each team attribute lacking a crossing class and update it to use either its passing value or a specified default crossing class.",
+    "detailed_text": "Create a PLpgSQL stored procedure to first verify whether a record exists in the Team_Attributes table where chanceCreationPassingClass equals the specified parameter para_chanceCreationPassingClass and defenceAggressionClass matches para_defenceAggressionClass. If such a record exists, update its chanceCreationPassing field with para_chanceCreationPassing; otherwise, insert a new record setting chanceCreationPassingClass to para_chanceCreationPassingClass, defenceAggressionClass to para_defenceAggressionClass, and chanceCreationPassing to para_chanceCreationPassing. Following this, open a cursor to process each record in the Team_Attributes table where chanceCreationCrossingClass is currently null. For each such record, update the chanceCreationCrossingClass to be the COALESCE value of the record's chanceCreationPassing field or the parameter para_chanceCreationCrossingClass, as applicable."
+  },
+  {
+    "text": "Create a PL/pgSQL stored procedure that begins by inserting a new row into the Other_Property_Features table, using the parameter para_feature_id for the feature_id column and para_property_id for the property_id column. Next, it opens a cursor to iterate over each row in the Other_Property_Features table. For every row retrieved by the cursor, update the property_feature_description column to match the given parameter para_property_feature_description. After all rows have been processed and updated, close the cursor.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_feature_id integer, para_property_id integer, para_property_feature_description text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Other_Property_Features\"; rec RECORD; BEGIN INSERT INTO \"Other_Property_Features\" (\"feature_id\", \"property_id\") VALUES (para_feature_id, para_property_id); OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Other_Property_Features\" SET \"property_feature_description\" = para_property_feature_description WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(2, 6, 'dolorem');",
+      "call sp(4, 3, 'modi');",
+      "call sp(3, 12, 'modi');",
+      "call sp(4, 6, 'autem');",
+      "call sp(4, 9, 'illo');"
+    ],
+    "database": "real_estate_properties",
+    "table": [
+      "Other_Property_Features"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Other_Available_Features",
+          "table_comment": "",
+          "column_names": [
+            "feature_id",
+            "feature_type_code",
+            "feature_name",
+            "feature_description"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              4
+            ],
+            [
+              "Amenity",
+              "Amenity"
+            ],
+            [
+              "AirCon",
+              "AirCon"
+            ],
+            [
+              "Burglar Alarm",
+              "Burglar Alarm"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Other_Property_Features",
+          "table_comment": "",
+          "column_names": [
+            "property_id",
+            "feature_id",
+            "property_feature_description"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              9
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              "quo",
+              "modi"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Properties",
+          "table_comment": "",
+          "column_names": [
+            "property_id",
+            "property_type_code",
+            "integer_on_market",
+            "integer_sold",
+            "property_name",
+            "property_address",
+            "room_count",
+            "vendor_requested_price",
+            "buyer_offered_price",
+            "agreed_selling_price",
+            "apt_feature_1",
+            "apt_feature_2",
+            "apt_feature_3",
+            "fld_feature_1",
+            "fld_feature_2",
+            "fld_feature_3",
+            "hse_feature_1",
+            "hse_feature_2",
+            "hse_feature_3",
+            "oth_feature_1",
+            "oth_feature_2",
+            "oth_feature_3",
+            "shp_feature_1",
+            "shp_feature_2",
+            "shp_feature_3",
+            "other_property_details"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "real",
+            "real",
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              13,
+              5
+            ],
+            [
+              "Other",
+              "Field"
+            ],
+            [
+              "1993-08-04 10:49:04",
+              "1996-09-16 22:04:27"
+            ],
+            [
+              "2001-11-09 04:37:33",
+              "2012-08-19 07:36:57"
+            ],
+            [
+              "high line",
+              "prism"
+            ],
+            [
+              "2765 Schulist Stream Lindmouth, UT 03391-3817",
+              "084 Lakin Vista Apt. 394 Fishertown, MA 16876"
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2198735.0,
+              305.0
+            ],
+            [
+              13991131.0,
+              0.0
+            ],
+            [
+              4514.807,
+              4201.8
+            ],
+            [
+              "et",
+              "aut"
+            ],
+            [
+              "et",
+              "vero"
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Ref_Feature_Types",
+          "table_comment": "",
+          "column_names": [
+            "feature_type_code",
+            "feature_type_name"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Security",
+              "Security"
+            ],
+            [
+              "Amenity, eg Pool.",
+              "Amenity, eg Pool."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        },
+        {
+          "table_name": "Ref_Property_Types",
+          "table_comment": "",
+          "column_names": [
+            "property_type_code",
+            "property_type_description"
+          ],
+          "column_types": [
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Apartment",
+              "House"
+            ],
+            [
+              "Field, Meadow.",
+              "Other, to be determined."
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN INSERT INTO _ (_, _) VALUES (_, _); OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 3,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that initially adds a new entry with specific feature and property identifiers into the property features database. Then, it reviews each existing entry, updating their descriptions to a given standard text. Finish by closing the review process once all updates are applied.",
+    "detailed_text": "Create a PL/pgSQL stored procedure that begins by inserting a new row into the Other_Property_Features table, using the parameter para_feature_id for the feature_id column and para_property_id for the property_id column. Next, it opens a cursor to iterate over each row in the Other_Property_Features table. For every row retrieved by the cursor, update the property_feature_description column to match the given parameter para_property_feature_description. After all rows have been processed and updated, close the cursor."
+  },
+  {
+    "text": "Create or replace a PL/pgSQL procedure named `sp` that first updates the `city` column in the `station` table by appending the string '_prefix' to the given city parameter. It then opens a cursor to iterate over all records in the `trip` table. For each record, if the `zip_code` field equals the provided zip code parameter, the procedure deletes that record from the `trip` table. Once all records have been processed, the cursor is closed. Finally, the procedure inserts a new record into the `status` table with the specified number of `bikes_available` and `station_id` parameters.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_city text, para_zip_code integer, para_bikes_available integer, para_station_id integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"trip\"; rec RECORD; BEGIN UPDATE \"station\" SET \"city\" = CONCAT(para_city, '_prefix'); OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; IF rec.\"zip_code\" = para_zip_code THEN DELETE FROM \"trip\" WHERE CURRENT OF ref_cursor; END IF; END LOOP; CLOSE ref_cursor; INSERT INTO \"status\" (\"bikes_available\", \"station_id\") VALUES (para_bikes_available, para_station_id); END; $$;",
+    "call": [
+      "call sp('Mountain View', 94107, 12, 3);",
+      "call sp('San Jose', 94608, 12, 3);",
+      "call sp('San Jose', 94002, 12, 3);",
+      "call sp('Mountain View', 94609, 12, 3);",
+      "call sp('San Jose', 94107, 12, 3);"
+    ],
+    "database": "bike_1",
+    "table": [
+      "station",
+      "trip",
+      "status"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "station",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "name",
+            "lat",
+            "long",
+            "dock_count",
+            "city",
+            "installation_integer"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "real",
+            "real",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              14,
+              2
+            ],
+            [
+              "Redwood City Public Library",
+              "St James Park"
+            ],
+            [
+              37.348743,
+              37.40694
+            ],
+            [
+              -122.10834,
+              -121.894714
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              "San Jose",
+              "San Jose"
+            ],
+            [
+              "8/5/2013",
+              "8/16/2013"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "status",
+          "table_comment": "",
+          "column_names": [
+            "station_id",
+            "bikes_available",
+            "docks_available",
+            "time"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              3
+            ],
+            [
+              12,
+              12
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              "2015-06-02 13:00:01",
+              "2015-06-02 12:49:02"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "trip",
+          "table_comment": "",
+          "column_names": [
+            "id",
+            "duration",
+            "start_integer",
+            "start_station_name",
+            "start_station_id",
+            "end_integer",
+            "end_station_name",
+            "end_station_id",
+            "bike_id",
+            "subscription_type",
+            "zip_code"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              900518,
+              900528
+            ],
+            [
+              693,
+              384
+            ],
+            [
+              "8/21/2015 17:03",
+              "8/21/2015 17:06"
+            ],
+            [
+              "Beale at Market",
+              "Davis at Jackson"
+            ],
+            [
+              55,
+              56
+            ],
+            [
+              "8/21/2015 17:13",
+              "8/21/2015 17:07"
+            ],
+            [
+              "Harry Bridges Plaza (Ferry Building)",
+              "San Francisco Caltrain 2 (330 Townsend)"
+            ],
+            [
+              77,
+              69
+            ],
+            [
+              503,
+              531
+            ],
+            [
+              "Subscriber",
+              "Subscriber"
+            ],
+            [
+              95119,
+              94122
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "weather",
+          "table_comment": "",
+          "column_names": [
+            "integer",
+            "max_temperature_f",
+            "mean_temperature_f",
+            "min_temperature_f",
+            "max_dew_point_f",
+            "mean_dew_point_f",
+            "min_dew_point_f",
+            "max_humidity",
+            "mean_humidity",
+            "min_humidity",
+            "max_sea_level_pressure_inches",
+            "mean_sea_level_pressure_inches",
+            "min_sea_level_pressure_inches",
+            "max_visibility_miles",
+            "mean_visibility_miles",
+            "min_visibility_miles",
+            "max_wind_Speed_mph",
+            "mean_wind_speed_mph",
+            "max_gust_speed_mph",
+            "precipitation_inches",
+            "cloud_cover",
+            "events",
+            "wind_dir_degrees",
+            "zip_code"
+          ],
+          "column_types": [
+            "text",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "real",
+            "real",
+            "real",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "9/7/2013",
+              "9/17/2013"
+            ],
+            [
+              66,
+              76
+            ],
+            [
+              71,
+              68
+            ],
+            [
+              62,
+              58
+            ],
+            [
+              55,
+              58
+            ],
+            [
+              55,
+              58
+            ],
+            [
+              52,
+              53
+            ],
+            [
+              86,
+              93
+            ],
+            [
+              73,
+              77
+            ],
+            [
+              50,
+              57
+            ],
+            [
+              29.82,
+              29.92
+            ],
+            [
+              30.01,
+              29.93
+            ],
+            [
+              29.72,
+              29.91
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              25,
+              18
+            ],
+            [
+              12,
+              16
+            ],
+            [
+              51,
+              39
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              "",
+              ""
+            ],
+            [
+              268,
+              276
+            ],
+            [
+              94107,
+              94107
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN UPDATE _ SET _ = CONCAT(_, _); OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN DELETE FROM _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; INSERT INTO _ (_, _) VALUES (_, _); END; $$;",
+    "table_num": 3,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that updates the station city name by appending \"_prefix\" to the provided city name. Then, for each trip entry, if the zip code matches the given value, delete that trip. After processing all trips, add a new status record with the specified number of available bikes and station ID.",
+    "detailed_text": "Create or replace a PL/pgSQL procedure named `sp` that first updates the `city` column in the `station` table by appending the string '_prefix' to the given city parameter. It then opens a cursor to iterate over all records in the `trip` table. For each record, if the `zip_code` field equals the provided zip code parameter, the procedure deletes that record from the `trip` table. Once all records have been processed, the cursor is closed. Finally, the procedure inserts a new record into the `status` table with the specified number of `bikes_available` and `station_id` parameters."
+  },
+  {
+    "text": "Design a PL/pgSQL stored procedure that involves opening cursors for the \"players\" and \"matches\" tables. For each player record, update the \"country_code\" field with the value provided by the parameter para_country_code. Then, for each match record where \"tourney_id\" matches the parameter para_tourney_id, update the \"score\" field to the value specified by para_score. After processing all records, insert a new row into the \"rankings\" table, setting the \"tours\" field to the value of the para_tours parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_country_code text, para_tourney_id text, para_score text, para_tours integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor1 CURSOR FOR SELECT * FROM \"players\"; ref_cursor2 CURSOR FOR SELECT * FROM \"matches\"; rec1 RECORD; rec2 RECORD; BEGIN OPEN ref_cursor1; LOOP FETCH ref_cursor1 INTO rec1; EXIT WHEN NOT FOUND; UPDATE \"players\" SET \"country_code\" = para_country_code WHERE CURRENT OF ref_cursor1; END LOOP; CLOSE ref_cursor1; OPEN ref_cursor2; LOOP FETCH ref_cursor2 INTO rec2; EXIT WHEN NOT FOUND; IF rec2.\"tourney_id\" = para_tourney_id THEN UPDATE \"matches\" SET \"score\" = para_score WHERE CURRENT OF ref_cursor2; END IF; END LOOP; CLOSE ref_cursor2; INSERT INTO \"rankings\" (\"tours\") VALUES (para_tours); END; $$;",
+    "call": [
+      "call sp('AUS', '2016-M020', '6-4 6-4', 0);",
+      "call sp('SLO', '2013-W-WT-TUR-01A-2013', '4-6 6-4 6-4', 6);",
+      "call sp('MEX', '2013-W-WT-TUR-01A-2013', '6-3 7-6(5)', 0);",
+      "call sp('FRA', '2013-W-WT-TUR-01A-2013', '6-3 2-6 6-3', 23);",
+      "call sp('SUI', '2013-W-WT-TUR-01A-2013', '6-4 6-3', 8);"
+    ],
+    "database": "wta_1",
+    "table": [
+      "players",
+      "matches",
+      "rankings"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "matches",
+          "table_comment": "",
+          "column_names": [
+            "best_of",
+            "draw_size",
+            "loser_age",
+            "loser_entry",
+            "loser_hand",
+            "loser_ht",
+            "loser_id",
+            "loser_ioc",
+            "loser_name",
+            "loser_rank",
+            "loser_rank_points",
+            "loser_seed",
+            "match_num",
+            "minutes",
+            "round",
+            "score",
+            "surface",
+            "tourney_integer",
+            "tourney_id",
+            "tourney_level",
+            "tourney_name",
+            "winner_age",
+            "winner_entry",
+            "winner_hand",
+            "winner_ht",
+            "winner_id",
+            "winner_ioc",
+            "winner_name",
+            "winner_rank",
+            "winner_rank_points",
+            "winner_seed",
+            "year"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "real",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "real",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              3
+            ],
+            [
+              32,
+              4
+            ],
+            [
+              28.199863,
+              26.466805
+            ],
+            [
+              "",
+              ""
+            ],
+            [
+              "R",
+              "R"
+            ],
+            [
+              177,
+              162
+            ],
+            [
+              201421,
+              201347
+            ],
+            [
+              "GER",
+              "ESP"
+            ],
+            [
+              "Angelique Kerber",
+              "Victoria Azarenka"
+            ],
+            [
+              7,
+              4
+            ],
+            [
+              7676,
+              4190
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              294,
+              296
+            ],
+            [
+              134,
+              105
+            ],
+            [
+              "QF",
+              "QF"
+            ],
+            [
+              "6-7(3) 6-2 6-3",
+              "6-4 6-3"
+            ],
+            [
+              "Hard",
+              "Hard"
+            ],
+            [
+              20160118,
+              20160118
+            ],
+            [
+              "2013-W-WT-TUR-01A-2013",
+              "2016-1049"
+            ],
+            [
+              "G",
+              "I"
+            ],
+            [
+              "WTA Championships",
+              "WTA Championships"
+            ],
+            [
+              25.968515,
+              26.480494
+            ],
+            [
+              "",
+              ""
+            ],
+            [
+              "R",
+              "R"
+            ],
+            [
+              173,
+              173
+            ],
+            [
+              201419,
+              201506
+            ],
+            [
+              "POL",
+              "GER"
+            ],
+            [
+              "Simona Halep",
+              "Madison Keys"
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              4190,
+              1715
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              2013,
+              2016
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "players",
+          "table_comment": "",
+          "column_names": [
+            "player_id",
+            "first_name",
+            "last_name",
+            "hand",
+            "birth_integer",
+            "country_code"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              200006,
+              200004
+            ],
+            [
+              "Mirjana",
+              "Katarina"
+            ],
+            [
+              "Srebotnik",
+              "Henin"
+            ],
+            [
+              "R",
+              "R"
+            ],
+            [
+              19731003,
+              19770524
+            ],
+            [
+              "FRA",
+              "CRO"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "rankings",
+          "table_comment": "",
+          "column_names": [
+            "ranking_integer",
+            "ranking",
+            "player_id",
+            "ranking_points",
+            "tours"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              20000101,
+              20000101
+            ],
+            [
+              66,
+              926
+            ],
+            [
+              200020,
+              200117
+            ],
+            [
+              2,
+              4378
+            ],
+            [
+              23,
+              0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      1,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; IF _._ = _ THEN UPDATE _ SET _ = _ WHERE CURRENT OF _; END IF; END LOOP; CLOSE _; INSERT INTO _ (_) VALUES (_); END; $$;",
+    "table_num": 3,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to first iterate over all player entries and update their country code to a specified value. Then, go through all match entries, updating the score for matches with a specific tournament ID to a given score. Finally, add a new ranking entry using a specified tour count.",
+    "detailed_text": "Design a PL/pgSQL stored procedure that involves opening cursors for the \"players\" and \"matches\" tables. For each player record, update the \"country_code\" field with the value provided by the parameter para_country_code. Then, for each match record where \"tourney_id\" matches the parameter para_tourney_id, update the \"score\" field to the value specified by para_score. After processing all records, insert a new row into the \"rankings\" table, setting the \"tours\" field to the value of the para_tours parameter."
+  },
+  {
+    "text": "Design a PLpgSQL stored procedure that uses a cursor to iterate through the locations table, focusing on entries where LOCATION_ID is greater than or equal to a specified parameter. For each of these location records, update the POSTAL_CODE field to a provided value. Track the count of processed records, and if this count is less than three, insert a new record into the departments table using the provided MANAGER_ID. If three or more records are processed, update the DEPARTMENT_ID for all entries in the job_history table with the supplied parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_LOCATION_ID real, para_POSTAL_CODE text, para_MANAGER_ID real, para_DEPARTMENT_ID real) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"locations\" WHERE \"LOCATION_ID\" >= para_LOCATION_ID; rec RECORD; total_count INTEGER := 0; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"locations\" SET \"POSTAL_CODE\" = para_POSTAL_CODE WHERE CURRENT OF ref_cursor; total_count := total_count + 1; END LOOP; CLOSE ref_cursor; IF total_count < 3 THEN INSERT INTO \"departments\" (\"MANAGER_ID\") VALUES (para_MANAGER_ID); ELSE UPDATE \"job_history\" SET \"DEPARTMENT_ID\" = para_DEPARTMENT_ID; END IF; END; $$;",
+    "call": [
+      "call sp(1900.0, '01307-002', 0.0, 20.0);",
+      "call sp(2200.0, 'M5V 2L7', 205.0, 90.0);",
+      "call sp(2400.0, '98199', 145.0, 0.0);",
+      "call sp(1600.0, ' The Oxford ', 203.0, 110.0);",
+      "call sp(2000.0, '490231', 0.0, 50.0);"
+    ],
+    "database": "hr_1",
+    "table": [
+      "locations",
+      "departments",
+      "job_history"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "locations",
+          "table_comment": "",
+          "column_names": [
+            "LOCATION_ID",
+            "STREET_ADDRESS",
+            "POSTAL_CODE",
+            "CITY",
+            "STATE_PROVINCE",
+            "COUNTRY_ID"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1300.0,
+              2200.0
+            ],
+            [
+              "2014 Jabberwocky Rd",
+              "Rua Frei Caneca 1360"
+            ],
+            [
+              "10934",
+              "540198"
+            ],
+            [
+              "South San Francisco",
+              "Hiroshima"
+            ],
+            [
+              "Tokyo Prefecture",
+              "California"
+            ],
+            [
+              "CA",
+              "AU"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "countries",
+          "table_comment": "",
+          "column_names": [
+            "COUNTRY_ID",
+            "COUNTRY_NAME",
+            "REGION_ID"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "CH",
+              "AR"
+            ],
+            [
+              "Argentina",
+              "Canada"
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "departments",
+          "table_comment": "",
+          "column_names": [
+            "DEPARTMENT_ID",
+            "DEPARTMENT_NAME",
+            "MANAGER_ID",
+            "LOCATION_ID"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              20.0,
+              80.0
+            ],
+            [
+              "Accounting",
+              "Treasury"
+            ],
+            [
+              0.0,
+              100.0
+            ],
+            [
+              2500.0,
+              1800.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "employees",
+          "table_comment": "",
+          "column_names": [
+            "EMPLOYEE_ID",
+            "FIRST_NAME",
+            "LAST_NAME",
+            "EMAIL",
+            "PHONE_NUMBER",
+            "HIRE_integer",
+            "JOB_ID",
+            "SALARY",
+            "COMMISSION_PCT",
+            "MANAGER_ID",
+            "DEPARTMENT_ID"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "real",
+            "real",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              110.0,
+              106.0
+            ],
+            [
+              "Diana",
+              "Luis"
+            ],
+            [
+              "Chen",
+              "De Haan"
+            ],
+            [
+              "AKHOO",
+              "BERNST"
+            ],
+            [
+              "515.127.4561",
+              "515.124.4169"
+            ],
+            [
+              "1987-06-24",
+              "1987-07-06"
+            ],
+            [
+              "FI_ACCOUNT",
+              "PU_CLERK"
+            ],
+            [
+              2600.0,
+              9000.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              103.0,
+              108.0
+            ],
+            [
+              30.0,
+              30.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "job_history",
+          "table_comment": "",
+          "column_names": [
+            "EMPLOYEE_ID",
+            "START_integer",
+            "END_integer",
+            "JOB_ID",
+            "DEPARTMENT_ID"
+          ],
+          "column_types": [
+            "real",
+            "text",
+            "text",
+            "text",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              200.0,
+              102.0
+            ],
+            [
+              "0000-00-00",
+              "1987-09-17"
+            ],
+            [
+              "1999-12-19",
+              "1999-12-31"
+            ],
+            [
+              "SA_MAN",
+              "ST_CLERK"
+            ],
+            [
+              110.0,
+              60.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "jobs",
+          "table_comment": "",
+          "column_names": [
+            "JOB_ID",
+            "JOB_TITLE",
+            "MIN_SALARY",
+            "MAX_SALARY"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "real",
+            "real"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "SH_CLERK",
+              "SA_REP"
+            ],
+            [
+              "Accountant",
+              "Administration Vice President"
+            ],
+            [
+              2500.0,
+              10000.0
+            ],
+            [
+              5000.0,
+              5500.0
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "regions",
+          "table_comment": "",
+          "column_names": [
+            "REGION_ID",
+            "REGION_NAME"
+          ],
+          "column_types": [
+            "real",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              4.0,
+              1.0
+            ],
+            [
+              "Asia\\r",
+              "Asia\\r"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ >= _; _ _; _ _ := _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; _ := _ + _; END LOOP; CLOSE _; IF _ < _ THEN INSERT INTO _ (_) VALUES (_); ELSE UPDATE _ SET _ = _; END IF; END; $$;",
+    "table_num": 3,
+    "parameter": 4,
+    "insert": 1,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 1,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to manage location records by updating their postal codes for all entries with an ID equal to or greater than a specified value. If fewer than three locations are updated, add a new manager entry; otherwise, change the department ID for all job history records.",
+    "detailed_text": "Design a PLpgSQL stored procedure that uses a cursor to iterate through the locations table, focusing on entries where LOCATION_ID is greater than or equal to a specified parameter. For each of these location records, update the POSTAL_CODE field to a provided value. Track the count of processed records, and if this count is less than three, insert a new record into the departments table using the provided MANAGER_ID. If three or more records are processed, update the DEPARTMENT_ID for all entries in the job_history table with the supplied parameter."
+  },
+  {
+    "text": "Develop a PL/pgSQL stored procedure that uses a cursor to retrieve all entries from the Customers table where the customer_id is greater than a specified parameter, para_customer_id. For each entry retrieved, update the state column to the value of para_state. This iteration continues until all qualifying records have been processed.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_customer_id integer, para_state text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Customers\" WHERE \"customer_id\" > para_customer_id; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Customers\" SET \"state\" = para_state WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(118, 'Hawaii');",
+      "call sp(119, 'Iowa');",
+      "call sp(116, 'Pennsylvania');",
+      "call sp(120, 'Kansas');",
+      "call sp(118, 'Tennessee');"
+    ],
+    "database": "customer_complaints",
+    "table": [
+      "Customers"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Complaints",
+          "table_comment": "",
+          "column_names": [
+            "complaint_id",
+            "product_id",
+            "customer_id",
+            "complaint_outcome_code",
+            "complaint_status_code",
+            "complaint_type_code",
+            "integer_complaint_raised",
+            "integer_complaint_closed",
+            "staff_id"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              8,
+              6
+            ],
+            [
+              119,
+              118
+            ],
+            [
+              117,
+              114
+            ],
+            [
+              "OK",
+              "OK"
+            ],
+            [
+              "Closed",
+              "New"
+            ],
+            [
+              "Product Unusable",
+              "Product Unusable"
+            ],
+            [
+              "2007-10-14 21:50:43",
+              "2007-10-14 21:50:43"
+            ],
+            [
+              "1976-04-19 11:03:06",
+              "1970-10-14 00:57:25"
+            ],
+            [
+              114,
+              114
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_type_code",
+            "address_line_1",
+            "address_line_2",
+            "town_city",
+            "state",
+            "email_address",
+            "phone_number"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              120,
+              117
+            ],
+            [
+              "Good Credit Rating",
+              "Good Credit Rating"
+            ],
+            [
+              "72144 Katlynn Flat Suite 512",
+              "1566 Ramona Overpass Apt. 464"
+            ],
+            [
+              "Suite 151",
+              "Apt. 495"
+            ],
+            [
+              "Hansenbury",
+              "North Alisaville"
+            ],
+            [
+              "Iowa",
+              "Pennsylvania"
+            ],
+            [
+              "ubeier@example.org",
+              "vida86@example.com"
+            ],
+            [
+              "+38(3)9011433816",
+              "06963347450"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Products",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "parent_product_id",
+            "product_category_code",
+            "integer_product_first_available",
+            "integer_product_discontinued",
+            "product_name",
+            "product_description",
+            "product_price"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "numeric"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              119,
+              119
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              "Book",
+              "Book"
+            ],
+            [
+              "1974-06-25 12:26:47",
+              "1994-12-18 15:13:19"
+            ],
+            [
+              "1987-12-20 13:46:16",
+              "1997-07-02 18:26:16"
+            ],
+            [
+              "Keyboard",
+              "Chocolate"
+            ],
+            [
+              "Handmade chocolate",
+              "Handmade chocolate"
+            ],
+            [
+              109.99,
+              2.88
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Staff",
+          "table_comment": "",
+          "column_names": [
+            "staff_id",
+            "gender",
+            "first_name",
+            "last_name",
+            "email_address",
+            "phone_number"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              120,
+              119
+            ],
+            [
+              "0",
+              "0"
+            ],
+            [
+              "Dagmar",
+              "Dagmar"
+            ],
+            [
+              "Zieme",
+              "Erdman"
+            ],
+            [
+              "glen.borer@example.com",
+              "glen.borer@example.com"
+            ],
+            [
+              "142-311-6503x206",
+              "155-811-6153"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 2,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to scan customers whose IDs exceed a given number, updating their status to a specific value.",
+    "detailed_text": "Develop a PL/pgSQL stored procedure that uses a cursor to retrieve all entries from the Customers table where the customer_id is greater than a specified parameter, para_customer_id. For each entry retrieved, update the state column to the value of para_state. This iteration continues until all qualifying records have been processed."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure that utilizes a cursor to iterate over each record in the artist table where the artist's name is alphabetically greater than the given parameter, para_artist_name. For each qualifying artist, update the country field to the value of para_country. After processing with the cursor, delete all records where the gender is null. Finally, update the preferred_genre field for all artists to the value provided in the para_preferred_genre parameter.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_artist_name text, para_country text, para_gender text, para_preferred_genre text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"artist\" WHERE \"artist_name\" > para_artist_name; rec RECORD; BEGIN OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"artist\" SET \"country\" = para_country WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; DELETE FROM \"artist\" WHERE \"gender\" IS NULL; UPDATE \"artist\" SET \"preferred_genre\" = para_preferred_genre; END; $$;",
+    "call": [
+      "call sp('Michel', 'India', 'Female', 'blues');",
+      "call sp('Shrikanta', 'Bangladesh', 'Male', 'folk');",
+      "call sp('Enrique', 'Bangladesh', 'Female', 'tagore');",
+      "call sp('Prity', 'Bangladesh', 'Male', 'tagore');",
+      "call sp('Topu', 'UK', 'Male', 'tagore');"
+    ],
+    "database": "music_1",
+    "table": [
+      "artist"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "artist",
+          "table_comment": "",
+          "column_names": [
+            "artist_name",
+            "country",
+            "gender",
+            "preferred_genre"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Prity",
+              "Enrique"
+            ],
+            [
+              "India",
+              "India"
+            ],
+            [
+              "Female",
+              "Female"
+            ],
+            [
+              "nazrul",
+              "tagore"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "files",
+          "table_comment": "",
+          "column_names": [
+            "f_id",
+            "artist_name",
+            "file_size",
+            "duration",
+            "formats"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              4
+            ],
+            [
+              "Michel",
+              "Prity"
+            ],
+            [
+              "4.10 MB",
+              "3.78 MB"
+            ],
+            [
+              "4:12",
+              "5:23"
+            ],
+            [
+              "mp4",
+              "mp4"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "genre",
+          "table_comment": "",
+          "column_names": [
+            "g_name",
+            "rating",
+            "most_popular_in"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "modern",
+              "blues"
+            ],
+            [
+              "7",
+              "8"
+            ],
+            [
+              "Sylhet,Chittagong,Kustia",
+              "Sylhet,Chittagong,Kustia"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "song",
+          "table_comment": "",
+          "column_names": [
+            "song_name",
+            "artist_name",
+            "country",
+            "f_id",
+            "genre_is",
+            "rating",
+            "languages",
+            "releaseinteger",
+            "resolution"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text",
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Ami opar hoye",
+              "Ami opar hoye"
+            ],
+            [
+              "Topu",
+              "Shrikanta"
+            ],
+            [
+              "Bangladesh",
+              "India"
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              "modern",
+              "tagore"
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              "bangla",
+              "bangla"
+            ],
+            [
+              "28-AUG-2011",
+              "17-MAR-2002"
+            ],
+            [
+              320,
+              320
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "column_labels": [
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; DELETE FROM _ WHERE _ IS NULL; UPDATE _ SET _ = _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure to scan all artist records with names alphabetically greater than a specified name. Change their country to a given value. Remove artists with unspecified gender, then set all artists' preferred genre to a specified genre.",
+    "detailed_text": "Develop a PL/pgSQL procedure that utilizes a cursor to iterate over each record in the artist table where the artist's name is alphabetically greater than the given parameter, para_artist_name. For each qualifying artist, update the country field to the value of para_country. After processing with the cursor, delete all records where the gender is null. Finally, update the preferred_genre field for all artists to the value provided in the para_preferred_genre parameter."
+  },
+  {
+    "text": "Create a PLpgSQL stored procedure that first deletes records from the Accounts table if the account_id is less than a specified parameter, para_account_id, or if the customer_id is less than another parameter, para_customer_id. The procedure then utilizes a cursor, ref_cursor, to iterate through all remaining rows in the Accounts table, updating the account_name field to the value provided by para_account_name for each row. In parallel, another cursor, ref_cursor2, is used to loop through all rows in the Product_Categories table, updating the vat_rating field to the value specified by para_vat_rating for each row processed.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_account_id integer, para_customer_id integer, para_account_name text, para_product_type_description text, para_production_type_code text, para_vat_rating numeric) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"Accounts\"; ref_cursor2 CURSOR FOR SELECT * FROM \"Product_Categories\"; rec RECORD; rec2 RECORD; BEGIN DELETE FROM \"Accounts\" WHERE \"account_id\" < para_account_id OR \"customer_id\" < para_customer_id; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"Accounts\" SET \"account_name\" = para_account_name WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; OPEN ref_cursor2; LOOP FETCH ref_cursor2 INTO rec2; EXIT WHEN NOT FOUND; UPDATE \"Product_Categories\" SET \"vat_rating\" = para_vat_rating WHERE CURRENT OF ref_cursor2; END LOOP; CLOSE ref_cursor2; END; $$;",
+    "call": [
+      "call sp(8, 13, '710', 'Food', 'Food', 11.4000);",
+      "call sp(8, 13, '935', 'Dvd products', 'Food', 13.9500);",
+      "call sp(15, 13, '520', 'Electrical devices', 'Electronics', 15.8400);",
+      "call sp(5, 15, '900', 'Food', 'Food', 17.9000);",
+      "call sp(11, 12, '191', 'Electrical devices', 'Electronics', 15.8400);"
+    ],
+    "database": "customers_and_invoices",
+    "table": [
+      "Accounts",
+      "Product_Categories"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "Order_Items",
+          "table_comment": "",
+          "column_names": [
+            "order_item_id",
+            "order_id",
+            "product_id",
+            "product_quantity",
+            "other_order_item_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              11,
+              7
+            ],
+            [
+              14,
+              1
+            ],
+            [
+              10,
+              5
+            ],
+            [
+              "7",
+              "5"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Accounts",
+          "table_comment": "",
+          "column_names": [
+            "account_id",
+            "customer_id",
+            "integer_account_opened",
+            "account_name",
+            "other_account_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              11,
+              13
+            ],
+            [
+              13,
+              15
+            ],
+            [
+              "2014-12-28 07:29:42",
+              "2012-07-09 23:40:15"
+            ],
+            [
+              "662",
+              "900"
+            ],
+            [
+              "VIP",
+              "Regular"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Customers",
+          "table_comment": "",
+          "column_names": [
+            "customer_id",
+            "customer_first_name",
+            "customer_middle_initial",
+            "customer_last_name",
+            "gender",
+            "email_address",
+            "login_name",
+            "login_password",
+            "phone_number",
+            "town_city",
+            "state_county_province",
+            "country"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              13,
+              11
+            ],
+            [
+              "Abbey",
+              "Zita"
+            ],
+            [
+              "A",
+              "M"
+            ],
+            [
+              "Keeling",
+              "Schaefer"
+            ],
+            [
+              "1",
+              "0"
+            ],
+            [
+              "thora.torphy@example.org",
+              "philip94@example.org"
+            ],
+            [
+              "jankunding",
+              "camilla.dubuque"
+            ],
+            [
+              "e67856613cd71f1b2884",
+              "d7629de5171fe29106c8"
+            ],
+            [
+              "+69(0)7149212554",
+              "+95(0)1523064649"
+            ],
+            [
+              "Lake Freemanville",
+              "North Devonte"
+            ],
+            [
+              "Kansas",
+              "California"
+            ],
+            [
+              "USA",
+              "USA"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Financial_Transactions",
+          "table_comment": "",
+          "column_names": [
+            "transaction_id",
+            "account_id",
+            "invoice_number",
+            "transaction_type",
+            "transaction_integer",
+            "transaction_amount",
+            "transaction_comment",
+            "other_transaction_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "numeric",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              1,
+              7
+            ],
+            [
+              14,
+              13
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              "Refund",
+              "Refund"
+            ],
+            [
+              "2018-03-13 13:27:46",
+              "2018-03-11 21:57:47"
+            ],
+            [
+              1517.77,
+              1598.25
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Invoice_Line_Items",
+          "table_comment": "",
+          "column_names": [
+            "order_item_id",
+            "invoice_number",
+            "product_id",
+            "product_title",
+            "product_quantity",
+            "product_price",
+            "derived_product_cost",
+            "derived_vat_payable",
+            "derived_total_cost"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "text",
+            "text",
+            "numeric",
+            "numeric",
+            "numeric",
+            "numeric"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              8
+            ],
+            [
+              1,
+              14
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              "prod_name",
+              "prod_name"
+            ],
+            [
+              "8",
+              "8"
+            ],
+            [
+              749.6,
+              942.99
+            ],
+            [
+              188.71,
+              150.04
+            ],
+            [
+              NaN,
+              NaN
+            ],
+            [
+              58.24,
+              51.27
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Invoices",
+          "table_comment": "",
+          "column_names": [
+            "invoice_number",
+            "order_id",
+            "invoice_integer"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              9,
+              3
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              "2018-03-16 11:01:06",
+              "2018-03-01 16:40:48"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Orders",
+          "table_comment": "",
+          "column_names": [
+            "order_id",
+            "customer_id",
+            "integer_order_placed",
+            "order_details"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              12,
+              9
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              "2015-05-17 03:05:32",
+              "2013-10-25 17:40:25"
+            ],
+            [
+              NaN,
+              NaN
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Products",
+          "table_comment": "",
+          "column_names": [
+            "product_id",
+            "parent_product_id",
+            "production_type_code",
+            "unit_price",
+            "product_name",
+            "product_color",
+            "product_size"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text",
+            "numeric",
+            "text",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              10,
+              1
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              "Electronics",
+              "Books"
+            ],
+            [
+              729.09,
+              82.96
+            ],
+            [
+              "Beer Menus",
+              "Learning English"
+            ],
+            [
+              "Red",
+              "Yellow"
+            ],
+            [
+              "Large",
+              "Small"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "Product_Categories",
+          "table_comment": "",
+          "column_names": [
+            "production_type_code",
+            "product_type_description",
+            "vat_rating"
+          ],
+          "column_types": [
+            "text",
+            "text",
+            "numeric"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              "Books",
+              "Food"
+            ],
+            [
+              "Dvd products",
+              "Electrical devices"
+            ],
+            [
+              15.84,
+              13.95
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ CURSOR FOR SELECT * FROM _; _ _; _ _; BEGIN DELETE FROM _ WHERE _ < _ OR _ < _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 2,
+    "parameter": 6,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that first removes entries from the Accounts list where either the account ID or customer ID is below a specified limit. Then, it reviews each remaining account to update their name to a given standard. Additionally, it examines all product categories to adjust their VAT rating to a specified value.",
+    "detailed_text": "Create a PLpgSQL stored procedure that first deletes records from the Accounts table if the account_id is less than a specified parameter, para_account_id, or if the customer_id is less than another parameter, para_customer_id. The procedure then utilizes a cursor, ref_cursor, to iterate through all remaining rows in the Accounts table, updating the account_name field to the value provided by para_account_name for each row. In parallel, another cursor, ref_cursor2, is used to loop through all rows in the Product_Categories table, updating the vat_rating field to the value specified by para_vat_rating for each row processed."
+  },
+  {
+    "text": "Define a PL/pgSQL stored procedure \"sp\" which takes parameters para_Region, para_Start_year, and para_Coach_ID. The procedure performs the following operations: First, in the \"club\" table, update the \"Start_year\" column by adding 100 to para_Start_year for all records where \"Start_year\" is less than or equal to para_Start_year. Next, utilize a cursor to iterate over each row in the \"club\" table, updating the \"Start_year\" column by subtracting 10 from para_Start_year for the current record in the cursor. Finally, update the \"Coach_ID\" column to para_Coach_ID for all records in the \"player_coach\" table.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Region text, para_Start_year integer, para_Coach_ID integer) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"club\"; rec RECORD; BEGIN UPDATE \"club\" SET \"Start_year\" = para_Start_year + 100 WHERE \"Start_year\" <= para_Start_year; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"club\" SET \"Start_year\" = para_Start_year - 10 WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; UPDATE \"player_coach\" SET \"Coach_ID\" = para_Coach_ID; END; $$;",
+    "call": [
+      "call sp('UK', 2000, 1);",
+      "call sp('USA', 2000, 2);",
+      "call sp('Russia', 2001, 3);",
+      "call sp('France', 1998, 3);",
+      "call sp('USA', 2009, 3);"
+    ],
+    "database": "riding_club",
+    "table": [
+      "club",
+      "player_coach"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "club",
+          "table_comment": "",
+          "column_names": [
+            "Club_ID",
+            "Club_name",
+            "Region",
+            "Start_year"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              3
+            ],
+            [
+              "Halmstads BK",
+              "Helsingborgs IF"
+            ],
+            [
+              "France",
+              "USA"
+            ],
+            [
+              2009,
+              2005
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "coach",
+          "table_comment": "",
+          "column_names": [
+            "Coach_ID",
+            "Coach_name",
+            "Gender",
+            "Club_ID",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              4
+            ],
+            [
+              "Robert Chen",
+              "James Wong"
+            ],
+            [
+              "M",
+              "M"
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              5,
+              2
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "match_result",
+          "table_comment": "",
+          "column_names": [
+            "Rank",
+            "Club_ID",
+            "Gold",
+            "Big_Silver",
+            "Small_Silver",
+            "Bronze",
+            "Points"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              5
+            ],
+            [
+              6,
+              1
+            ],
+            [
+              20,
+              6
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              9,
+              10
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              89,
+              84
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "player",
+          "table_comment": "",
+          "column_names": [
+            "Player_ID",
+            "Sponsor_name",
+            "Player_name",
+            "Gender",
+            "Residence",
+            "Occupation",
+            "Votes",
+            "Rank"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              6,
+              6
+            ],
+            [
+              "Saint Boniface",
+              "Winnipeg South Centre"
+            ],
+            [
+              "Jean Luc Bouché",
+              "Judy Wasylycia-Leis"
+            ],
+            [
+              "F",
+              "F"
+            ],
+            [
+              "Oakbank",
+              "Selkirk"
+            ],
+            [
+              "Student",
+              "Retired"
+            ],
+            [
+              7190,
+              5502
+            ],
+            [
+              "4th",
+              "2nd"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "player_coach",
+          "table_comment": "",
+          "column_names": [
+            "Player_ID",
+            "Coach_ID",
+            "Starting_year"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              2,
+              6
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2013,
+              2010
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _; _ _; BEGIN UPDATE _ SET _ = _ + _ WHERE _ <= _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ - _ WHERE CURRENT OF _; END LOOP; CLOSE _; UPDATE _ SET _ = _; END; $$;",
+    "table_num": 2,
+    "parameter": 3,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 0,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure named \"sp\" that updates club membership start years and coach assignments. First, for all club members whose start year is not more recent than a given year, increase their start year by 100. Then, for each club member, reduce their start year by 10 using a cursor. Finally, update all coaching assignments to a specified coach ID.",
+    "detailed_text": "Define a PL/pgSQL stored procedure \"sp\" which takes parameters para_Region, para_Start_year, and para_Coach_ID. The procedure performs the following operations: First, in the \"club\" table, update the \"Start_year\" column by adding 100 to para_Start_year for all records where \"Start_year\" is less than or equal to para_Start_year. Next, utilize a cursor to iterate over each row in the \"club\" table, updating the \"Start_year\" column by subtracting 10 from para_Start_year for the current record in the cursor. Finally, update the \"Coach_ID\" column to para_Coach_ID for all records in the \"player_coach\" table."
+  },
+  {
+    "text": "Develop a PL/pgSQL procedure that first deletes entries in the festival_detail table where the Num_of_Audience is null. Subsequently, update the Chair_Name column for all entries with the value provided in para_Chair_Name. Employ a cursor to iterate over records where the Year is greater than para_Year, and update the Location column with the value from para_Location for each of these records.",
+    "plsql": "CREATE OR REPLACE PROCEDURE sp(para_Num_of_Audience integer, para_Chair_Name text, para_Year integer, para_Location text) LANGUAGE plpgsql AS $$ DECLARE ref_cursor CURSOR FOR SELECT * FROM \"festival_detail\" WHERE \"Year\" > para_Year; rec RECORD; BEGIN DELETE FROM \"festival_detail\" WHERE \"Num_of_Audience\" IS NULL; UPDATE \"festival_detail\" SET \"Chair_Name\" = para_Chair_Name; OPEN ref_cursor; LOOP FETCH ref_cursor INTO rec; EXIT WHEN NOT FOUND; UPDATE \"festival_detail\" SET \"Location\" = para_Location WHERE CURRENT OF ref_cursor; END LOOP; CLOSE ref_cursor; END; $$;",
+    "call": [
+      "call sp(155, 'Arnold Palmer', 2010, 'United States');",
+      "call sp(155, 'Arnold Palmer', 2007, 'United States');",
+      "call sp(155, 'Doug Ford', 2006, 'United States');",
+      "call sp(155, 'Raymond Floyd', 2010, 'United States');",
+      "call sp(155, 'Charles Coody', 2007, 'United States');"
+    ],
+    "database": "entertainment_awards",
+    "table": [
+      "festival_detail"
+    ],
+    "schema": {
+      "schema_items": [
+        {
+          "table_name": "artwork",
+          "table_comment": "",
+          "column_names": [
+            "Artwork_ID",
+            "Type",
+            "Name"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              7,
+              7
+            ],
+            [
+              "Program Music/Variety Show",
+              "Program Music/Variety Show"
+            ],
+            [
+              "Cats",
+              "Daniel Mananta"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "festival_detail",
+          "table_comment": "",
+          "column_names": [
+            "Festival_ID",
+            "Festival_Name",
+            "Chair_Name",
+            "Location",
+            "Year",
+            "Num_of_Audience"
+          ],
+          "column_types": [
+            "integer",
+            "text",
+            "text",
+            "text",
+            "integer",
+            "integer"
+          ],
+          "column_comments": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              5,
+              5
+            ],
+            [
+              "Gobel Awards",
+              "Cherry Awards"
+            ],
+            [
+              "Lucy Lu",
+              "Charles Coody"
+            ],
+            [
+              "United States",
+              "United States"
+            ],
+            [
+              2007,
+              2007
+            ],
+            [
+              160,
+              155
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "table_name": "nomination",
+          "table_comment": "",
+          "column_names": [
+            "Artwork_ID",
+            "Festival_ID",
+            "Result"
+          ],
+          "column_types": [
+            "integer",
+            "integer",
+            "text"
+          ],
+          "column_comments": [
+            "",
+            "",
+            ""
+          ],
+          "column_contents": [
+            [
+              3,
+              3
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              "Nominated",
+              "Nominated"
+            ]
+          ],
+          "pk_indicators": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "foreign_keys": []
+    },
+    "evidence": "",
+    "table_labels": [
+      0,
+      1,
+      0
+    ],
+    "column_labels": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "matched_contents": {},
+    "skeleton": "CREATE OR REPLACE PROCEDURE sp(_ _, _ _, _ _, _ _) LANGUAGE plpgsql AS $$ DECLARE _ CURSOR FOR SELECT * FROM _ WHERE _ > _; _ _; BEGIN DELETE FROM _ WHERE _ IS NULL; UPDATE _ SET _ = _; OPEN _; LOOP FETCH _ INTO _; EXIT WHEN NOT FOUND; UPDATE _ SET _ = _ WHERE CURRENT OF _; END LOOP; CLOSE _; END; $$;",
+    "table_num": 1,
+    "parameter": 4,
+    "insert": 0,
+    "select": 1,
+    "update": 1,
+    "delete": 1,
+    "if": 0,
+    "loop": 1,
+    "declare": 1,
+    "concise_text": "Create a PL/pgSQL procedure that removes any festival entries with no audience count, then updates the chairperson's name for all records. For events with a year later than the given parameter, adjust the location using a cursor to ensure precise updates.",
+    "detailed_text": "Develop a PL/pgSQL procedure that first deletes entries in the festival_detail table where the Num_of_Audience is null. Subsequently, update the Chair_Name column for all entries with the value provided in para_Chair_Name. Employ a cursor to iterate over records where the Year is greater than para_Year, and update the Location column with the value from para_Location for each of these records."
+  }
+]
